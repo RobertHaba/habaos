@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { db } from '../firebaseDB';
+import { db } from '@/firebaseDB';
 import Favorite from '../components/home/Favorite.vue'
 import Recommended from '../components/home/Recommended.vue'
 import MusicPlayer from '../components/musicPlayer.vue'

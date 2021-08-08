@@ -4,7 +4,7 @@
         <weather v-if="app == 'weather'" id="app-weather" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-weather')"/>
         <music v-if="app == 'music'" id="app-music" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-music')" />
     </div>
-</template>
+</template> 
 
 <script>
 import calculator from '../../app/system/calculator/components/Calculator.vue'

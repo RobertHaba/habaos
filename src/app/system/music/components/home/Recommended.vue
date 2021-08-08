@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { db } from '../../firebaseDB';
+import { db } from '@/firebaseDB';
     export default {
         name:'Daily Recommended',
         data(){

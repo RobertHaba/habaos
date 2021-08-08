@@ -56,7 +56,7 @@
 
 <script>
 
-import { db } from '../firebaseDB';
+import { db } from '@/firebaseDB';
 import SmallMusicPlayer from './player/SmallMusicPlayer'
 import PlayMusic from './player/PlayMusic'
     export default {
