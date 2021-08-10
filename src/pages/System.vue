@@ -7,7 +7,7 @@
       <ul class="os-container-navbar">
             <workListItem class="os-navbar-item os-navbar-item--menu-start bg-theme" imgURL="http://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app=""/>
         
-          <menuStart v-if="openStart"/>
+          <menuStart :class="{'menu-hidden': !openStart}"/>
         <li class="os-navbar-item bg-theme">
           <ul class="work-navbar work-navbar--pinned">
             <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/calculator.svg" itemTitle="Kalkulator" app="calculator"/>
@@ -100,5 +100,8 @@ export default {
   display: flex;
   height: 100%;
   padding: 0 10px;
+}
+.menu-hidden{
+  display: none;
 }
 </style>
