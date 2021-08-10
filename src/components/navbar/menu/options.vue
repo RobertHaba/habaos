@@ -1,6 +1,6 @@
 <template>
     <div class="menu-options bg-dark">
-            <optionButton class="menu-options-user" imgURL="http://cdn.haba.usermd.net/os/img/admin.png" itemTitle="Account"/>
+            <optionButton class="menu-options-user" imgURL="http://cdn.haba.usermd.net/os/img/admin.png" itemTitle="Account" app="account"/>
         <hr class="vertical-line">
         <ul class="options-list">
             <optionButton imgURL="http://cdn.haba.usermd.net/os/icons/setting.svg" itemTitle="Settings"/>
@@ -12,7 +12,12 @@
     import optionButton from '../workListItem.vue'
     export default {
         components:{
-            optionButton
+            optionButton,
+        },
+        data(){
+            return{
+                showAccountSettings: false,
+            }
         }
         
     }

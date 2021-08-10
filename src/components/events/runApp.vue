@@ -3,6 +3,7 @@
         <calculator v-if="app == 'calculator'" id="app-calculator"  @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-calculator')"/>
         <weather v-if="app == 'weather'" id="app-weather" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-weather')"/>
         <music v-if="app == 'music'" id="app-music" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-music')" />
+        <account v-if="app == 'account'" id="settings-account" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('settings-account')" />
     </div>
 </template> 
 
@@ -10,12 +11,14 @@
 import calculator from '../../app/system/calculator/components/Calculator.vue'
 import weather from '../../app/system/weather/components/WeatherApp.vue'
 import music from '../../app/system/music/components/musicHome.vue'
+import account from '../settings/Account.vue'
     export default {
         name:'runApp',
         components:{
                calculator,
                weather,
-               music
+               music,
+               account
         },
         props:{
             app:String
@@ -23,8 +26,9 @@ import music from '../../app/system/music/components/musicHome.vue'
         methods: {
             moveToDesktop(){
                 if(this.app != ''){
-                    console.log('asdasd');
+                    console.log(this.app);
                         let appBox = document.querySelector('.os-appBox ' + '.'+this.app)
+                    console.log(appBox);
                         document.querySelector('.os-main-window').appendChild(appBox.parentElement)
                         appBox.classList.add('app-top-index')
                 }
@@ -37,22 +41,22 @@ import music from '../../app/system/music/components/musicHome.vue'
             },
             drop(e){
                 console.log(e);
-                let left, top, item
+                let left, top, item, padding
                 item = e.target
                 left = e.x
                 top = e.y
-                
-                if(left <= item.offsetWidth /2){
-                    left = item.offsetWidth / 2
+                padding = 10
+                if(left <= (item.offsetWidth /2) + padding){
+                    left = (item.offsetWidth / 2) + padding
                 }
-                if(left >= window.innerWidth - item.offsetWidth / 2){
-                    left = window.innerWidth - item.offsetWidth / 2
+                if(left >= window.innerWidth - padding - item.offsetWidth / 2){
+                    left = window.innerWidth - padding - item.offsetWidth / 2
                 }
-                if(top <= 0){
-                    top = 0
+                if(top <= padding){
+                    top = padding
                 }
-                if(top >= window.innerHeight - item.offsetHeight / 2){
-                    top = window.innerHeight - item.offsetHeight
+                if(top >= window.innerHeight - item.offsetHeight - 60 - padding){
+                    top = window.innerHeight - item.offsetHeight - 60 - padding
                 }
                 item.style.top = top + 'px'
                 item.style.left = left + 'px'

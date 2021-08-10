@@ -160,7 +160,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .bg-theme {
-    background: #552991;
+    background: #2e377af1;
 }
 
 .bg-dark--hover:hover {
@@ -183,6 +183,10 @@ input[type=range]::-webkit-slider-thumb {
 .horizontal-line {
     width: 100%;
     border-color: rgba(255, 255, 255, 0.473);
+}
+
+.line--light-color {
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 img {

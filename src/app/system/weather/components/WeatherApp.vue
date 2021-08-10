@@ -95,7 +95,7 @@ export default {
                     let res = response
                     this.geolocationCoordinates = {lat:res.latitude,lon:res.longitude}
                     this.utcOffset = res.utc_offset
-                    this.city = res.city
+                    this.city = 'Gdynia' // zmienić API
                     this.getWeather()
                 })
                 
