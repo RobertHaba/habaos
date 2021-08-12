@@ -1,16 +1,40 @@
 <template>
-    <div class="widget-tile">
+    <div class="widget-tile" v-if="weather != ''">
         <div class="widget-column">
-            <span class="widget-icon"><img src="http://cdn.haba.usermd.net/os/icons/cloud-white.svg" alt=""></span>
-            <p class="widget-degrees c-title">22°</p>
+            <span class="widget-icon"><img :src="weather.condition.icon" alt=""></span>
+            <p class="widget-degrees c-title">{{weather.temp_c}}°</p>
         </div>
-        <p class="widget-weather-text c-subtitle">Cloudy</p>
+        <p class="widget-weather-text c-subtitle">{{weather.condition.text}}</p>
     </div>
 </template>
 
 <script>
     export default {
-        
+        data(){
+            return{
+                city:'',
+                weather:''
+            }
+        },
+        methods:{
+            getWeather(){
+                this.city = JSON.parse(sessionStorage.getItem('userData')).location
+            fetch('http://api.weatherapi.com/v1/forecast.json?key=5b4fe3990258407d8ee214311212005&q=' + this.city + '&days=3&aqi=no&alerts=no')
+            .then(res => res.json())
+            .then(data=>{
+                let resWeather = data
+                this.weather = resWeather.current
+                console.log(this.weather);
+            })
+            
+        },
+        },
+        mounted(){
+            this.getWeather()
+            this.emitter.on('updateLocationInWidget',()=>{
+                this.getWeather()
+            })
+        }
     }
 </script>
 
@@ -23,7 +47,11 @@
         height: 100%;
     }
     .widget-weather-text{
-        font-size: 0.9rem;
+        width: 100%;
+        max-height: 35px;
+        font-size: 0.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .widget-degrees{
         font-size: 1.5rem;

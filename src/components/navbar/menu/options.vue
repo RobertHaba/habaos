@@ -1,6 +1,6 @@
 <template>
     <div class="menu-options bg-dark">
-            <optionButton class="menu-options-user" imgURL="http://cdn.haba.usermd.net/os/img/admin.png" itemTitle="Account" app="account"/>
+            <optionButton class="menu-options-user__img" :imgURL="avatarURL" itemTitle="Account" app="account" v-if="avatarURL != ''"/>
         <hr class="vertical-line">
         <ul class="options-list">
             <optionButton imgURL="http://cdn.haba.usermd.net/os/icons/setting.svg" itemTitle="Settings"/>
@@ -17,7 +17,20 @@
         data(){
             return{
                 showAccountSettings: false,
+                avatarURL:'',
             }
+        },
+        methods:{
+            async getUserAvatarFromDB(){
+                this.avatarURL = JSON.parse(sessionStorage.getItem('userData')).avatar
+                console.log(this.avatarURL);
+            }
+        },
+        mounted(){
+            this.getUserAvatarFromDB()
+            this.emitter.on('menuStartChangeImage', () =>{
+                    this.getUserAvatarFromDB()
+            })
         }
         
     }
@@ -40,6 +53,7 @@
 .menu-options-user__img{
     width: 35px;
     height: 35px;
+    margin:0 0.5rem;
 }
 .options-list{
     display: flex;

@@ -1,11 +1,11 @@
 <template>
-    <section class="account settings-container" :class="'settings-container--' + theme">
+    <section class="account settings-container app-container" :class="'settings-container--' + theme" v-if="render">
         <settingsHeader imgURL="http://cdn.haba.usermd.net/os/icons/user.svg" title="Account"/>
-        <div class="settings-body">
-            <subTitle text="What do you want do change?" />
+        <div class="settings-body" v-if="userData !== ''">
+            <subTitle text="What do you want to change?" />
             <div class="settings-form-container" v-for="form in content.body" :key="form._id">
                 <formTitle :title="form.title" :imgURL="form.icon"/>
-                <component :is="form.component" :formProps="form.props" ></component>
+                <component :is="form.component" :formProps="form.props"></component>
                 <hr class="horizontal-line line--light-color">
             </div>
         </div>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import settingsHeader from './components/header.vue'
 import settingsFooter from './components/footer.vue'
 import subTitle from './components/subtitle.vue'
@@ -27,6 +28,9 @@ import formPassword from './components/forms/formPassword.vue'
             return{
                 theme:'dark',
                 name:'accountSettings',
+                render:true,
+                userData:'',
+                newData:[],
                 content:{
                     body:[
                         {
@@ -35,7 +39,8 @@ import formPassword from './components/forms/formPassword.vue'
                             title:'Avatar',
                             icon:'http://cdn.haba.usermd.net/os/icons/picture.svg',
                             props:{
-                                img:'http://cdn.haba.usermd.net/os/img/admin.png'
+                                img:'',
+                                
                             }
                         },
                         {
@@ -65,13 +70,13 @@ import formPassword from './components/forms/formPassword.vue'
                                         name:'Szczecin',
                                     },{
                                         id:3,
-                                        name:'Kraków',
+                                        name:'Krakow',
                                     },{
                                         id:4,
-                                        name:'Wrocław',
+                                        name:'Wroclaw',
                                     },{
                                         id:5,
-                                        name:'Poznań',
+                                        name:'Poznan',
                                     },
                                 ]
                             }
@@ -98,7 +103,57 @@ import formPassword from './components/forms/formPassword.vue'
             formImage,
             formText,
             formSelect,
-            formPassword
+            formPassword,
+        },
+        methods:{
+            async getUserDatabase(){
+                await db.collection('admin').doc('user').get().then(snapshot =>{
+                    this.userData = snapshot.data()
+                })
+                this.content.body[0].props.img = this.userData.avatar
+                this.content.body[1].props.name = this.userData.name
+                this.content.body[2].props.city = this.userData.location
+                this.content.body[3].props.oldPassword = this.userData.password
+            },
+            async pushDataToDatabase(){
+                this.newData.forEach((item)=>{
+                    db.collection('admin').doc('user').update({[item[0]] :item[1]}).then(()=>{
+                        this.emitter.emit('getUserData')
+                    })
+                })
+                
+            },
+            getDataFromForm(){
+                let formInputsArray = document.querySelectorAll('[data-account-data-get=true] > [data-account-value]')
+                let newDataArray = []
+                formInputsArray.forEach((input)=>{
+                    newDataArray.push(
+                        [input.dataset.accountInputName, input.value]
+                    )
+                })
+                console.log(newDataArray);
+                console.log(formInputsArray);
+                if(newDataArray.length != 0){
+                    this.newData = newDataArray
+                    this.pushDataToDatabase()
+                }
+            },
+            forceRerender(){
+                this.render = false;
+                this.$nextTick(() => {
+                    this.render = true;
+                });
+            }
+        },
+        mounted(){
+            this.getUserDatabase()
+            this.emitter.on('accountSaveData', () =>{
+                    this.getDataFromForm()
+            })
+            this.emitter.on('cancelData', async () =>{
+                    await this.getUserDatabase()
+                    await this.forceRerender()
+            })
         }
     }
 </script>
@@ -115,11 +170,11 @@ import formPassword from './components/forms/formPassword.vue'
     max-height: 650px;
     background-color: #FFF;
     border-radius: 20px;
-    box-shadow: 4px 4px 15px -5px rgba(0, 0, 0, 0.14);
     transition: 0.5s ease all;
 }
 .settings-container--dark{
     background-color: #22252D;
+    background-image: linear-gradient(135deg, #622c66, #443272); /* <- wybrać theme*/
     color: #FFF;
 }
 .settings-body{

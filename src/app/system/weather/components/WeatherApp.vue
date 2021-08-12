@@ -55,23 +55,11 @@ export default {
                 {id:1, text:'', icon:'moon',iconPosition:'right', itemPosition:'right'},
             ],
             todayWeatherInHours:[
-                {id:0, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19'},
-                {id:1, text:'9 AM', icon:'cloud-with-sun', mainTemperature:'19'},
-                {id:2, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19'},
-                {id:3, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19'},
-                {id:4, text:'9 AM', icon:'cloud-with-sun', mainTemperature:'19'},
-                {id:5, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19'}
             ],
             weekWeather:[
-                {id:0, text:'Tuesday', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'},
-                {id:1, text:'Wednesday', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'},
-                {id:2, text:'Thursday', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'},
-                {id:3, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'},
-                {id:4, text:'9 AM', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'},
-                {id:5, text:'10 AM', icon:'cloud-with-sun', mainTemperature:'19', nightTemperature:'15'}
             ],
             theme:'light',
-            city:'Warszawa',
+            city:'',
             geolocationCoordinates: '',
             sun:'',
             weather:'',
@@ -89,15 +77,8 @@ export default {
             }
         },
         getCity(){
-                fetch('https://ipapi.co/json/')
-                .then( res => res.json())
-                .then(response => {
-                    let res = response
-                    this.geolocationCoordinates = {lat:res.latitude,lon:res.longitude}
-                    this.utcOffset = res.utc_offset
-                    this.city = 'Gdynia' // zmienić API
-                    this.getWeather()
-                })
+                this.city = JSON.parse(sessionStorage.getItem('userData')).location
+                this.getWeather()
                 
         },
         getWeather(){

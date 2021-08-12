@@ -1,5 +1,5 @@
 <template>
-    <div class="calculator container" :class="{'container--dark' : theme == 'dark'}">
+    <div class="calculator app-container" :class="{'container--dark' : theme == 'dark'}">
         <div class="calculator-container" :class="{'calculator-container--dark' : theme == 'dark'}">
         <div class="calculator-options">
                 <button class="switch-button" title="Change theme to Light" aria-label="Change theme to Light" @click="theme = 'light'">
@@ -232,7 +232,7 @@ button:focus{
     -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
           filter: invert(100%);
 }
-.container{
+.app-container{
   position: fixed;
   top:50%;
   left:50%;
@@ -242,7 +242,7 @@ button:focus{
   align-items: center;
   height: auto;
   transition: 0.5s ease all;
-
+  border-radius: 20px;
 }
 .calculator-container{
     position: relative;

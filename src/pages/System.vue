@@ -20,23 +20,29 @@
         </li>
       </ul>
     </nav>
+    <getUserData />
   </main>
 </template>
 
 <script>
 import workListItem from '../components/navbar/workListItem'
 import menuStart from '../components/navbar/menuStart'
+import getUserData from '@/components/system/getUserData.vue'
 
 export default {
   name: 'App',
   components: {
     workListItem,
-    menuStart
+    menuStart,
+    getUserData
   },
   data(){
     return{
       openStart: false
     }
+  },
+  mounted(){
+    this.emitter.emit('getUserData')
   }
 }
 </script>

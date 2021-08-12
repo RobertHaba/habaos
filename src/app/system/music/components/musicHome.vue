@@ -116,6 +116,7 @@ import MusicPlayer from '../components/musicPlayer.vue'
     justify-content: center;
     align-items: center;
     height: 650px;
+    border-radius: 20px;
 }
 .music-container{
     position: relative;
