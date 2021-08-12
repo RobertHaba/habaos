@@ -140,6 +140,10 @@ export default {
     mounted(){
         this.checkIfBrowserIsSetToDarkMode()
         this.getCity()
+            this.emitter.on('updateLocationInWeatherApp',()=>{
+                this.getCity()
+            })
+        
     }
 }
 </script>

@@ -13,6 +13,8 @@ export default {
                 })
             await this.emitter.emit('menuStartChangeImage')
             await this.emitter.emit('updateLocationInWidget')
+            await this.emitter.emit('updateLocationInWeatherApp')
+            
         }
     },
     mounted(){

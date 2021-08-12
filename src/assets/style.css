@@ -244,6 +244,7 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
     height: 14px;
     width: 14px;
+    margin-top: -5px;
     border: 0;
     background: #ff5ba3;
     border-radius: 10px;
