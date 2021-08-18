@@ -16,6 +16,7 @@
           <hr class="vertical-line">
           <ul class="work-navbar">
             <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/weather.svg" itemTitle="Pogoda" app="weather"/>
+            <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/weather.svg" itemTitle="Kalendarz" app="calendar"/>
           </ul>
         </li>
       </ul>
@@ -25,16 +26,16 @@
 </template>
 
 <script>
+import getUserData from '@/components/system/getUserData.vue'
 import workListItem from '../components/navbar/workListItem'
 import menuStart from '../components/navbar/menuStart'
-import getUserData from '@/components/system/getUserData.vue'
 
 export default {
   name: 'App',
   components: {
+    getUserData,
     workListItem,
     menuStart,
-    getUserData
   },
   data(){
     return{

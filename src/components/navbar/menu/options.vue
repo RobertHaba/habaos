@@ -27,7 +27,6 @@
             }
         },
         mounted(){
-            this.getUserAvatarFromDB()
             this.emitter.on('menuStartChangeImage', () =>{
                     this.getUserAvatarFromDB()
             })

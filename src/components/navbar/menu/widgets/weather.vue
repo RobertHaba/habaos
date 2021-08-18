@@ -30,7 +30,6 @@
         },
         },
         mounted(){
-            this.getWeather()
             this.emitter.on('updateLocationInWidget',()=>{
                 this.getWeather()
             })

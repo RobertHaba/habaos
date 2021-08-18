@@ -163,6 +163,10 @@ input[type=range]::-webkit-slider-thumb {
     background-image: linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98));
 }
 
+.bg-theme--no-gradient {
+    background-color: #662B65;
+}
+
 .bg-dark--hover:hover {
     background-color: rgba(0, 0, 0, 0.35);
 }

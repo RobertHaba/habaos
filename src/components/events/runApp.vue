@@ -4,6 +4,7 @@
         <weather v-if="app == 'weather'" id="app-weather" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-weather')"/>
         <music v-if="app == 'music'" id="app-music" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-music')" />
         <account v-if="app == 'account'" id="settings-account" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('settings-account')" />
+        <calendar v-if="app == 'calendar'" id="app-calendar" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-calendar')" />
     </div>
 </template> 
 
@@ -12,13 +13,15 @@ import calculator from '../../app/system/calculator/components/Calculator.vue'
 import weather from '../../app/system/weather/components/WeatherApp.vue'
 import music from '../../app/system/music/components/musicHome.vue'
 import account from '../settings/Account.vue'
+import calendar from '@/app/system/calendar/calendarApp.vue'
     export default {
         name:'runApp',
         components:{
                calculator,
                weather,
                music,
-               account
+               account,
+               calendar
         },
         props:{
             app:String
