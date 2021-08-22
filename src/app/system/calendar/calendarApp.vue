@@ -2,14 +2,16 @@
     <section class="calendar calendar-container app-container" :class="'calendar-container--' + theme">
         <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
         <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
-        <todoBody :today="todayDate"/>
+        <todoList :today="todayDate"/>
+        <todoAdd/>
     </section>
 </template>
 
 <script>
 import headerApp from './components/header.vue'
 import calendarBody from './components/calendarBody.vue'
-import todoBody from './components/todoBody.vue'
+import todoList from './components/todoList.vue'
+import todoAdd from './todoAdd.vue'
     export default {
         data(){
             return{
@@ -23,7 +25,8 @@ import todoBody from './components/todoBody.vue'
         components:{
             headerApp,
             calendarBody,
-            todoBody
+            todoList,
+            todoAdd
         },
         methods:{
             getToDayTime(){

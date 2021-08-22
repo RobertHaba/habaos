@@ -3,6 +3,7 @@
         <div class="calendar-todo-header">
             <p class="calendar-todo-header__text">Tasks - {{activeDate}}</p>
             <p class="calendar-todo-header__number">3</p>
+            <p class="calendar-todo-header__add">+</p>
         </div>
         <div class="calendar-todo-list">
                 <todoItem />
@@ -40,23 +41,32 @@ import todoItem from './todoItem.vue'
 
 <style scoped>
 .calendar-todo-header{
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: 8fr 40px 40px;
+    align-items: center;
+    height: 40px;
+    width: 100%;
+    margin: 1.2rem 0 1.2rem 0;
 }
 .calendar-todo-header__text{
     font-weight: bold;
 }
+.calendar-todo-header__add,
 .calendar-todo-header__number{
     display: flex;
+    justify-self: center;
     justify-content: center;
     align-items: center;
-    height: 20px;
-    width: 100%;
-    max-width: 60px;
+    height: 30px;
+    width: 30px;
     background-color: #E67500;
     font-weight: bold;
-    border-radius: 5px;
+    font-size: 1.5rem;
+    border-radius: 100px;
+}
+.calendar-todo-header__number{
+    font-size: 1rem;
+    background-color: #662B65;
 }
 .calendar-todo-list{
     position: relative;

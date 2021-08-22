@@ -59,8 +59,8 @@ export default {
     }
     .work-navbar-icon{
         display: block;
-        height: 25px;
-        width: 25px;
+        height: 30px;
+        width: 30px;
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center;

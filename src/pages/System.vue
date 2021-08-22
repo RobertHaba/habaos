@@ -1,7 +1,6 @@
 <template>
   <main class='os-container'>
     <section class="os-main-window" @click="openStart = false">
-
     </section>
     <nav class="os-navbar">
       <ul class="os-container-navbar">
@@ -16,7 +15,7 @@
           <hr class="vertical-line">
           <ul class="work-navbar">
             <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/weather.svg" itemTitle="Pogoda" app="weather"/>
-            <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/weather.svg" itemTitle="Kalendarz" app="calendar"/>
+            <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/calendar.svg" itemTitle="Kalendarz" app="calendar"/>
           </ul>
         </li>
       </ul>
