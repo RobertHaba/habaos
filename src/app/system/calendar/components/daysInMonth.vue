@@ -6,7 +6,7 @@
             </p>
         </div>
         <div class="calendar-days-column" v-for="weeks in allDaysCalendar" :key="weeks" >
-            <p class="calendar-days-column__item" v-for="day in weeks" :key="day" :class="{'calendar-days-column__item--active' : day == activeDay, 'calendar-days-column__item--active-day' : day[1] == 'active-day','calendar-days-column__item--others': day[1] == 'others', 'calendar-days-column__item--has-todo':day[3]}" @click="activeDay = day, runTodoChangeDate(day[2])">
+            <p class="calendar-days-column__item" v-for="day in weeks" :key="day[2]" :class="{'calendar-days-column__item--active' : day[2] == activeDay[2], 'calendar-days-column__item--active-day' : day[1] == 'active-day','calendar-days-column__item--others': day[1] == 'others', 'calendar-days-column__item--has-todo':day[3]}" @click="activeDay = day, runTodoChangeDate(day[2])">
                 {{daysWithTodo.id}}
                 {{day[0]}}
             </p>
@@ -49,7 +49,7 @@ import  {db}  from '@/firebaseDB';
                 this.activeMonthNumber = this.day.toLocaleString('en-us',{month:'numeric'})
                 
                 this.dayName = this.day.toLocaleString('en-us', {weekday:'short'})
-                this.activeDay = this.dayNumber
+                this.activeDay = (this.activeDay == '')? this.dayNumber : this.activeDay
                 this.year = this.day.toLocaleString('en-us',{year:'numeric'})
                 let firstDayNameOfMonth = new Date(Date.UTC(this.year,this.activeMonthNumber-1,1)).toLocaleString('en-us',{weekday:'short'})
 
@@ -121,6 +121,7 @@ import  {db}  from '@/firebaseDB';
                 await this.addTodoPropertyToDay()
             },
             addTodoPropertyToDay(){
+                console.log(this.daysWithTodo);
                 this.daysWithTodo.forEach((todoDay)=>{
                     this.allDaysCalendar.forEach(day => {
                         day.forEach(item => {
@@ -134,7 +135,7 @@ import  {db}  from '@/firebaseDB';
             addZeroToFirstCharacter(date){
                 let newDate = '0' + date.toString()
                 return newDate.slice(-2)
-            }
+            },
 
         },
         mounted(){
@@ -153,6 +154,14 @@ import  {db}  from '@/firebaseDB';
                     this.emitter.emit('todoChangeDate',this.year + '.'+ monthEmit + '.' + day)
                     this.getDataFromDB()
                 }, 50);
+            })
+            
+            this.emitter.on('todoMonthDaysUpdateData',()=>{
+                this.allDaysCalendar = []
+                this.getDaysValue()
+                setTimeout(()=>{
+                    this.getDataFromDB()
+                },50)
             })
             
         }

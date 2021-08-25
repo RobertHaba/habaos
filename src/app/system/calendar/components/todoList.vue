@@ -63,6 +63,9 @@ import todoItem from './todoItem.vue'
                     this.getDataFromDB()
                 },20)
             })
+           this.emitter.on('todoListUpdateData',()=>{
+                    this.getDataFromDB()
+            })
             
         }
     }

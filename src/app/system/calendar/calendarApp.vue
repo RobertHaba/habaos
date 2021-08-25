@@ -4,7 +4,7 @@
         <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
         <todoList :today="todayDate"/>
         <todoAdd v-if="openTodoEditor" :activeDate="activeDate"/>
-        <todoView v-if="todoView"/>
+        <todoView v-if="todoView" :todoData="todoData"/>
     </section>
 </template>
 
@@ -25,7 +25,7 @@ import todoView from './todoView.vue'
                 openTodoEditor: false,
                 todoView: false,
                 activeDate:'',
-                todoData:''
+                todoData:'',
             }
         },
         components:{
@@ -54,6 +54,10 @@ import todoView from './todoView.vue'
             this.emitter.on('openTodoView',(data)=>{
                 this.todoView = data.status
                 this.todoData = data.value
+            })
+            this.emitter.on('resetDataInCalendarApp',()=>{
+                this.emitter.emit('todoListUpdateData')
+                this.emitter.emit('todoMonthDaysUpdateData')
             })
         }
     }

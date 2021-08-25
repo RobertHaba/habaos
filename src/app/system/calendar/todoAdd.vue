@@ -4,7 +4,7 @@
             <headerTodo :headerTitle="headerTitleText" />
             <div class="calendar-todo-main" >
                 <todoInput class="calendar-todo-main__column"  inputTag="input" inputType="text" inputName="Title" inputLabel="Title" inputText="Add your title" :inputMaxLength="40" :inputMinLength="4"/>
-                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" inputLabel="Description" :inputMaxLength="120" :inputMinLength="4"/>
+                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" inputLabel="Description" :inputMaxLength="280" :inputMinLength="4"/>
                 <div class="calendar-todo-main__column" >
                     <div class="todo-input-box"><p class="calendar-todo-column-title">Priority</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
                     <div class="calendar-todo-buttons-wrapper">
@@ -106,9 +106,11 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                 console.log('Sending to DB ID: ' +this.todoId + ' with data:');
                 console.log(this.todoData);
                 let objectTodoData = {
+                    id: this.todoId.toString(),
                     title: this.todoData[1].value,
                     description: this.todoData[2].value,
-                    priority: this.todoData[0].value
+                    priority: this.todoData[0].value,
+                    createAt: this.todoDate.toString()
                 }
                 this.dummyFields()
                 db.collection('admin').doc('todoApp').collection('todo').doc(this.todoDate[0]).collection(this.todoDate[1].replace('0','')).doc(this.todoDate[2]).collection('lists').doc(this.todoId.toString()).set(
@@ -138,6 +140,7 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                 db.collection('admin').doc('todoApp').collection('todo').doc(this.todoDate[0]).collection(this.todoDate[1].replace('0','')).doc(this.todoDate[2]).set({dummy:'dummy'})
             },
             closeTodoEditor(){
+                this.emitter.emit('resetDataInCalendarApp')
                 this.emitter.emit('openTodoEditor',false)
             }
         },
@@ -223,9 +226,9 @@ import defaultModal from '@/components/modals/defaultModal.vue'
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
+    padding: 0 1rem;
     height: 30px;
-    border-radius: 10px;
+    border-radius: 100px;
     color:#FFF;
 }
 .todo-button--active{
@@ -241,9 +244,10 @@ import defaultModal from '@/components/modals/defaultModal.vue'
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
     width: 100%;
     height: 70px;
-    background-color: rgba(196, 196, 196, 0.06);
+    background-color: #2C2F36;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 

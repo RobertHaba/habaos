@@ -77,7 +77,7 @@
     height: 25px;
     padding: 0 1rem;
     margin:1rem 1rem 0 0;
-    border-radius: 10px;
+    border-radius: 50px;
     font-size: 0.8rem;
 }
 .calendar-months-item--active{
