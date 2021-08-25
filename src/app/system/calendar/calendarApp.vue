@@ -48,6 +48,7 @@ import todoView from './todoView.vue'
         mounted(){
             this.getToDayTime()
             this.emitter.on('openTodoEditor',(data)=>{
+                console.log('asdaasdasdasdasd');
                 this.openTodoEditor = data.status
                 this.activeDate = data.value
             })

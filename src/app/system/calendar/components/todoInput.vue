@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="todo-input-box"><label :for="inputName" >{{inputLabel}}</label> <p v-show="remainingLength != inputMaxLength && inputLength >= inputMinLength" class="validation-alert">Remaining length: {{remainingLength}}</p><p class="validation-alert" v-show="keyPressed && inputLength < inputMinLength">Too short, min length is {{inputMinLength}}</p></div>
-        <component :is="inputTag" :type="inputType" :name="inputName" @keyup="getData" :placeholder="inputText" :maxlength="inputMaxLength"> </component>
+        <component :is="inputTag" :type="inputType" :name="inputName" @keyup="getData" :placeholder="inputText" :maxlength="inputMaxLength" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"  v-bind="$attrs"> </component>
     </div>
 </template>
 
@@ -17,6 +17,7 @@
             inputType:String,
             inputLabel: String,
             inputText: String,
+            modelValue: String,
             inputMaxLength: Number,
             inputMinLength: Number,
         },
@@ -49,8 +50,13 @@
                 
             }
         },
+        watch:{
+            modelValue: function(newValue){
+                this.inputData.value= newValue
+            }
+        },
         mounted(){
-            this.inputData.value =''
+            this.inputData.value = this.modelValue
             this.emitter.on('getDataTodoInput',this.pushDataToApp)
             this.emitter.all.forEach((emitFunctionArray,emitName)=>{
                     if(emitName == 'getDataTodoInput' && emitFunctionArray.length >2){
@@ -60,9 +66,7 @@
             
             this.emitter.all.forEach((emitFunctionArray,emitName)=>{
                     if(emitName == 'getTodoDate' && emitFunctionArray.length >1){
-                        console.log(emitFunctionArray);
                         emitFunctionArray.splice(0,1)
-                        console.log(emitFunctionArray);
                 }
             }) //<--- FIX Multiple emitter function on every mounted 
         }

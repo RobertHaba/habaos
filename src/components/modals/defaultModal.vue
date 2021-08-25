@@ -100,8 +100,8 @@ import btn from '@/components/system/singleButton.vue'
     background-color: rgba(255, 255, 255, 0.247);
 }
 .icon{
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
 }
 .os-modal-title{
     font-weight: bold;

@@ -1,5 +1,5 @@
 <template>
-    <div class="calendar-todo-cover calendar-todo-cover--dark" @click.self="closeTodoEditor()" >
+    <div class="calendar-todo-cover calendar-todo-cover--dark" @click.self="closeTodoView()" >
         <div class="calendar-todo-container" :class="'bg-color--'+todoData.priority">
             <headerTodo :headerTitle="headerTitleText" />
             <div class="calendar-todo-main">
@@ -15,8 +15,8 @@
                 </div>
                 <div class="calendar-todo-footer calendar-todo-footer--space">
                     <todoBtn class="todo-button" btnTitle="Remove" btnBgColor="#AD1E1E" @click="answerModalShow = true"/>
-                    <todoBtn class="todo-button" btnTitle="Edit" btnBgColor="#50B4EC" @click="resetApp"/>
-                    <todoBtn class="todo-button" btnTitle="Complete" btnBgColor="#4CAF50" @click="'a'"/>
+                    <todoBtn class="todo-button" btnTitle="Edit" btnBgColor="#50B4EC" @click="editTodo"/>
+                    <todoBtn class="todo-button" btnTitle="Complete" btnBgColor="#4CAF50" @click="removeFromDB"/>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
 import { db } from '@/firebaseDB';
 import headerTodo from './components/headerTodo.vue'
 import todoBtn from './components/todoBtn.vue'
-import answerModal from '@/components/modals/answerModal.vue' //timeout, icon,title,text
+import answerModal from '@/components/modals/answerModal.vue'
     export default {
         props:['todoData'],
         components:{
@@ -52,7 +52,7 @@ import answerModal from '@/components/modals/answerModal.vue' //timeout, icon,ti
             }
         },
         methods:{
-            closeTodoEditor(){
+            closeTodoView(){
                 this.emitter.emit('openTodoView',false)
             },
             removeFromDB(){
@@ -62,7 +62,7 @@ import answerModal from '@/components/modals/answerModal.vue' //timeout, icon,ti
                     console.log('Usunięte');
                     this.resetApp()
                     this.checkDayListsLengthDB(date)
-                    this.closeTodoEditor()
+                    this.closeTodoView()
                 })
             },
             checkDayListsLengthDB(date){
@@ -77,6 +77,17 @@ import answerModal from '@/components/modals/answerModal.vue' //timeout, icon,ti
                 .catch(()=>{
                     this.resetApp()
                 })
+            },
+            editTodo(){
+                this.emitter.emit('openTodoEditor',
+                {
+                    status:true,
+                    value:this.todoData.createAt.split(',').join('.')
+                })
+                setTimeout(()=>{
+                    this.emitter.emit('editTodo',this.todoData)
+                    this.closeTodoView()
+                },200)
             },
             resetApp(){
                 this.emitter.emit('resetDataInCalendarApp')
