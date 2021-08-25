@@ -59,11 +59,7 @@ import  {db}  from '@/firebaseDB';
                 this.thisMonthDayNumberEnd = new Date(this.dayNumber, this.activeMonthNumber, 0).getDate()
                 let previousMonthDayStart = new Date(Date.UTC(this.day.toLocaleString('en-us',{year:'numeric'}),this.activeMonthNumber-1,-this.firstDayIndexOfWeek + 2)).toLocaleString('en-us',{day:'numeric'})
                 let previousMonthDayEnd = new Date(Date.UTC(this.day.toLocaleString('en-us',{year:'numeric'}),this.activeMonthNumber-1,0)).toLocaleString('en-us',{day:'numeric'})
-                console.log(previousMonthDayStart);
-                console.log(previousMonthDayEnd);
-                console.log(this.thisMonthDayNumberEnd);
                 if(this.firstDayIndexOfWeek !== 1){
-                    
                     this.allDays({
                     indexStart:previousMonthDayStart,
                     indexEnd:previousMonthDayEnd,
@@ -75,20 +71,19 @@ import  {db}  from '@/firebaseDB';
                     indexEnd:this.thisMonthDayNumberEnd,
                     monthDifference: 0
                 }, 'active-month')
-                this.allDays({
+                if(this.activeMonthNumber !== "12"){
+                    this.allDays({
                     indexStart:1,
                     indexEnd:16,
                     monthDifference: 1
                 }, 'others')
+                }
                 this.allDaysInWeek()
-                
-                console.log(this.allDaysCalendar);
             },
             indexOfWeekdays(day){
                 let value
                 this.daysName.filter((item, index)=>{
                     if(item == day){
-                        console.log(index);
                         value = index +1
                     }
                 })
@@ -151,8 +146,6 @@ import  {db}  from '@/firebaseDB';
                 this.activeMonthNumber = month
                 this.allDaysCalendar = []
                 this.day = new Date(this.year, this.activeMonthNumber, this.today)
-                console.log(this.activeDay[0]);
-                console.log(this.year + '.'+this.activeMonthNumber + '.' + this.today);
                 this.getDaysValue()
                 let monthEmit = this.addZeroToFirstCharacter(this.activeMonthNumber)
                 let day = this.addZeroToFirstCharacter(this.today)

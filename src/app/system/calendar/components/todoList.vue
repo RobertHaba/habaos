@@ -3,11 +3,11 @@
         <div class="calendar-todo-header">
             <p class="calendar-todo-header__text">Tasks - {{activeDate}}</p>
             <p class="calendar-todo-header__number">{{(todos !== '')? todos.length : 0}}</p>
-            <p class="calendar-todo-header__add" @click="openTodoEditor()">+</p>
+            <p class="calendar-todo-header__add" @click="openTodoWindow('openTodoEditor', activeDate)">+</p>
         </div>
         <div class="calendar-todo-list" v-if="todos !== ''" >
             <template  v-for="todo in todos" :key="todo.id" >
-                <todoItem :todoData="todo"/>
+                <todoItem :todoData="todo" @click="openTodoWindow('openTodoView',todo)"/>
             </template>
         </div>
     </div>
@@ -21,7 +21,7 @@ import todoItem from './todoItem.vue'
             today: String
         },
         components:{
-            todoItem
+            todoItem,
         },
         data(){
             return{
@@ -41,11 +41,11 @@ import todoItem from './todoItem.vue'
                     this.todos =""
                 })
             },
-            openTodoEditor(){
-                this.emitter.emit('openTodoEditor',
+            openTodoWindow(windowType, data){
+                this.emitter.emit(windowType,
                     {
                         status:true,
-                        activeDate: this.activeDate
+                        value: data
                     }
                 )
             },

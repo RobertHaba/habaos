@@ -28,6 +28,7 @@
     background-color: #393939;
     border-left: 6px solid #E67500;
     font-size: 0.8rem;
+    border-radius: 5px;
     color:#FFF;
     word-break: break-all;
 }

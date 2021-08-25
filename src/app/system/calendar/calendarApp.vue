@@ -4,6 +4,7 @@
         <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
         <todoList :today="todayDate"/>
         <todoAdd v-if="openTodoEditor" :activeDate="activeDate"/>
+        <todoView v-if="todoView"/>
     </section>
 </template>
 
@@ -12,6 +13,7 @@ import headerApp from './components/header.vue'
 import calendarBody from './components/calendarBody.vue'
 import todoList from './components/todoList.vue'
 import todoAdd from './todoAdd.vue'
+import todoView from './todoView.vue'
     export default {
         data(){
             return{
@@ -21,14 +23,17 @@ import todoAdd from './todoAdd.vue'
                 day:'',
                 dayNumber:'',
                 openTodoEditor: false,
-                activeDate:''
+                todoView: false,
+                activeDate:'',
+                todoData:''
             }
         },
         components:{
             headerApp,
             calendarBody,
             todoList,
-            todoAdd
+            todoAdd,
+            todoView
         },
         methods:{
             getToDayTime(){
@@ -38,17 +43,17 @@ import todoAdd from './todoAdd.vue'
                 this.todayDate = this.day.toJSON().slice(0,10).replace(/-/g,'.');
                 this.actuallyMonth =this.day.toLocaleString('en-us', {month:'long'})
                 this.actuallyDay =this.day.toLocaleString('en-us', {weekday:'long'})
-                console.log(this.actuallyMonth);
-                console.log( this.todayDate);
-                console.log( this.actuallyDay);
             },
         },
         mounted(){
             this.getToDayTime()
             this.emitter.on('openTodoEditor',(data)=>{
-                console.log(data);
                 this.openTodoEditor = data.status
-                this.activeDate = data.activeDate
+                this.activeDate = data.value
+            })
+            this.emitter.on('openTodoView',(data)=>{
+                this.todoView = data.status
+                this.todoData = data.value
             })
         }
     }
