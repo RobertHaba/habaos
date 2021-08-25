@@ -3,7 +3,7 @@
         <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
         <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
         <todoList :today="todayDate"/>
-        <todoAdd/>
+        <todoAdd v-if="openTodoEditor" :activeDate="activeDate"/>
     </section>
 </template>
 
@@ -19,7 +19,9 @@ import todoAdd from './todoAdd.vue'
                 todayDate: '',
                 actuallyMonth:'',
                 day:'',
-                dayNumber:''
+                dayNumber:'',
+                openTodoEditor: false,
+                activeDate:''
             }
         },
         components:{
@@ -39,10 +41,15 @@ import todoAdd from './todoAdd.vue'
                 console.log(this.actuallyMonth);
                 console.log( this.todayDate);
                 console.log( this.actuallyDay);
-            }
+            },
         },
         mounted(){
             this.getToDayTime()
+            this.emitter.on('openTodoEditor',(data)=>{
+                console.log(data);
+                this.openTodoEditor = data.status
+                this.activeDate = data.activeDate
+            })
         }
     }
 </script>

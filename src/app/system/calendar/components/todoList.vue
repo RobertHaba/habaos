@@ -2,18 +2,19 @@
     <div>
         <div class="calendar-todo-header">
             <p class="calendar-todo-header__text">Tasks - {{activeDate}}</p>
-            <p class="calendar-todo-header__number">3</p>
-            <p class="calendar-todo-header__add">+</p>
+            <p class="calendar-todo-header__number">{{(todos !== '')? todos.length : 0}}</p>
+            <p class="calendar-todo-header__add" @click="openTodoEditor()">+</p>
         </div>
-        <div class="calendar-todo-list">
-                <todoItem />
-                <todoItem />
-                <todoItem />
+        <div class="calendar-todo-list" v-if="todos !== ''" >
+            <template  v-for="todo in todos" :key="todo.id" >
+                <todoItem :todoData="todo"/>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import todoItem from './todoItem.vue'
     export default {
         props:{
@@ -24,17 +25,45 @@ import todoItem from './todoItem.vue'
         },
         data(){
             return{
-                activeDate:''
+                activeDate:'',
+                todos:''
             }
+        },
+        methods:{
+            async getDataFromDB(){
+                let splitDate = this.activeDate.split('.')
+                console.log(splitDate);
+                await db.collection('admin').doc('todoApp').collection('todo').doc(splitDate[0]).collection(splitDate[1].replace('0','')).doc(splitDate[2]).collection('lists').get()
+                .then(res =>{
+                    this.todos = res.docs.map(doc => doc.data())
+                })
+                .catch(()=>{
+                    this.todos =""
+                })
+            },
+            openTodoEditor(){
+                this.emitter.emit('openTodoEditor',
+                    {
+                        status:true,
+                        activeDate: this.activeDate
+                    }
+                )
+            },
         },
         mounted(){
            setTimeout(()=>{
                 this.activeDate = this.today
-           },10) 
+           },10)
+           setTimeout(()=>{
+                    this.getDataFromDB()
+                },20) 
            this.emitter.on('todoChangeDate',(date)=>{
-               console.log(date);
-                this.activeDate = date.toJSON().slice(0,10).replace(/-/g,'.');
+                this.activeDate = date;
+                setTimeout(()=>{
+                    this.getDataFromDB()
+                },20)
             })
+            
         }
     }
 </script>

@@ -19,7 +19,6 @@
             inputText: String,
             inputMaxLength: Number,
             inputMinLength: Number,
-            getChildData: Function
         },
         data(){
             return{
@@ -44,12 +43,28 @@
                 this.inputLength = e.target.value.length
             },
             pushDataToApp(){
-                this.keyPressed = (this.inputData.value == '' || this.inputData.value <= this.inputMaxLength)? true : false
-                this.emitter.emit('getTodoDate', this.inputData)
+                if(this.inputData.value !== '' || this.inputData.value >= this.inputMaxLength){
+                    this.emitter.emit('getTodoDate', this.inputData)
+                }
+                
             }
         },
         mounted(){
-            this.emitter.on('getData',this.pushDataToApp)
+            this.inputData.value =''
+            this.emitter.on('getDataTodoInput',this.pushDataToApp)
+            this.emitter.all.forEach((emitFunctionArray,emitName)=>{
+                    if(emitName == 'getDataTodoInput' && emitFunctionArray.length >2){
+                        emitFunctionArray.splice(0,2)
+                }
+            }) //<--- FIX Multiple emitter function on every mounted 
+            
+            this.emitter.all.forEach((emitFunctionArray,emitName)=>{
+                    if(emitName == 'getTodoDate' && emitFunctionArray.length >1){
+                        console.log(emitFunctionArray);
+                        emitFunctionArray.splice(0,1)
+                        console.log(emitFunctionArray);
+                }
+            }) //<--- FIX Multiple emitter function on every mounted 
         }
     }
 </script>

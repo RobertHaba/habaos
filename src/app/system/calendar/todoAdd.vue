@@ -1,10 +1,10 @@
 <template>
-    <div class="calendar-todo-cover calendar-todo-cover--dark">
-        <div class="calendar-todo-container">
-            <headerTodo headerTitle="Create a New Task" />
-            <div class="calendar-todo-main">
-                <todoInput class="calendar-todo-main__column"  inputTag="input" inputType="text" inputName="Title" inputLabel="Title" inputText="Add your title" :getChildData="todoChildData" inputMaxLength="40" inputMinLength="4"/>
-                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" inputLabel="Description" :getChildData="todoChildData" inputMaxLength="120" inputMinLength="4"/>
+    <div class="calendar-todo-cover calendar-todo-cover--dark" @click.self="closeTodoEditor()">
+        <div class="calendar-todo-container" >
+            <headerTodo :headerTitle="headerTitleText" />
+            <div class="calendar-todo-main" >
+                <todoInput class="calendar-todo-main__column"  inputTag="input" inputType="text" inputName="Title" inputLabel="Title" inputText="Add your title" :inputMaxLength="40" :inputMinLength="4"/>
+                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" inputLabel="Description" :inputMaxLength="120" :inputMinLength="4"/>
                 <div class="calendar-todo-main__column" >
                     <div class="todo-input-box"><p class="calendar-todo-column-title">Priority</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
                     <div class="calendar-todo-buttons-wrapper">
@@ -29,6 +29,9 @@ import todoInput from './components/todoInput.vue'
 import todoBtn from './components/todoBtn.vue'
 import defaultModal from '@/components/modals/defaultModal.vue'
     export default {
+        props:{
+            activeDate: String
+        },
         components:{
             headerTodo,
             todoInput,
@@ -58,9 +61,10 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                     'validation': ''
                 },
                 validationStatus:[],
-                taskDate: '2021.08.25',
+                todoDate: this.activeDate.split('.'),
                 todoId: Date.now(),
-                modalData:''
+                modalData:'',
+                headerTitleText:'Create a New Task'
             }
         },
         methods:{
@@ -92,27 +96,53 @@ import defaultModal from '@/components/modals/defaultModal.vue'
             async callToInput(){
                 this.todoData = []
                 this.todoData.push(this.priorityData)
-                await this.emitter.emit('getData',)
-                await this.checkData()
+                this.emitter.emit('getDataTodoInput')
+                setTimeout(()=>{
+                    this.checkData()
+                },200)
+                
             },
             sendToDB(){
-                let objectTodoData = Object.assign({}, this.todoData)
-                db.collection('admin').doc('todo').collection(this.taskDate).doc(this.todoId.toString()).set(
+                console.log('Sending to DB ID: ' +this.todoId + ' with data:');
+                console.log(this.todoData);
+                let objectTodoData = {
+                    title: this.todoData[1].value,
+                    description: this.todoData[2].value,
+                    priority: this.todoData[0].value
+                }
+                this.dummyFields()
+                db.collection('admin').doc('todoApp').collection('todo').doc(this.todoDate[0]).collection(this.todoDate[1].replace('0','')).doc(this.todoDate[2]).collection('lists').doc(this.todoId.toString()).set(
                     objectTodoData
                 )
                 .then(()=>{
-                    console.log('asdasd');
+                    console.log('Data with ID: ' +this.todoId + ' is successfully sent!');
                     this.modalData = {
                         title:'Succes',
                         text:'Your data has been successfully sent!',
                         icon:'http://cdn.haba.usermd.net/os/icons/happy-face.svg',
                         timeout:4000
                     }
+                    this.headerTitleText = 'Edit task'
                 })
-                console.log('sending...');
+                .catch(()=>{
+                    this.modalData = {
+                        title:'Error',
+                        text:'Your data has not been sent!',
+                        icon:'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                        timeout:4000
+                    }
+                })
+            },
+            dummyFields(){
+                db.collection('admin').doc('todoApp').collection('todo').doc(this.todoDate[0]).set({dummy:'dummy'})
+                db.collection('admin').doc('todoApp').collection('todo').doc(this.todoDate[0]).collection(this.todoDate[1].replace('0','')).doc(this.todoDate[2]).set({dummy:'dummy'})
+            },
+            closeTodoEditor(){
+                this.emitter.emit('openTodoEditor',false)
             }
         },
         mounted(){
+            this.todoData.length = 0
             this.emitter.on('getTodoDate', this.getTodoData)
         }
         
