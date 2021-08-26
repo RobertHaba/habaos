@@ -1,10 +1,10 @@
 <template>
-    <header class="calendar-header">
-        <div class="calendar-header-column">
-            <h2 class="calendar-header-title">Hi, {{userName}}</h2>
-            <p class="calendar-header-subtitle">Today is: <time datetime="">{{today}}</time> - {{actuallyDay}}</p>
+    <header class="app-header">
+        <div class="app-header-column">
+            <h2 class="app-header-title">Hi, {{userName}}</h2>
+            <p class="app-header-subtitle" v-if="today">Today is: <time datetime="">{{today}}</time> - {{actuallyDay}}</p>
         </div>
-        <div class="calendar-header-column calendar-header-column--image">
+        <div class="app-header-column app-header-column--image">
             <div class="icon-box-circle bg-theme">
                 <span class="icon" :style="{'background-image' : 'url('+ userAvatar +')'}"></span>
             </div>
@@ -38,25 +38,25 @@
     }
 </script>
 
-<style scoped>
-.calendar-header{
+<style>
+.app-header{
     display: grid;
     grid-template-columns: 1fr 66px;
     height: 70px;
 }
-.calendar-header-column{
+.app-header-column{
     height: 100%;
+    margin-bottom: 1rem;
 }
-.calendar-header-column--image{
+.app-header-column--image{
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
 }
-.calendar-header-title{
+.app-header-title{
     font-size: 1.5rem;
-    margin-bottom: 1rem;
 }
-.calendar-header-subtitle{
+.app-header-subtitle{
     font-size: 0.8rem;
 }
 .icon-box-circle{

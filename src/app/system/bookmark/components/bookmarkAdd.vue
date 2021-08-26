@@ -3,8 +3,8 @@
         <div class="calendar-todo-container" >
             <headerTodo :headerTitle="headerTitleText" />
             <div class="calendar-todo-main" >
-                <todoInput class="calendar-todo-main__column"  inputTag="input" inputType="text" inputName="Title" inputText="Add your title" :inputMaxLength="40" :inputMinLength="4" v-model="todoEditData.title" emitUseName="getTodoDate" emitCreateName="getDataTodoInput"/>
-                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" :inputMaxLength="280" :inputMinLength="4" v-model="todoEditData.description" emitUseName="getTodoDate" emitCreateName="getDataTodoInput"/>
+                <todoInput class="calendar-todo-main__column"  inputTag="input" inputType="text" inputName="Title" inputLabel="Title" inputText="Add your title" :inputMaxLength="40" :inputMinLength="4" v-model="todoEditData.title"/>
+                <todoInput class="calendar-todo-main__column" inputTag="textarea" inputType="" inputName="Description" inputText="Add your description" inputLabel="Description" :inputMaxLength="280" :inputMinLength="4" v-model="todoEditData.description"/>
                 <div class="calendar-todo-main__column" >
                     <div class="todo-input-box"><p class="calendar-todo-column-title">Priority</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
                     <div class="calendar-todo-buttons-wrapper">
@@ -25,7 +25,7 @@
 <script>
 import { db } from '@/firebaseDB';
 import headerTodo from './components/headerTodo.vue'
-import todoInput from '../components/viewAddInput.vue'
+import todoInput from './components/todoInput.vue'
 import todoBtn from './components/todoBtn.vue'
 import defaultModal from '@/components/modals/defaultModal.vue'
     export default {

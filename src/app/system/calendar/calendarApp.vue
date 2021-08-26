@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import headerApp from './components/header.vue'
+import headerApp from '../components/header.vue'
 import calendarBody from './components/calendarBody.vue'
 import todoList from './components/todoList.vue'
 import todoAdd from './todoAdd.vue'
