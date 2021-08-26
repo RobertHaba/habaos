@@ -3,7 +3,7 @@
         <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
         <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
         <todoList :today="todayDate"/>
-        <todoAdd v-if="openTodoEditor" :activeDate="activeDate"/>
+        <todoAdd v-if="openTodoEditor" :activeDate="activeDate" :addSettings="todoAddViewSettings"/>
         <todoView v-if="todoView" :todoData="todoData"/>
     </section>
 </template>
@@ -12,7 +12,7 @@
 import headerApp from '../components/header.vue'
 import calendarBody from './components/calendarBody.vue'
 import todoList from './components/todoList.vue'
-import todoAdd from './todoAdd.vue'
+import todoAdd from '../components/windowAddForm.vue'
 import todoView from './todoView.vue'
     export default {
         data(){
@@ -26,6 +26,69 @@ import todoView from './todoView.vue'
                 todoView: false,
                 activeDate:'',
                 todoData:'',
+                
+                todoAddViewSettings:{
+                    title:'Create a new task.',
+                    editorTitle:'Edit task',
+                    app:'todoApp',
+                    inputs:[
+                        {
+                            inputName:'Title',
+                            inputTag:'input',
+                            inputType:'text',
+                            inputPlaceholder:'Add your title',
+                            inputMinLength:4,
+                            inputMaxLength:40,
+                            emitUseName:'getTodoDate',
+                            emitCreateName:'getDataTodoInput',
+                            editDataTitle:'title'
+
+                        },
+                        {
+                            inputName:'Description',
+                            inputTag:'textarea',
+                            inputType:'',
+                            inputPlaceholder:'Add your description',
+                            inputMinLength:4,
+                            inputMaxLength:280,
+                            emitUseName:'getTodoDate',
+                            emitCreateName:'getDataTodoInput',
+                            editDataTitle:'description'
+
+                        }
+                    ],
+                    emits:{
+                        input:'getDataTodoInput',
+                        resetData:'resetDataInCalendarApp',
+                        openEditor:'openTodoEditor',
+                        getData:'getTodoDate',
+                        edit:'editTodo'
+                    },
+                    tagValues:[
+                        {
+                            'title':'Low',
+                            'bgColor':'#4CAF50'
+                        },
+                        {
+                            'title':'Medium',
+                            'bgColor':'#E67500'
+                        },
+                        {
+                            'title':'High',
+                            'bgColor':'#FF127F'
+                        },
+                    ],
+                    editData:{
+                        title:'',
+                        description:''
+                    },
+                    tagData:{
+                        'name':'Priority',
+                        'value':'',
+                        'validation': ''
+                    },
+                    editMode:false,
+                }
             }
         },
         components:{
@@ -48,7 +111,6 @@ import todoView from './todoView.vue'
         mounted(){
             this.getToDayTime()
             this.emitter.on('openTodoEditor',(data)=>{
-                console.log('asdaasdasdasdasd');
                 this.openTodoEditor = data.status
                 this.activeDate = data.value
             })

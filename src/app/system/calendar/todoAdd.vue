@@ -25,7 +25,7 @@
 <script>
 import { db } from '@/firebaseDB';
 import headerTodo from './components/headerTodo.vue'
-import todoInput from '../components/viewAddInput.vue'
+import todoInput from '../components/windowInput.vue'
 import todoBtn from './components/todoBtn.vue'
 import defaultModal from '@/components/modals/defaultModal.vue'
     export default {

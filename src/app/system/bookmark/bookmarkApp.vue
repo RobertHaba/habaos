@@ -25,7 +25,8 @@ import bookmarksList from './components/bookmarksList.vue'
                 styleSectionTitle:{
                     fontSize: '1.1rem',
                     padding: '1rem 0'
-                }
+                },
+
             }
         },
         components:{

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="todo-input-box"><label :for="inputName" >{{inputName}}</label> <p v-show="remainingLength != inputMaxLength && inputLength >= inputMinLength" class="validation-alert">Remaining length: {{remainingLength}}</p><p class="validation-alert" v-show="keyPressed && inputLength < inputMinLength">Too short, min length is {{inputMinLength}}</p></div>
-        <component :is="inputTag" :type="inputType" :name="inputName" @keyup="getData" :placeholder="inputText" :maxlength="inputMaxLength" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"  v-bind="$attrs"> </component>
+        <div class="addForm-input-box"><label :for="inputProps.inputName" >{{inputProps.inputName}}</label> <p v-show="remainingLength != inputProps.inputMaxLength && inputLength >= inputProps.inputMinLength" class="validation-alert">Remaining length: {{remainingLength}}</p><p class="validation-alert" v-show="keyPressed && inputLength < inputProps.inputMinLength">Too short, min length is {{inputProps.inputMinLength}}</p></div>
+        <component :is="inputProps.inputTag" :type="inputProps.inputType" :name="inputProps.inputName" @keyup="getData" :placeholder="inputProps.inputPlaceholder" :maxlength="inputProps.inputMaxLength" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)"  v-bind="$attrs"> </component>
     </div>
 </template>
 
@@ -12,23 +12,16 @@
             event:'change'
         },
         props:{
-            inputName:String,
-            inputTag:String,
-            inputType:String,
-            inputText: String,
             modelValue: String,
-            inputMaxLength: Number,
-            inputMinLength: Number,
-            emitUseName: String,
-            emitCreateName: String,
+            inputProps:Object
         },
         data(){
             return{
                 inputData:{
-                    name:this.inputName,
+                    name:this.inputProps.inputName,
                     value: ''
                 },
-                remainingLength:this.inputMaxLength,
+                remainingLength:this.inputProps.inputMaxLength,
                 inputLength:0,
                 keyPressed: false
             }
@@ -37,16 +30,16 @@
             getData(e){
                 this.keyPressed = true
                 this.lengthCounter(e)
-                this.inputData.value = (this.inputLength >= this.inputMinLength && this.inputLength <= this.inputMaxLength)? e.target.value : ''
+                this.inputData.value = (this.inputLength >= this.inputProps.inputMinLength && this.inputLength <= this.inputProps.inputMaxLength)? e.target.value : ''
                 
             },
             lengthCounter(e){
-                this.remainingLength = this.inputMaxLength - e.target.value.length
+                this.remainingLength = this.inputProps.inputMaxLength - e.target.value.length
                 this.inputLength = e.target.value.length
             },
             pushDataToApp(){
-                if(this.inputData.value !== '' || this.inputData.value >= this.inputMaxLength){
-                    this.emitter.emit(this.emitUseName, this.inputData)
+                if(this.inputData.value !== '' || this.inputData.value >= this.inputProps.inputMaxLength){
+                    this.emitter.emit(this.inputProps.emitUseName, this.inputData)
                 }
                 
             }
@@ -58,9 +51,9 @@
         },
         mounted(){
             this.inputData.value = this.modelValue
-            this.emitter.on(this.emitCreateName,this.pushDataToApp)
+            this.emitter.on(this.inputProps.emitCreateName,this.pushDataToApp)
             this.emitter.all.forEach((emitFunctionArray,emitName)=>{
-                    if(emitName ==this.emitCreateName && emitFunctionArray.length >2){
+                    if(emitName ==this.inputProps.emitCreateName && emitFunctionArray.length >2){
                         emitFunctionArray.splice(0,2)
                 }
             }) //<--- FIX Multiple emitter function on every mounted 

@@ -1,22 +1,22 @@
 <template>
-    <div class="calendar-todo-cover calendar-todo-cover--dark" @click.self="closeTodoView()" >
-        <div class="calendar-todo-container" :class="'bg-color--'+todoData.priority">
+    <div class="window-addForm-cover window-addForm-cover--dark" @click.self="closeTodoView()" >
+        <div class="window-addForm-container" :class="'bg-color--'+todoData.priority">
             <headerTodo :headerTitle="headerTitleText" />
-            <div class="calendar-todo-main">
-                <div class="todo-view">
-                    <h4 class="todo-view__title">{{todo.title}}</h4>
-                    <p class="todo-view__description">{{todo.description}}
+            <div class="window-addForm-main">
+                <div class="addForm-view">
+                    <h4 class="addForm-view__title">{{todo.title}}</h4>
+                    <p class="addForm-view__description">{{todo.description}}
 
                     </p>
-                    <div class="todo-view__footer">
+                    <div class="addForm-view__footer">
                         <p class="bg-color" :class="'bg-color--'+todo.priority">{{todo.priority}}</p>
-                        <p class="todo-view-date">Date: <time :datetime="todoCreateAt">{{todoCreateAt}}</time></p>
+                        <p class="addForm-view-date">Date: <time :datetime="todoCreateAt">{{todoCreateAt}}</time></p>
                     </div>
                 </div>
-                <div class="calendar-todo-footer calendar-todo-footer--space">
-                    <todoBtn class="todo-button" btnTitle="Remove" btnBgColor="#AD1E1E" @click="answerModalShow = true"/>
-                    <todoBtn class="todo-button" btnTitle="Edit" btnBgColor="#50B4EC" @click="editTodo"/>
-                    <todoBtn class="todo-button" btnTitle="Complete" btnBgColor="#4CAF50" @click="removeFromDB"/>
+                <div class="window-addForm-footer window-addForm-footer--space">
+                    <todoBtn class="addForm-button" btnTitle="Remove" btnBgColor="#AD1E1E" @click="answerModalShow = true"/>
+                    <todoBtn class="addForm-button" btnTitle="Edit" btnBgColor="#50B4EC" @click="editTodo"/>
+                    <todoBtn class="addForm-button" btnTitle="Complete" btnBgColor="#4CAF50" @click="removeFromDB"/>
                 </div>
             </div>
         </div>
@@ -79,13 +79,14 @@ import answerModal from '@/components/modals/answerModal.vue'
                 })
             },
             editTodo(){
+                let todoDataArray = [this.todoData.title,this.todoData.description,this.todoData.priority, this.todoData.id]
                 this.emitter.emit('openTodoEditor',
                 {
                     status:true,
                     value:this.todoData.createAt.split(',').join('.')
                 })
                 setTimeout(()=>{
-                    this.emitter.emit('editTodo',this.todoData)
+                    this.emitter.emit('editTodo',todoDataArray)
                     this.closeTodoView()
                 },200)
             },
@@ -109,30 +110,30 @@ import answerModal from '@/components/modals/answerModal.vue'
 </script>
 
 <style>
-.todo-view{
+.addForm-view{
     word-break: break-all;
     height: 100%;
     overflow: auto;
     padding-bottom: 4rem;
 }
-.todo-view__title{
+.addForm-view__title{
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
-.todo-view__title::first-letter{
+.addForm-view__title::first-letter{
     text-transform: uppercase;
 }
-.todo-view__description,
-.todo-view__date{
+.addForm-view__description,
+.addForm-view__date{
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.774);
 }
-.todo-view__footer{
+.addForm-view__footer{
     display: flex;
     justify-content: space-between;
     margin-top: 1.5rem;
 }
-.todo-view-date,
+.addForm-view-date,
 .bg-color{
     font-size: 0.7rem;
 }
@@ -149,7 +150,7 @@ import answerModal from '@/components/modals/answerModal.vue'
 .bg-color--High{
     background-color: #FF127F;
 }
-.calendar-todo-footer--space{
+.window-addForm-footer--space{
     padding: 0 1rem;
     justify-content: space-between;
 }
