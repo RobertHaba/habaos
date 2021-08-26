@@ -28,7 +28,7 @@ import todoView from './todoView.vue'
                 todoData:'',
                 
                 todoAddViewSettings:{
-                    title:'Create a new task.',
+                    title:'Create a new task',
                     editorTitle:'Edit task',
                     app:'todoApp',
                     inputs:[
@@ -78,10 +78,6 @@ import todoView from './todoView.vue'
                             'bgColor':'#FF127F'
                         },
                     ],
-                    editData:{
-                        title:'',
-                        description:''
-                    },
                     tagData:{
                         'name':'Priority',
                         'value':'',
@@ -111,6 +107,7 @@ import todoView from './todoView.vue'
         mounted(){
             this.getToDayTime()
             this.emitter.on('openTodoEditor',(data)=>{
+                console.log(data.status);
                 this.openTodoEditor = data.status
                 this.activeDate = data.value
             })

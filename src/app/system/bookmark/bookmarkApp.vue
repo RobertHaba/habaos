@@ -6,9 +6,10 @@
         <categoriesList />
         <div class="bookmark-list-header">
             <sectionTitle sectionTitle="Bookmarks" :styleProps="styleSectionTitle" />
-            <div>add</div>
+            <div @click="openBookmarkAddForm = true">add</div>
         </div>
         <bookmarksList />
+        <bookmarkAdd v-if="openBookmarkAddForm" :activeDate="activeDate" :addSettings="bookmarkAddViewSettings"/>
     </section>
 </template>
 
@@ -18,6 +19,7 @@ import searchBar from './components/search.vue'
 import sectionTitle from '../components/title.vue'
 import categoriesList from './components/categoriesList.vue'
 import bookmarksList from './components/bookmarksList.vue'
+import bookmarkAdd from '../components/windowAddForm.vue'
     export default {
         data(){
             return{
@@ -26,6 +28,66 @@ import bookmarksList from './components/bookmarksList.vue'
                     fontSize: '1.1rem',
                     padding: '1rem 0'
                 },
+                openBookmarkAddForm: false,
+                activeDate:"2021.08.26",
+                bookmarkAddViewSettings:{
+                    title:'Create a new bookmark',
+                    editorTitle:'Edit bookmark',
+                    app:'bookmarkApp',
+                    inputs:[
+                        {
+                            inputName:'Title',
+                            inputTag:'input',
+                            inputType:'text',
+                            inputPlaceholder:'Add your title',
+                            inputMinLength:2,
+                            inputMaxLength:15,
+                            emitUseName:'getBookmarkDate',
+                            emitCreateName:'getDataBookmarkInput',
+                            editDataTitle:'title'
+
+                        },
+                        {
+                            inputName:'Description',
+                            inputTag:'input',
+                            inputType:'text',
+                            inputPlaceholder:'Add your description',
+                            inputMinLength:2,
+                            inputMaxLength:40,
+                            emitUseName:'getBookmarkDate',
+                            emitCreateName:'getDataBookmarkInput',
+                            editDataTitle:'description'
+
+                        }
+                    ],
+                    emits:{
+                        input:'getDataBookmarkInput',
+                        resetData:'resetDataInBookmarkApp', //Add This Emit
+                        openEditor:'openBookmarkEditor',
+                        getData:'getBookmarkDate',
+                        edit:'editBookmark'
+                    },
+                    tagValues:[
+                        {
+                            'title':'Low',
+                            'bgColor':'#4CAF50'
+                        },
+                        {
+                            'title':'Medium',
+                            'bgColor':'#E67500'
+                        },
+                        {
+                            'title':'High',
+                            'bgColor':'#FF127F'
+                        },
+                    ],
+                    tagData:{
+                        'name':'Category',
+                        'value':'',
+                        'validation': ''
+                    },
+                    editMode:false,
+                }
 
             }
         },
@@ -34,7 +96,17 @@ import bookmarksList from './components/bookmarksList.vue'
             searchBar,
             sectionTitle,
             categoriesList,
-            bookmarksList
+            bookmarksList,
+            bookmarkAdd
+        },
+        mounted(){
+            this.emitter.on('openBookmarkEditor',(data)=>{
+                console.log(data);
+                this.openBookmarkAddForm = data
+                this.activeDate = "2021.08.26"
+            })
+            this.emitter.on('resetDataInBookmarkApp',()=>{
+            })
         }    
     }
 </script>

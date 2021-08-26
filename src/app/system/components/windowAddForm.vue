@@ -131,8 +131,9 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                 db.collection('admin').doc('todoApp').collection('todo').doc(this.addFormDate[0]).collection(this.addFormDate[1].replace('0','')).doc(this.addFormDate[2]).set({dummy:'dummy'})
             },
             closeTodoEditor(){
+                console.log('zamykanie');
                 this.emitter.emit(this.addSettings.emits.resetData)
-                this.emitter.emit('openTodoEditor',false)
+                this.emitter.emit(this.addSettings.emits.openEditor,false)
             }
         },
         mounted(){
