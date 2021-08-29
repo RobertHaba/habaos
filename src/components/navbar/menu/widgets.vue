@@ -2,7 +2,10 @@
     <div class="widgets-category">
         <categoryTitle title="Widgets" imgURL="http://cdn.haba.usermd.net/os/icons/widgets.svg"/>
         <div class="widgets-container">
-            <div class="widget widget--music">
+            <div class="widget widget--bookmark">
+                <widgetBookmark />
+            </div>
+            <div class="widget widget--music" v-if="false">
                 <widgetMusic />
             </div>
             <div class="widget widget--weather">
@@ -17,11 +20,13 @@
 import categoryTitle  from './categoryTitle.vue'
 import widgetMusic  from './widgets/music.vue'
 import widgetWeather  from './widgets/weather.vue'
+import widgetBookmark from '@/app/system/bookmark/widget/bookmarkWidget.vue'
     export default {
         components:{
             categoryTitle,
             widgetMusic,
-            widgetWeather
+            widgetWeather,
+            widgetBookmark
         }
     }
 </script>
@@ -45,5 +50,8 @@ import widgetWeather  from './widgets/weather.vue'
 }
 .widget--weather{
     background-color: rgba(0, 209, 255, 0.33);
+}
+.widget--bookmark{
+    background-color: #4CAF50;
 }
 </style>

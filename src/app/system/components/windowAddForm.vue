@@ -4,19 +4,19 @@
             <windowHeader :headerTitle="headerTitleText" />
             <div class="window-addForm-main" >
                 <template v-for="(input,index) in addSettings.inputs" :key="input.inputName">
-                    <windowInput class="window-addForm-main__column" :inputProps="input" v-model="addFormEditData[index]"/>
+                    <windowInput class="window-addForm-main__column" :inputProps="input" v-model="addFormEditData[index]" :allInputsLength="addSettings.inputs.length"/>
                 </template>
 
                 <div class="window-addForm-main__column" >
-                    <div class="addForm-input-box"><p class="window-addForm-column-title">Priority</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
+                    <div class="addForm-input-box"><p class="window-addForm-column-title">{{addSettings.tagData.name}}</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
                     <div class="window-addForm-buttons-wrapper">
                         <template v-for="tag in addSettings.tagValues" :key="tag" >
-                            <windowBtn class="addForm-button" :class="{'addForm-button--active':priorityData.value == tag.title}" :btnTitle="tag.title" :btnBgColor="tag.bgColor" @click="priorityData.value = tag.title"/>
+                            <windowBtn class="addForm-button" :class="{'addForm-button--active':priorityData.value == tag.title}" :btnTitle="tag.title" :btnBgColor="tag.bgColor" @click="priorityData.value = tag.title; scrollToActiveTag()"/>
                         </template>
                     </div>
                 </div>
                 <div class="window-addForm-footer">
-                    <windowBtn class="addForm-button" btnTitle="Save" btnBgColor="#4CAF50" @click="callToInput"/>
+                    <windowBtn class="addForm-button addForm-button--save" btnTitle="Save" btnBgColor="#4CAF50" @click="callToInput"/>
                 </div>
             </div>
         </div>
@@ -89,6 +89,7 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                 setTimeout(()=>{
                     this.checkData()
                 },200)
+                this.scrollToActiveTag()
                 
             },
             sendToDB(){
@@ -125,19 +126,66 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                         }
                     })
                 }
+                else if(this.addSettings.app == 'bookmarkApp'){
+                    this.dummyFields()
+                    let objectTodoData = {
+                        id: this.addFormId,
+                        title: this.addFormData[1].value,
+                        url: this.addFormData[2].value,
+                        description: this.addFormData[3].value,
+                        category: this.addFormData[0].value,
+                        favorite:false,
+                    } // Tu trzeba zrobić zmiany
+                    objectTodoData.favorite = (this.addFormEditData[3] == true)?true : false
+                    db.collection('admin').doc('bookmarkApp').collection('bookmarks').doc(objectTodoData.id).set(
+                        objectTodoData
+                    )
+                    .then(()=>{
+                        console.log('Data with ID: ' +this.addFormId + ' is successfully sent!');
+                        this.modalData = {
+                            title:'Succes',
+                            text:'Your data has been successfully sent!',
+                            icon:'http://cdn.haba.usermd.net/os/icons/happy-face.svg',
+                            timeout:4000
+                        }
+                        this.headerTitleText = 'Edit task'
+                    })
+                    .catch(()=>{
+                        this.modalData = {
+                            title:'Error',
+                            text:'Your data has not been sent!',
+                            icon:'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                            timeout:4000
+                        }
+                    })
+                }
             },
             dummyFields(){
-                db.collection('admin').doc('todoApp').collection('todo').doc(this.addFormDate[0]).set({dummy:'dummy'})
-                db.collection('admin').doc('todoApp').collection('todo').doc(this.addFormDate[0]).collection(this.addFormDate[1].replace('0','')).doc(this.addFormDate[2]).set({dummy:'dummy'})
+                if(this.addSettings.app == 'todoApp'){
+                    db.collection('admin').doc('todoApp').set({dummy:'dummy'})
+                    db.collection('admin').doc('todoApp').collection('todo').doc(this.addFormDate[0]).set({dummy:'dummy'})
+                    db.collection('admin').doc('todoApp').collection('todo').doc(this.addFormDate[0]).collection(this.addFormDate[1].replace('0','')).doc(this.addFormDate[2]).set({dummy:'dummy'})
+            
+                }
+                else if(this.addSettings.app == 'bookmarkApp'){
+                    db.collection('admin').doc('bookmarkApp').set({dummy:'dummy'})
+                } 
             },
             closeTodoEditor(){
-                console.log('zamykanie');
                 this.emitter.emit(this.addSettings.emits.resetData)
                 this.emitter.emit(this.addSettings.emits.openEditor,false)
+            },
+            scrollToActiveTag(){
+                console.log('asda');
+                setTimeout(()=>{
+                    let activeCategory = document.querySelector('.addForm-button--active')
+                    let previewCategoryContainer = document.querySelector('.window-addForm-buttons-wrapper')
+                    console.log(activeCategory);
+                    previewCategoryContainer.scrollLeft = activeCategory.offsetLeft - activeCategory.offsetWidth
+                },160)
             }
         },
         mounted(){
-            console.log('Załadowano');
             this.addFormEditData.length = 0
             this.priorityData.value = ''
             this.addFormData.length = 0
@@ -146,9 +194,8 @@ import defaultModal from '@/components/modals/defaultModal.vue'
                 this.headerTitleText = this.addSettings.editorTitle
                 this.addFormEditData = data
                 this.addFormId = this.addFormEditData[this.addFormEditData.length -1]
-                console.log('Edytowanie addForm');
                 this.priorityData.value = data[this.addFormEditData.length -2]
-                console.log(this.addFormEditData);
+                this.scrollToActiveTag()
             })
         }
         
@@ -162,6 +209,7 @@ import defaultModal from '@/components/modals/defaultModal.vue'
     position: absolute;
     left: 0;
     bottom: 0;
+    z-index: 10;
     width: 100%;
     max-width: 330px;
     height: 100%;
@@ -223,21 +271,28 @@ import defaultModal from '@/components/modals/defaultModal.vue'
 .window-addForm-buttons-wrapper{
     display: flex;
     justify-content: space-between;
-    padding-top: 1rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 .addForm-button{
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0 1rem;
+    margin-right: 0.5rem;
+    width: auto;
     height: 30px;
     border-radius: 100px;
     color:#FFF;
 }
+.addForm-button--save{
+    margin: 0;
+    padding: 0 1.5rem;
+}
 .addForm-button--active{
     transition: 0.5s ease width;
     border-radius: 100px;
-    width: 90px;
     border:2px solid rgb(255, 255, 255);
 }
 .window-addForm-footer{
@@ -249,7 +304,7 @@ import defaultModal from '@/components/modals/defaultModal.vue'
     align-items: center;
     z-index: 2;
     width: 100%;
-    height: 70px;
+    height: 50px;
     background-color: #2C2F36;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;

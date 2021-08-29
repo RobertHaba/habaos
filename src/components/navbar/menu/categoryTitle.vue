@@ -1,6 +1,6 @@
 <template>
     <div class="menu-title-container">
-        <span class="menu-title-container__icon" :style="{'background-image' : 'url('+ imgURL + ')'}"></span><h2 class="menu-title-container__title">{{title}}</h2>
+        <span class="menu-title-container__icon icon--reverse-color" :style="{'background-image' : 'url('+ imgURL + ')'}"></span><h2 class="menu-title-container__title">{{title}}</h2>
     </div>
 </template>
 

@@ -2,8 +2,8 @@
     <div>
         <div class="calendar-todo-header">
             <p class="calendar-todo-header__text">Tasks - {{activeDate}}</p>
-            <p class="calendar-todo-header__number">{{(todos !== '')? todos.length : 0}}</p>
-            <p class="calendar-todo-header__add" @click="openTodoWindow('openTodoEditor', activeDate)">+</p>
+            <p class="btn-app-circle calendar-todo-header__number">{{(todos !== '')? todos.length : 0}}</p>
+            <p class="btn-app-circle" @click="openTodoWindow('openTodoEditor', activeDate)">+</p>
         </div>
         <div class="calendar-todo-list" v-if="todos !== ''" >
             <template  v-for="todo in todos" :key="todo.id" >
@@ -82,19 +82,6 @@ import todoItem from './todoItem.vue'
 }
 .calendar-todo-header__text{
     font-weight: bold;
-}
-.calendar-todo-header__add,
-.calendar-todo-header__number{
-    display: flex;
-    justify-self: center;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 30px;
-    background-color: #E67500;
-    font-weight: bold;
-    font-size: 1.5rem;
-    border-radius: 100px;
 }
 .calendar-todo-header__number{
     font-size: 1rem;

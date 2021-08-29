@@ -16,17 +16,19 @@
           <ul class="work-navbar">
             <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/weather.svg" itemTitle="Pogoda" app="weather"/>
             <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/calendar.svg" itemTitle="Kalendarz" app="calendar"/>
-            <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/bookmark.svg" itemTitle="Menadżer zakładek" app="bookmark"/>
+            <workListItem imgURL="http://cdn.haba.usermd.net/os/icons/apps/bookmark.svg" itemTitle="Menadżer zakładek" app="bookmark"/>
           </ul>
         </li>
       </ul>
     </nav>
     <getUserData />
+    <validations />
   </main>
 </template>
 
 <script>
 import getUserData from '@/components/system/getUserData.vue'
+import validations from '@/components/system/validation.vue'
 import workListItem from '../components/navbar/workListItem'
 import menuStart from '../components/navbar/menuStart'
 
@@ -36,10 +38,12 @@ export default {
     getUserData,
     workListItem,
     menuStart,
+    validations
   },
   data(){
     return{
-      openStart: false
+      openStart: false,
+      
     }
   },
   mounted(){

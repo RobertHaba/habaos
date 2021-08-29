@@ -23,7 +23,7 @@
 <script>
 import btn from '@/components/system/singleButton.vue'
     export default {
-        props:['modalProps'],
+        props:['modalProps'], //timeout,title,text,icon,
         data(){
             return{
                 modalStatus: true,

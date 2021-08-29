@@ -3,6 +3,12 @@ input {
     border: none;
 }
 
+:root {
+    --bg-theme: linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98));
+    --bg-theme--first: rgba(98, 44, 102, 1);
+    --bg-theme--second: rgba(68, 50, 114, 1);
+}
+
 input::placeholder,
 textarea::placeholder {
     color: rgba(250, 250, 250, 0.541);
@@ -165,6 +171,34 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
 }
 
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.icon {
+    display: block;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon--sad-face {
+    background-image: url('http://cdn.haba.usermd.net/os/icons/sad-face.svg');
+}
+
+.icon--filter {
+    background-image: url('http://cdn.haba.usermd.net/os/icons/filter.svg');
+}
+
+.icon--sort {
+    background-image: url('http://cdn.haba.usermd.net/os/icons/sort.svg');
+}
+
+.icon--reverse-color {
+    filter: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
+}
+
 .bg-dark {
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -201,18 +235,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .line--light-color {
     border-color: rgba(255, 255, 255, 0.3);
-}
-
-img {
-    width: 100%;
-    height: 100%;
-}
-
-.icon {
-    display: block;
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
  ::-webkit-scrollbar {
@@ -335,4 +357,53 @@ input::placeholder {
 
 .menu-options-user__img .work-navbar-icon {
     border-radius: 100px;
+}
+
+.btn-app-circle {
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #FFF;
+    background-color: #E67500;
+    border-radius: 100px;
+}
+
+
+/* Bookmark Global Style */
+
+.bookmark-category--favorites {
+    background-color: #FF4693;
+}
+
+.bookmark-category--programming {
+    background-color: #000;
+}
+
+.bookmark-category--traveling {
+    background-color: #4CAF50;
+}
+
+.bookmark-category--cooking {
+    background-color: #662B65
+}
+
+.bookmark-category--education {
+    background-color: #2D60E3;
+}
+
+.bookmark-category--work {
+    background-color: #1a5a70;
+}
+
+.bookmark-category--home {
+    background-color: #912951;
+}
+
+.bookmark-category--others {
+    background-color: #d38e2e;
 }

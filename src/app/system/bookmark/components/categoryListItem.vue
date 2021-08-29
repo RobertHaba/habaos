@@ -1,13 +1,15 @@
 <template>
-    <div class="category-list-item">
-        <span class="icon list-item-icon" :style="{'background-image' : 'url(http://cdn.haba.usermd.net/os/icons/coding.svg)'}"></span>
-        <p class="list-item-title">Programming</p>
-    </div>
+    <button class="category-list-item" :class="'bookmark-category--' + title.toLowerCase()">
+        <span class="icon list-item-icon" :style="{'background-image' : `url(http://cdn.haba.usermd.net/os/icons/bookmark/bookmark-${title.toLowerCase()}.svg)`}"></span>
+        <p class="list-item-title">{{title}}</p>
+    </button>
 </template>
 
 <script>
     export default {
-        
+        props:{
+            title: String
+        }
     }
 </script>
 
@@ -21,8 +23,13 @@
     min-width: 100px;
     height: 100px;
     margin-right: 1rem;
-    background-color: black;
+    color: rgba(255, 255, 255, 0.70);
     border-radius: 20px;
+    transition: 0.3s cubic-bezier(.17,.67,.83,.67);
+}
+.category-list-item--active{
+    color: #FFF;
+    border-radius: 5px;
 }
 .list-item-icon{
     position: relative;
@@ -43,6 +50,5 @@
 .list-item-title{
     font-weight: bold;
     font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.70);
 }
 </style>

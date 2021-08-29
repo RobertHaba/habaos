@@ -1,35 +1,86 @@
 <template>
-    <section class="bookmark bookmark-container app-container" :class="'bookmark-container--' + theme">
+    <section class="bookmark bookmark-container app-container" :class="'bookmark-container--' + theme" >
         <headerComponent />
         <searchBar />
-        <sectionTitle sectionTitle="Categories" :styleProps="styleSectionTitle" />
-        <categoriesList />
+        <sectionTitle sectionTitle="Categories" :styleProps="styleSectionCategoryTitle" />
+        <categoriesList :categories="bookmarkAddViewSettings.tagValues"/>
         <div class="bookmark-list-header">
-            <sectionTitle sectionTitle="Bookmarks" :styleProps="styleSectionTitle" />
-            <div @click="openBookmarkAddForm = true">add</div>
+            <button class="button-bookmark-all" v-if="showButtonToReturnAllItems == true" @click="showAllBookmarks()">All</button>
+            <div class="bookmark-header-row">
+                <sectionTitle sectionTitle="Bookmarks" :styleProps="styleSectionTitle" />
+                <p class="bookmark-header-row-subtitle">{{bookmarksHeaderCategoryTitle}}</p>
+            </div>
+            <div class="bookmark-header-column">
+                <div class="bookmark-header-row bookmark-header-row--center">
+                    <p class="bookmark-header-row-subtitle">sort by</p>
+                    <span class="icon icon--reverse-color" :style="{'background-image': 'url(' + sortIcon + ')'}"></span>
+                </div>
+                <button class="btn-app-circle btn-app-circle--sort" @click="showFilterOptions = !showFilterOptions">
+                    <span class="icon icon--sort icon--reverse-color"></span>
+                    <dropSmallMenu v-show="showFilterOptions" :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu"/>
+                </button>
+                
+                <button class="btn-app-circle" @click="openBookmarkAddForm = true">+</button>
+            </div>
         </div>
-        <bookmarksList />
+        <bookmarksList :bookmarksListData="bookmarksListData" v-if="bookmarksListData" />
         <bookmarkAdd v-if="openBookmarkAddForm" :activeDate="activeDate" :addSettings="bookmarkAddViewSettings"/>
+        <defaultModal :modalProps="modalData" v-if="modalData !== ''"/>
     </section>
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import headerComponent from '../components/header.vue'
 import searchBar from './components/search.vue'
 import sectionTitle from '../components/title.vue'
 import categoriesList from './components/categoriesList.vue'
 import bookmarksList from './components/bookmarksList.vue'
 import bookmarkAdd from '../components/windowAddForm.vue'
+import defaultModal from '@/components/modals/defaultModal.vue'
+import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     export default {
         data(){
             return{
                 theme: 'dark',
                 styleSectionTitle:{
+                    fontSize: '1rem',
+                    padding: '0'
+                },
+                styleSectionCategoryTitle:{
                     fontSize: '1.1rem',
                     padding: '1rem 0'
                 },
                 openBookmarkAddForm: false,
-                activeDate:"2021.08.26",
+                showButtonToReturnAllItems:false,
+                bookmarksHeaderCategoryTitle:'All',
+                showFilterOptions:false,
+                sortIcon:'http://cdn.haba.usermd.net/os/icons/latest.svg',
+                dropSmallMenuOptions:[
+                {
+                    id:0,
+                    url:'http://cdn.haba.usermd.net/os/icons/latest.svg',
+                    title:'Sort by lastest to oldest',
+                    functionName:'sortLatest'
+                },
+                {
+                    id:1,
+                    url:'http://cdn.haba.usermd.net/os/icons/oldest.svg',
+                    title:'Sort by oldest to lastest',
+                    functionName:'sortOldest'
+                },
+                {
+                    id:2,
+                    url:'http://cdn.haba.usermd.net/os/icons/alphabetical-order.svg',
+                    title:'Sort from A - Z',
+                    functionName:'sortAlphabetical'
+                },
+                {
+                    id:3,
+                    url:'http://cdn.haba.usermd.net/os/icons/alphabetical-order-reverse.svg',
+                    title:'Sort from Z - A',
+                    functionName:'sortAlphabeticalReverse'
+                }],
                 bookmarkAddViewSettings:{
                     title:'Create a new bookmark',
                     editorTitle:'Edit bookmark',
@@ -41,7 +92,21 @@ import bookmarkAdd from '../components/windowAddForm.vue'
                             inputType:'text',
                             inputPlaceholder:'Add your title',
                             inputMinLength:2,
-                            inputMaxLength:15,
+                            inputMaxLength:22,
+                            emitUseName:'getBookmarkDate',
+                            emitCreateName:'getDataBookmarkInput',
+                            editDataTitle:'title'
+
+                        },
+                        {
+                            inputName:'URL',
+                            inputTag:'input',
+                            inputType:'text',
+                            inputPlaceholder:'Add URL link ex. www.name.com',
+                            inputMinLength:0,
+                            inputMaxLength:320,
+                            emitAdvancedValidationName:'bookmarkURLValidation',
+                            emitAdvancedValidationReturn:'bookmarkURLValidationReturn',
                             emitUseName:'getBookmarkDate',
                             emitCreateName:'getDataBookmarkInput',
                             editDataTitle:'title'
@@ -62,23 +127,39 @@ import bookmarkAdd from '../components/windowAddForm.vue'
                     ],
                     emits:{
                         input:'getDataBookmarkInput',
-                        resetData:'resetDataInBookmarkApp', //Add This Emit
+                        resetData:'resetDataInBookmarkApp',
                         openEditor:'openBookmarkEditor',
                         getData:'getBookmarkDate',
                         edit:'editBookmark'
                     },
                     tagValues:[
                         {
-                            'title':'Low',
+                            'title':'Programming',
+                            'bgColor':'#000000'
+                        },
+                        {
+                            'title':'Cooking',
+                            'bgColor':'#662B65'
+                        },
+                        {
+                            'title':'Traveling',
                             'bgColor':'#4CAF50'
                         },
                         {
-                            'title':'Medium',
-                            'bgColor':'#E67500'
+                            'title':'Education',
+                            'bgColor':'#2D60E3'
                         },
                         {
-                            'title':'High',
-                            'bgColor':'#FF127F'
+                            'title':'Work',
+                            'bgColor':'#1a5a70'
+                        },
+                        {
+                            'title':'Home',
+                            'bgColor':'#912951'
+                        },
+                        {
+                            'title':'Others',
+                            'bgColor':'#d38e2e'
                         },
                     ],
                     tagData:{
@@ -87,7 +168,9 @@ import bookmarkAdd from '../components/windowAddForm.vue'
                         'validation': ''
                     },
                     editMode:false,
-                }
+                },
+                modalData:'',
+                bookmarksListData:[],
 
             }
         },
@@ -97,16 +180,70 @@ import bookmarkAdd from '../components/windowAddForm.vue'
             sectionTitle,
             categoriesList,
             bookmarksList,
-            bookmarkAdd
+            bookmarkAdd,
+            defaultModal,
+            dropSmallMenu
+        },
+        methods:{
+            getBookmarkFromDB(){
+                db.collection('admin').doc('bookmarkApp').collection('bookmarks').orderBy('id','desc').get()
+                .then(res =>{
+                    this.bookmarksListData = res.docs.map(doc => doc.data())
+                })
+                .catch(()=>{
+                    this.bookmarksListData =""
+                })
+            },
+            showAllBookmarks(){
+                this.showButtonToReturnAllItems = false
+                this.bookmarksHeaderCategoryTitle = 'All'
+                this.emitter.emit('showAllBookmarks','all')
+            },
+            chooseEmitFunctionFromDropMenu(sortOption){
+                this.emitter.emit('sortBookmarksByOptions',sortOption)
+                this.changeSortIcon(sortOption)
+            },
+            changeSortIcon(sortOption){
+                this.dropSmallMenuOptions.forEach(item=>{
+                    if(item.functionName == sortOption){
+                        this.sortIcon = item.url
+                        return true
+                    }
+                })
+            }
+        },
+        watch:{
+            bookmarksListData: function (dataArray){
+                if(dataArray.length == 0){
+                    this.emitter.emit('bookmarksListShowAlert',{status:true,text: "Ohh.. You don't have bookmarks in this category."})
+                }
+                else if(this.bookmarksHeaderCategoryTitle == 'All'){
+                    this.emitter.emit('bookmarksListShowAlert',{status:false,text: ""})
+                }
+            }
         },
         mounted(){
+            this.getBookmarkFromDB()
+            this.activeDate = new Date().toLocaleDateString('en-CA').split('-').join('.')
             this.emitter.on('openBookmarkEditor',(data)=>{
                 console.log(data);
                 this.openBookmarkAddForm = data
-                this.activeDate = "2021.08.26"
             })
             this.emitter.on('resetDataInBookmarkApp',()=>{
+                this.getBookmarkFromDB()
+                
             })
+            this.emitter.on('showModal',(data)=>{
+                this.modalData = data
+                setTimeout(()=>{
+                    this.modalData = ''
+                },data.timeout)
+            })
+            this.emitter.on('showCategoryElementsInBookmarksHeader',(data)=>{
+                this.showButtonToReturnAllItems = data.button
+                this.bookmarksHeaderCategoryTitle = data.category
+            })
+             
         }    
     }
 </script>
@@ -134,5 +271,57 @@ import bookmarkAdd from '../components/windowAddForm.vue'
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem 0;
+}
+.bookmark-header-column{
+    display: flex;
+    align-items: center;
+}
+.bookmark-header-row{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.bookmark-header-row--center{
+    align-items: center;
+}
+.bookmark-header-row-subtitle{
+    height: 100%;
+    font-size: 0.6rem;
+}
+.button-bookmark-all{
+    height: 30px;
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+    color: rgb(255, 255, 255);
+    border-radius: 100px;
+    font-weight: bold;
+    border: 2px solid var(--bg-theme--first);
+    transition: 0.3s cubic-bezier(.17,.67,.83,.67);
+}
+.button-bookmark-all:hover{
+    background-color: var(--bg-theme--first);
+}
+.icon{
+    width: 14px;
+    height: 14px;
+}
+.btn-app-circle{
+    margin-left: 0.5rem;
+}
+.btn-app-circle--sort{
+    position: relative;
+    background-color: var(--bg-theme--first);
+}
+.drop-small-menu{
+    display: flex;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 9;
+    align-items: center;
+    background-color: var(--bg-theme--first);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+   
 }
 </style>

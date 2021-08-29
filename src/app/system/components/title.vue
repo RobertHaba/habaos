@@ -10,20 +10,7 @@
     export default {
         props:{
             sectionTitle: String,
-            styleProps:{
-                fontColor: {
-                    type: String,
-                    default: '#FFFFFF'
-                },
-                fontSize: {
-                    type: String,
-                    default: '1rem'
-                },
-                padding: {
-                    type: String,
-                    default: '0'
-                },
-            }
+            styleProps:Object
         }
     }
 </script>
