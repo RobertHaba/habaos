@@ -1,5 +1,5 @@
 <template>
-    <section class="bookmark bookmark-container app-container" :class="'bookmark-container--' + theme" >
+    <section class="bookmark bookmark-container app-container app-bookmark" :class="'bookmark-container--' + theme" >
         <headerComponent />
         <searchBar />
         <sectionTitle sectionTitle="Categories" :styleProps="styleSectionCategoryTitle" />
@@ -37,7 +37,7 @@ import sectionTitle from '../components/title.vue'
 import categoriesList from './components/categoriesList.vue'
 import bookmarksList from './components/bookmarksList.vue'
 import bookmarkAdd from '../components/windowAddForm.vue'
-import defaultModal from '@/components/modals/defaultModal.vue'
+import defaultModal from '@/app/components/modals/defaultModal.vue'
 import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     export default {
         data(){

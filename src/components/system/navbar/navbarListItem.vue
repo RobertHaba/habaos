@@ -28,7 +28,6 @@ export default {
     },
     methods:{
         minimizeApp(){
-                console.log('___________ ' + this.app);
                 console.log('minimize ' + this.minimize);
                 console.log('show ' + this.show);
             if(this.show == true && this.minimize == true){

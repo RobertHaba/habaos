@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-    import optionButton from '../workListItem.vue'
+    import optionButton from '../navbarListItem.vue'
     export default {
         components:{
             optionButton,

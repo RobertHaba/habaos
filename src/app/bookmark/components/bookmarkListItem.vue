@@ -17,7 +17,7 @@
 <script>
 import { db } from '@/firebaseDB';
 import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
-import answerModal from '@/components/modals/answerModal.vue'
+import answerModal from '@/app/components/modals/answerModal.vue'
     export default {
         props:{
             bookmarkItemData:Object

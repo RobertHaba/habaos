@@ -2,7 +2,7 @@
     <div class="widgets-category">
         <categoryTitle title="Widgets" imgURL="http://cdn.haba.usermd.net/os/icons/widgets.svg"/>
         <div class="widgets-container">
-            <div class="widget widget--bookmark">
+            <div class="widget widget--bookmark" v-if="false">
                 <widgetBookmark />
             </div>
             <div class="widget widget--music" v-if="false">
@@ -20,7 +20,7 @@
 import categoryTitle  from './categoryTitle.vue'
 import widgetMusic  from './widgets/music.vue'
 import widgetWeather  from './widgets/weather.vue'
-import widgetBookmark from '@/app/system/bookmark/widget/bookmarkWidget.vue'
+import widgetBookmark from '@/app/bookmark/widget/bookmarkWidget.vue'
     export default {
         components:{
             categoryTitle,

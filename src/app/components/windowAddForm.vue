@@ -29,7 +29,7 @@ import { db } from '@/firebaseDB';
 import windowHeader from './windowHeader.vue'
 import windowInput from './windowInput.vue'
 import windowBtn from './windowBtn.vue'
-import defaultModal from '@/components/modals/defaultModal.vue'
+import defaultModal from '@/app/components/modals/defaultModal.vue'
     export default {
         props:{
             activeDate: String,

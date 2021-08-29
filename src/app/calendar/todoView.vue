@@ -28,7 +28,7 @@
 import { db } from '@/firebaseDB';
 import headerTodo from './components/headerTodo.vue'
 import todoBtn from './components/todoBtn.vue'
-import answerModal from '@/components/modals/answerModal.vue'
+import answerModal from '@/app/components/modals/answerModal.vue'
     export default {
         props:['todoData'],
         components:{
