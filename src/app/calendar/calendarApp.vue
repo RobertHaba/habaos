@@ -1,10 +1,12 @@
 <template>
     <section class="calendar calendar-container app-container" :class="'calendar-container--' + theme">
-        <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
-        <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
-        <todoList :today="todayDate"/>
-        <todoAdd v-if="openTodoEditor" :activeDate="activeDate" :addSettings="todoAddViewSettings"/>
-        <todoView v-if="todoView" :todoData="todoData"/>
+        <div class="app-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
+            <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
+            <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
+            <todoList :today="todayDate"/>
+            <todoAdd v-if="openTodoEditor" :activeDate="activeDate" :addSettings="todoAddViewSettings"/>
+            <todoView v-if="todoView" :todoData="todoData"/>
+        </div>
     </section>
 </template>
 

@@ -408,10 +408,11 @@ import PlayMusic from './player/PlayMusic'
 
 .music-player-wrapper{
     position: absolute;
+    top:-3rem;
+    left: 0;
     width: 100%;
     max-width: 330px;
-    height: 100%;
-    max-height: 650px;
+    height: 650px;
     padding: 3rem 1.5rem;
     border-radius: 20px;
     overflow-x: hidden;
@@ -419,8 +420,10 @@ import PlayMusic from './player/PlayMusic'
 .music-player-wrapper--small{
     position: absolute;
     height: 50px;
+    top: inherit;
     bottom: 0;
     padding: 0;
+    overflow: hidden;
     border-radius: 0;
 }
 .music-player-container{

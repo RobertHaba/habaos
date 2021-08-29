@@ -26,7 +26,7 @@
                 <Details :object="sunDetails"></Details>
                 <div class="line"></div>
             </ul>
-            <div class="hours-wrapper hours-weather">
+            <div class="hours-wrapper hours-weather" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
                 <h3 class="hours-weather__title">Today</h3>
                 <div class="hours-weather-wrapper">
                     <ul class="hours-weather__list">
@@ -34,7 +34,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="week-weather-wrapper">
+            <div class="week-weather-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
                 <ul class="week-weather-list">
                     <List :object="weekWeather" orientation="horizontal" :theme="theme"/>
                 </ul>

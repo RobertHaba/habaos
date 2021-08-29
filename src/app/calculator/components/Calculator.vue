@@ -9,7 +9,7 @@
                     <span class="icon i-moon"></span>
                 </button>
         </div>
-        <div class="calculator-view">
+        <div class="calculator-view" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <p class="calculations">
                 <span class="calculations-text">{{numberFirst}}</span>
                 <span class="calculations-operator">{{operator}}</span>

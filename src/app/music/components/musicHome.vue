@@ -1,7 +1,6 @@
 <template>
-    <div class="music container" :class="'container--' + theme">
-        <div class="app-container">
-            <section class="music-container" :class="'music-container--' + theme" >
+    <section class="music app-container" :class="'app-container--' + theme" >
+        <div class="music-container" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <header class="music-container-header">
                 <h2 class="header-title">Hi, {{user}}!</h2>
                 <ul class="header-nav-actions">
@@ -14,12 +13,13 @@
                 <Recommended :getMusic="getMusicFromChild"/>
                 <Favorite :getMusic="getMusicFromChild"/>
             </div>
+                    <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :themeColor="theme" :dbPlaylistsName="dbPlaylistsName"/>
+
             <footer>
             </footer>
-            </section>
-            <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :themeColor="theme" :dbPlaylistsName="dbPlaylistsName"/>
         </div>
-    </div>
+
+    </section>
 </template>
 
 <script>
@@ -94,45 +94,31 @@ import MusicPlayer from '../components/musicPlayer.vue'
     -webkit-filter: invert(0%); /* safari 6.0 - 9.0 */
           filter: invert(0%);
 }
-.container{
-  position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  transition: 0.5s ease all;
-  color: #445b77;
-  border-radius: 20px;
-}
-.container--dark{
-    background-color: #373b49;
-}
 .app-container{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 650px;
-    border-radius: 20px;
-}
-.music-container{
-    position: relative;
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     max-width: 330px;
     height: 100%;
     max-height: 650px;
-    padding: 3rem 1.5rem;
+    padding-top: 3rem;
     background-color: #FFF;
     border-radius: 20px;
-    box-shadow: 4px 4px 15px -5px rgba(0, 0, 0, 0.14);
     transition: 0.5s ease all;
 }
-.music-container--dark{
+.app-container--dark{
     background-color: #22252D;
     color: #FFF;
+}
+.music-container{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 1.5rem;
+    width: 100%;
+    height: 100%;
 }
 .music-container-header{
     display: flex;
@@ -161,7 +147,6 @@ import MusicPlayer from '../components/musicPlayer.vue'
 }
 .music-wrapper{
     height: calc(100% - 100px);
-    padding-right: 0.5rem;
     overflow-y:auto;
 }
 </style>

@@ -1,31 +1,33 @@
 <template>
     <section class="bookmark bookmark-container app-container app-bookmark" :class="'bookmark-container--' + theme" >
-        <headerComponent />
-        <searchBar />
-        <sectionTitle sectionTitle="Categories" :styleProps="styleSectionCategoryTitle" />
-        <categoriesList :categories="bookmarkAddViewSettings.tagValues"/>
-        <div class="bookmark-list-header">
-            <button class="button-bookmark-all" v-if="showButtonToReturnAllItems == true" @click="showAllBookmarks()">All</button>
-            <div class="bookmark-header-row">
-                <sectionTitle sectionTitle="Bookmarks" :styleProps="styleSectionTitle" />
-                <p class="bookmark-header-row-subtitle">{{bookmarksHeaderCategoryTitle}}</p>
-            </div>
-            <div class="bookmark-header-column">
-                <div class="bookmark-header-row bookmark-header-row--center">
-                    <p class="bookmark-header-row-subtitle">sort by</p>
-                    <span class="icon icon--reverse-color" :style="{'background-image': 'url(' + sortIcon + ')'}"></span>
+        <div class="app-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
+            <headerComponent/>
+            <searchBar />
+            <sectionTitle sectionTitle="Categories" :styleProps="styleSectionCategoryTitle" />
+            <categoriesList :categories="bookmarkAddViewSettings.tagValues"/>
+            <div class="bookmark-list-header">
+                <button class="button-bookmark-all" v-if="showButtonToReturnAllItems == true" @click="showAllBookmarks()">All</button>
+                <div class="bookmark-header-row">
+                    <sectionTitle sectionTitle="Bookmarks" :styleProps="styleSectionTitle" />
+                    <p class="bookmark-header-row-subtitle">{{bookmarksHeaderCategoryTitle}}</p>
                 </div>
-                <button class="btn-app-circle btn-app-circle--sort" @click="showFilterOptions = !showFilterOptions">
-                    <span class="icon icon--sort icon--reverse-color"></span>
-                    <dropSmallMenu v-show="showFilterOptions" :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu"/>
-                </button>
-                
-                <button class="btn-app-circle" @click="openBookmarkAddForm = true">+</button>
+                <div class="bookmark-header-column">
+                    <div class="bookmark-header-row bookmark-header-row--center">
+                        <p class="bookmark-header-row-subtitle">sort by</p>
+                        <span class="icon icon--reverse-color" :style="{'background-image': 'url(' + sortIcon + ')'}"></span>
+                    </div>
+                    <button class="btn-app-circle btn-app-circle--sort" @click="showFilterOptions = !showFilterOptions">
+                        <span class="icon icon--sort icon--reverse-color"></span>
+                        <dropSmallMenu v-show="showFilterOptions" :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu"/>
+                    </button>
+                    
+                    <button class="btn-app-circle" @click="openBookmarkAddForm = true">+</button>
+                </div>
             </div>
+            <bookmarksList :bookmarksListData="bookmarksListData" v-if="bookmarksListData" />
+            <bookmarkAdd v-if="openBookmarkAddForm" :activeDate="activeDate" :addSettings="bookmarkAddViewSettings"/>
+            <defaultModal :modalProps="modalData" v-if="modalData !== ''"/>
         </div>
-        <bookmarksList :bookmarksListData="bookmarksListData" v-if="bookmarksListData" />
-        <bookmarkAdd v-if="openBookmarkAddForm" :activeDate="activeDate" :addSettings="bookmarkAddViewSettings"/>
-        <defaultModal :modalProps="modalData" v-if="modalData !== ''"/>
     </section>
 </template>
 
@@ -266,6 +268,10 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
 .bookmark-container--dark{
     background-color: #22252D;
     color: #FFF;
+}
+.app-wrapper{
+    width: 100%;
+    height: 100%;
 }
 .bookmark-list-header{
     display: flex;

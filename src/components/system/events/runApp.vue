@@ -1,11 +1,6 @@
 <template>
     <div class="os-appBox">
-        <calculator v-if="app == 'calculator'" id="app-calculator"  @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-calculator')"/>
-        <weather v-if="app == 'weather'" id="app-weather" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-weather')"/>
-        <music v-if="app == 'music'" id="app-music" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-music')" />
-        <account v-if="app == 'account'" id="settings-account" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('settings-account')" />
-        <calendar v-if="app == 'calendar'" id="app-calendar" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-calendar')" />
-        <bookmarkApp v-if="app == 'bookmark'" id="app-bookmark" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-bookmark')" />
+            <component :is="app" :v-if="app" :id="'app-'+app" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-'+app)"/>
     </div>
 </template> 
 
@@ -15,7 +10,7 @@ import weather from '@/app/weather/components/WeatherApp.vue'
 import music from '@/app/music/components/musicHome.vue'
 import account from '@/app/settings/Account.vue'
 import calendar from '@/app/calendar/calendarApp.vue'
-import bookmarkApp from '@/app/bookmark/bookmarkApp.vue'
+import bookmark from '@/app/bookmark/bookmarkApp.vue'
     export default {
         name:'runApp',
         components:{
@@ -24,7 +19,7 @@ import bookmarkApp from '@/app/bookmark/bookmarkApp.vue'
                music,
                account,
                calendar,
-               bookmarkApp
+               bookmark
         },
         props:{
             app:String
@@ -80,6 +75,7 @@ import bookmarkApp from '@/app/bookmark/bookmarkApp.vue'
             }
         },
         mounted(){
+            console.log('dziala');
             this.moveToDesktop()
         }
     }
