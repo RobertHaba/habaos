@@ -34,7 +34,7 @@ import menuStart from './menu/menuStart'
                 id:0,
                 title:'Calcualtor',
                 name:'calculator',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg"
+                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg",
               },
               {
                 id:1,

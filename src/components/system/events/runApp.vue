@@ -1,5 +1,5 @@
 <template>
-    <div class="os-appBox">
+    <div class="os-appBox" v-if="app!=''">
             <component :is="app" :v-if="app" :id="'app-'+app" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-'+app)"/>
     </div>
 </template> 

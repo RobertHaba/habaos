@@ -1,13 +1,13 @@
 <template>
         <div class="widgets-container">
             <div  v-for="widget in widgetLists" :key="widget.id" @dragenter.prevent @dragover.prevent>
-                <component class="widget" :class="'widget--'+widget.name" :is="widget.component" v-if="widget.ready !== false && widget.show"  v-on:checkIfWidgetItsReady="widget.ready = $event" draggable="true" @dragenter="dragOverOtherBox(widget)" @dragend="dropItem(widget)"/>
+                <component class="widget" :class="'widget--'+widget.name" :is="widget.component" v-if="widget.ready !== false && widget.show"  v-on:checkIfWidgetItsReady="widget.ready = $event" draggable="true" @dragenter="runDragOver(widget)" @dragend="runDragEnd(widget)"/>
             </div>
         </div>
 </template>
 
 <script>
-import { db } from '@/firebaseDB';
+import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
 import widgetBookmark from '@/app/bookmark/widget/bookmarkWidget.vue'
 import widgetMusic from '@/app/music/widget/music.vue'
 import widgetWeather from '@/app/weather/widget/weather.vue'
@@ -42,51 +42,21 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
                     component: 'widgetBookmark',
                     ready:'',
                     show:true
-                }]
+                }],
+                dbTree:['admin','system','menu','widget','list'],
+                itemListsFromDB:[]
             }
         },
         methods:{
-            dragOverOtherBox(widget){
-                this.overDragElement = widget
+            runDragOver(widget){
+                dragItem.methods.dragOverOtherBox(widget)
             },
-            dropItem(widget){
-                this.activeDragElement = widget
-                let indexActiveDrag = this.widgetLists.findIndex((el)=>el == this.activeDragElement)
-                let isChangedPoition = false
-                if(this.activeDragElement != this.overDragElement){
-                    this.widgetLists.forEach((item,index) =>{
-                        if(item == this.overDragElement && !isChangedPoition){
-                            isChangedPoition = true
-                            let element = this.widgetLists[indexActiveDrag]
-                            this.widgetLists.splice(indexActiveDrag,1)
-                            this.widgetLists.splice(index,0,element)
-                            element.positionInWidget = index
-                            item.positionInWidget = indexActiveDrag
-                            this.pushChangesWidgetListToDB()
-                        }
-                    })
-                }
+            runDragEnd(widget){
+                dragItem.methods.dropItem(widget, this.widgetLists, this.dbTree)
             },
-            pushChangesWidgetListToDB(){
-                let dbSystem = db.collection('admin').doc('system')
-                dbSystem.set({dummy:'dummy'})
-                dbSystem.collection('menu').doc('widget').set({dummy:'dummy'})
-                this.widgetLists.forEach((item)=>{
-                    item.ready = ''
-                    dbSystem.collection('menu').doc('widget').collection('list').doc(item.positionInWidget.toString()).set(item)
-                })
-            },
-            getWidgetListFromDB(){
-                this.widgetLists = []
-                db.collection('admin').doc('system').collection('menu').doc('widget').collection('list').get()
-                .then((res)=>{
-                    console.log(res);
-                    if(!res.empty){
-                        res.forEach((doc)=>{
-                            this.widgetLists.push(doc.data())
-                        })
-                    }
-                })
+            async getWidgetListFromDB(){
+                dragItem.methods.getWidgetListFromDB(this.dbTree, this.itemListsFromDB)
+                this.widgetLists = (this.itemListsFromDB)? this.itemListsFromDB:this.favoriteAppsData
             }
         },
         mounted(){

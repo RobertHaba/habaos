@@ -4,7 +4,10 @@
             <categoryTitle title="Widgets" imgURL="http://cdn.haba.usermd.net/os/icons/widgets.svg"/>
             <widgets />
         </div>
-        <favorites />
+        <div class="os-menu-start__section">
+            <categoryTitle title="Favorites Apps" imgURL="http://cdn.haba.usermd.net/os/icons/heart.svg"/>
+            <favorites />
+        </div>
         <allApps />
         <options />
     </div>

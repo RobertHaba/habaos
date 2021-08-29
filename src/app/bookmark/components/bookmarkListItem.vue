@@ -7,7 +7,7 @@
             <p class="list-item-content__title">{{bookmarkItemData.title}}</p>
             <p class="list-item-content__description">{{bookmarkItemData.description}}</p>
         </div>
-        <span class="list-item-favorite" :class="{'list-item-favorite--active': favorite}" @click="addToFavorite()" onclick="return false;">
+        <span class="icon icon--reverse-color list-item-favorite" :class="{'list-item-favorite--active': favorite}" @click="addToFavorite()" onclick="return false;">
         </span>
         <dropSmallMenu :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu" onclick="return false"/>
         <answerModal onclick="return false" :modalProps="answerModalProps" v-if="showAnswerModal"/>

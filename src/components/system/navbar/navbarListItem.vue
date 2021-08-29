@@ -1,6 +1,6 @@
 <template>
-    <button class="work-navbar-item bg-dark--hover" >
-        <div class="work-navbar-icon-container" @click="minimizeApp()">
+    <button class="work-navbar-item bg-dark--hover" :class="{'work-navbar-item--active-app':show && app != '','work-navbar-item--app-is-open':minimize}">
+        <div class="work-navbar-icon-container" @click="minimizeApp()" >
             <span class="work-navbar-icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
         </div>
         <p class="work-navbar-item__title bg-dark">{{itemTitle}}</p>
@@ -38,6 +38,13 @@ export default {
                 this.minimize = !this.minimize
             }
         }
+    },
+    mounted(){
+        this.emitter.on('osAppRun-'+this.app,()=>{
+            console.log('dziala');
+            this.minimizeApp()
+            this.minimize = true
+        })
     }
 }
 </script>
@@ -48,6 +55,37 @@ export default {
         width: 50px;
         height: 100%;
         border-radius: 10px;
+        margin-right: 0.1rem;
+        transition: 0.5s ease;
+    }
+    .work-navbar-item--active-app{
+        padding-top: 4px;
+        height: calc(100% - 2px);
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        box-shadow: 0px 10px 0px -8px #ffffff80;
+        border-bottom: 2px solid rgba(255, 255, 255, 0);
+        transition: 0s height;
+    }
+    .work-navbar-item--active-app:hover{
+        padding-top: 2px;
+        height: 100%;
+        box-shadow: 0px 10px 0px -10px #ffffff80;
+        border-bottom:2px solid #ffffff80;
+    }
+    .work-navbar-item--app-is-open:hover{
+        height: 100%;
+        border: unset;
+        padding: 0px;
+        background-color: rgba(0, 0, 0, 0.589);
+    }
+    .work-navbar-item--app-is-open{
+        height: 100%;
+        padding: 0;
+        box-shadow: none;
+        border:none;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.35);
     }
     .work-navbar-icon-container{
         display: flex;
