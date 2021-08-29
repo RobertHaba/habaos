@@ -1,5 +1,5 @@
-<template>
-    <a :href="bookmark.url" class="widget-tile" v-if="bookmark != ''">
+<template >
+    <a v-if="bookmark.status != ''" :href="bookmark.url" class="widget-tile" >
         <div class="widget-column">
             <span class="icon icon--circle" :style="{'background-image': 'url(' + bookmark.favicon + ')'}"></span>
             <span class="icon icon--reverse-color icon--widget-animation" :style="{'background-image': 'url(http://cdn.haba.usermd.net/os/icons/bookmark.svg)'}"></span>
@@ -13,14 +13,22 @@ import { db } from '@/firebaseDB';
     export default {
         data(){
             return{
-                bookmark:''
+                bookmark:{
+                    status:'',
+                    url:'#'
+                }
             }
         },
         methods:{
             getWidgetBookmark(){
+                let status
                 db.collection('admin').doc('bookmarkApp').collection('widget').doc('bookmark').get()
                 .then((res)=>{
-                    this.bookmark = res.data()
+                    if(res.exists){
+                        this.bookmark = res.data()
+                    }
+                    status = (this.bookmark.title != undefined)? true : false
+                    this.$emit("checkIfWidgetItReadyChild",status)
                 })
                 .catch((err)=>{
                     console.log(err);
@@ -32,6 +40,7 @@ import { db } from '@/firebaseDB';
             this.emitter.on('widgetBookmarkUpdateData',()=>{
                 this.getWidgetBookmark()
             })
+            
         }
     }
 </script>

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import categoryTitle from './categoryTitle.vue'
-import appItem from './apps/appItem.vue'
+import categoryTitle from '../categoryTitle.vue'
+import appItem from '../apps/appItem.vue'
     export default {
         components:{
             categoryTitle,

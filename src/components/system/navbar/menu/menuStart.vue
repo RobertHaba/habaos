@@ -1,6 +1,9 @@
 <template>
     <div class="os-menu-start bg-theme">
-        <widgets />
+        <div class="os-menu-start__section">
+            <categoryTitle title="Widgets" imgURL="http://cdn.haba.usermd.net/os/icons/widgets.svg"/>
+            <widgets />
+        </div>
         <favorites />
         <allApps />
         <options />
@@ -8,12 +11,14 @@
 </template>
 
 <script>
-import widgets from './menu/widgets.vue'
-import favorites from './menu/favorites.vue'
-import allApps from './menu/allApps.vue'
-import options from './menu/options.vue'
+import categoryTitle  from './categoryTitle.vue'
+import widgets from './category/widgets.vue'
+import favorites from './category/favorites.vue'
+import allApps from './category/allApps.vue'
+import options from './options.vue'
     export default {
         components:{
+            categoryTitle,
             widgets,
             favorites,
             allApps,
@@ -25,7 +30,7 @@ import options from './menu/options.vue'
 <style scoped>
     .os-menu-start{
         position: absolute;
-        min-width: 320px;
+        width: 330px;
         height: 500px;
         bottom: 60px;
         padding: 1rem;
@@ -34,5 +39,7 @@ import options from './menu/options.vue'
     }
     .os-menu-start div{
         margin-bottom: 1rem;
+    }
+    .os-menu-start__section{
     }
 </style>

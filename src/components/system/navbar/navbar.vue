@@ -20,7 +20,7 @@
 
 <script>
 import navbarListItem from './navbarListItem'
-import menuStart from './menuStart'
+import menuStart from './menu/menuStart'
     export default {
         components:{
             navbarListItem,

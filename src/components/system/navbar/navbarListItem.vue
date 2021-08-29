@@ -1,11 +1,11 @@
 <template>
-    <li class="work-navbar-item bg-dark--hover" >
+    <button class="work-navbar-item bg-dark--hover" >
         <div class="work-navbar-icon-container" @click="minimizeApp()">
             <span class="work-navbar-icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
         </div>
         <p class="work-navbar-item__title bg-dark">{{itemTitle}}</p>
-        <runApp v-if="show"  :class="{'app-minimize' : minimize == true}" :app="app" ref="appOpen"/>
-    </li>
+        <runApp v-if="show" v-show="minimize" :app="app" ref="appOpen"/>
+    </button>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
     data(){
         return{
             show:false,
-            minimize: true,
+            minimize: false,
         }
     },
     methods:{

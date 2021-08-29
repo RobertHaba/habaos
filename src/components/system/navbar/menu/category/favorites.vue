@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import categoryTitle  from './categoryTitle.vue'
-import tile  from './favorites/tile.vue'
+import categoryTitle  from '../categoryTitle.vue'
+import tile  from '../favorites/tile.vue'
     export default {
         components:{
             categoryTitle,

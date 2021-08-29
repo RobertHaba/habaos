@@ -1,3 +1,6 @@
+<template>
+    <div v-if="false"></div>
+</template>
 <script>
 import { db } from '@/firebaseDB';
 export default {
