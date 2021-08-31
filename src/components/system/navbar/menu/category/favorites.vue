@@ -2,7 +2,7 @@
     <div class="menu-favorites" v-if="favoriteAppsData">
         <div class="menu-favorites__container">
             <template v-for="favoriteApp in favoriteAppsData" :key="favoriteApp.id" >
-                <button title="Drag to change position" v-if="favoriteApp.favorite" class="favorite-item" @click="runApp(favoriteApp.emitToApp)" draggable="true" @dragenter="runDragOver(favoriteApp)" @dragend="runDragEnd(favoriteApp)">
+                <button title="Drag to change position" class="favorite-item" @click="runApp(favoriteApp.emitToApp)" draggable="true" @dragenter="runDragOver(favoriteApp)" @dragend="runDragEnd(favoriteApp)">
                     <span class="icon" :style="{'background-image' : 'url('+favoriteApp.iconURL +')'}"></span>
                     <p class="favoritle-item__title c-title">{{favoriteApp.title}}</p>
                 </button>
@@ -26,7 +26,7 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
             return{
                 favoriteAppsData:[],
                 dbTree:'admin/system/allApp/',
-                changePositionInKeyName:'favoriteID'
+                favoriteKeyNameInDBObject:'favorite'
             }
         },
         methods:{
@@ -37,18 +37,18 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
                 dragItem.methods.dragOverOtherBox(favoriteApp)
             },
             runDragEnd(favoriteApp){
-                dragItem.methods.dropItem(favoriteApp, this.favoriteAppsData, this.changePositionInKeyName)
+                dragItem.methods.dropItem(favoriteApp, this.favoriteAppsData, this.favoriteKeyNameInDBObject)
             },
             getOnlyFavoriteApp(){
                 [...this.dataProp].forEach((app)=>{
-                    if(app.favorite){
+                    if(app.favorite.added){
                         this.favoriteAppsData.push(app)
                     }
                 })
                 this.sortFavoriteApp()
             },
             sortFavoriteApp(){
-                this.favoriteAppsData.sort((a,b)=>(a.favoriteID > b.favoriteID)?1:(b.favoriteID > a.favoriteID)?-1:0)
+                this.favoriteAppsData.sort((a,b)=>(a.favorite.id > b.favorite.id)?1:(b.favorite.id > a.favorite.id)?-1:0)
             },
             updateFavoriteDataInDB(){
                 this.favoriteAppsData.forEach((item)=>{

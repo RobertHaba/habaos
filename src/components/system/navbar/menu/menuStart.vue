@@ -38,7 +38,7 @@ import options from './options.vue'
                         title:'Widgets',
                         icon:"http://cdn.haba.usermd.net/os/icons/widgets.svg",
                         component:'widgets',
-                        props:true
+                        props:this.allAppData
                     },
                     {
                         id:1,

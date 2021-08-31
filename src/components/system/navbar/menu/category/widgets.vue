@@ -1,12 +1,13 @@
 <template>
-        <div class="widgets-container">
-            <div  v-for="widget in widgetLists" :key="widget.id" >
-                <component class="widget" :class="'widget--'+widget.name" :is="widget.component" v-if="widget.ready !== false && widget.show"  v-on:checkIfWidgetItsReady="widget.ready = $event" draggable="true" @dragenter="runDragOver(widget)" @dragend="runDragEnd(widget)" title="Drag to change position"/>
+        <div class="widgets-container" v-if="widgetLists">
+            <div  v-for="app in widgetLists" :key="app.id" >
+                <component class="widget" :class="'widget--'+app.appName" :is="app.widget.component" v-if="app.widget.ready !== false && app.widget.show"  v-on:checkIfWidgetItsReady="app.widget.ready = $event" draggable="true" @dragenter="runDragOver(app)" @dragend="runDragEnd(app)" title="Drag to change position"/>
             </div>
         </div>
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
 import widgetBookmark from '@/app/bookmark/widget/bookmarkWidget.vue'
 import widgetMusic from '@/app/music/widget/music.vue'
@@ -17,34 +18,16 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
             widgetWeather,
             widgetBookmark
         },
+        props:{
+            dataProp:{
+                type:Array,
+                default:undefined
+            }
+        },
         data(){
             return{
-                widgetLists:[
-                {
-                    id:0,
-                    positionInWidget:0,
-                    name:'weather',
-                    component: 'widgetWeather',
-                    ready:'',
-                    show:true
-                },{
-                    id:1,
-                    positionInWidget:1,
-                    name:'music',
-                    component: 'widgetMusic',
-                    ready:'',
-                    show:true
-                },
-                {
-                    id:2,
-                    positionInWidget:2,
-                    name:'bookmark',
-                    component: 'widgetBookmark',
-                    ready:'',
-                    show:true
-                }],
-                dbTree:['admin','system','menu','widget','list'],
-                itemListsFromDB:[]
+                widgetLists:[],
+                widgetKeyNameInDBObject:'widget'
             }
         },
         methods:{
@@ -52,15 +35,41 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
                 dragItem.methods.dragOverOtherBox(widget)
             },
             runDragEnd(widget){
-                dragItem.methods.dropItem(widget, this.widgetLists, this.dbTree)
+                dragItem.methods.dropItem(widget, this.widgetLists, this.widgetKeyNameInDBObject)
             },
-            async getWidgetListFromDB(){
-                dragItem.methods.getWidgetListFromDB(this.dbTree, this.itemListsFromDB)
-                this.widgetLists = (this.itemListsFromDB.length > 0)? this.widgetLists : this.itemListsFromDB
+            getWidgetList(){
+                console.log(this.dataProp);
+                [...this.dataProp].forEach((app)=>{
+                    if(app.widget != undefined && app.widget.show){
+                        console.log(app);
+                        this.widgetLists.push(app)
+                    }
+                })
+                this.sortWidget()
+                
+            },
+            sortWidget(){
+                console.log('Sorotwanie');
+                this.widgetLists.sort((a,b)=>(a.widget.id>b.widget.id)?1:(b.widget.id>a.widget.id)?-1:0)
+            },
+            updateWidgetDataInDB(){
+                this.widgetLists.forEach((item)=>{
+                    console.log(item);
+                    item.widget.ready = '' 
+                   db.collection('admin').doc('system').collection('allApp').doc(item.id.toString()).update(item)
+                })
+            }
+        },
+        watch:{
+            widgetLists:{
+                deep:true,
+                handler(){
+                    this.updateWidgetDataInDB()
+                }
             }
         },
         mounted(){
-            this.getWidgetListFromDB()
+            this.getWidgetList()
         }
     }
 </script>

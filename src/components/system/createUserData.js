@@ -9,10 +9,12 @@ export const createUserData = {
                     positionInList:null,
                     title:'Calcualtor',
                     appName:'calculator',
+                    favorite:{
+                        id:null,
+                        added:false,
+                    },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg",
                     emitToApp:'osAppRun-calculator',
-                    favorite:false,
-                    favoriteID:0,
                     pinned:true,
                 },
                 {
@@ -20,10 +22,18 @@ export const createUserData = {
                     positionInList:null,
                     title:'Music',
                     appName:'music',
+                    widget:{
+                        id:null,
+                        component: 'widgetMusic',
+                        ready:'',
+                        show:true
+                    },
+                    favorite:{
+                        id:null,
+                        added:false,
+                    },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/music.svg",
                     emitToApp:'osAppRun-music',
-                    favorite:false,
-                    favoriteID:1,
                     pinned:true,
                 },
                 {
@@ -31,10 +41,18 @@ export const createUserData = {
                     positionInList:null,
                     title:'Weather',
                     appName:'weather',
+                    widget:{
+                        id:null,
+                        component: 'widgetWeather',
+                        ready:'',
+                        show:true
+                    },
+                    favorite:{
+                        id:null,
+                        added:true,
+                    },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/weather.svg",
                     emitToApp:'osAppRun-weather',
-                    favorite:true,
-                    favoriteID:2,
                     pinned:true,
                 },
                 {
@@ -42,10 +60,12 @@ export const createUserData = {
                     positionInList:null,
                     title:'Calendar',
                     appName:'calendar',
+                    favorite:{
+                        id:null,
+                        added:false,
+                    },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calendar.svg",
                     emitToApp:'osAppRun-calendar',
-                    favorite:false,
-                    favoriteID:3,
                     pinned:true,
                 },
                 {
@@ -53,10 +73,18 @@ export const createUserData = {
                     positionInList:null,
                     title:'Bookmarks',
                     appName:'bookmark',
+                    widget:{
+                        id:null,
+                        component: 'widgetBookmark',
+                        ready:'',
+                        show:true
+                    },
+                    favorite:{
+                        id:null,
+                        added:true,
+                    },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/bookmark.svg",
                     emitToApp:'osAppRun-bookmark',
-                    favorite:true,
-                    favoriteID:4,
                     pinned:true,
                 },
             ],
