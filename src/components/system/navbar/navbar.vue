@@ -1,13 +1,13 @@
 <template>
     <nav class="os-navbar">
-      <ul class="os-container-navbar">
+      <ul class="os-container-navbar" v-if="allAppData">
         <navbarListItem class="os-navbar-item os-navbar-item--menu-start bg-theme" imgURL="http://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app=""/>
         
-        <menuStart v-show="openStart"/>
+        <menuStart v-show="openStart" :allAppData="allAppData"/>
         <li class="os-navbar-item bg-theme">
           <ul class="work-navbar work-navbar--pinned">
-            <template v-for="app in navbarListPinedApps" :key="app.id">
-              <navbarListItem :imgURL="app.iconURL" :itemTitle="app.title" :app="app.name" :data-navbar-os-app="app.name"/>
+            <template v-for="app in allAppData" :key="app.id" >
+              <navbarListItem :imgURL="app.iconURL" :itemTitle="app.title" :app="app.appName" :data-navbar-os-app="app.name" v-if="app.pinned == true"/>
             </template>
           </ul>
           <hr class="vertical-line">
@@ -22,6 +22,7 @@
 import navbarListItem from './navbarListItem'
 import menuStart from './menu/menuStart'
     export default {
+        props:['allAppData'],
         components:{
             navbarListItem,
             menuStart,
@@ -29,45 +30,8 @@ import menuStart from './menu/menuStart'
         data(){
           return{
             openStart: false,
-            navbarListPinedApps:[
-              {
-                id:0,
-                title:'Calcualtor',
-                name:'calculator',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg",
-              },
-              {
-                id:1,
-                title:'Music',
-                name:'music',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/music.svg"
-              },
-              {
-                id:2,
-                title:'Weather',
-                name:'weather',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/weather.svg"
-              },
-              {
-                id:3,
-                title:'Calendar',
-                name:'calendar',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calendar.svg"
-              },
-              {
-                id:4,
-                title:'Bookmarks',
-                name:'bookmark',
-                iconURL:"http://cdn.haba.usermd.net/os/icons/apps/bookmark.svg"
-              },
-            ],
-            navbarListOpenApps:[]
           }
         },
-        methods:{
-          moveToOpenNavbarList(){
-          }
-        }
         
     }
 </script>

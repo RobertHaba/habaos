@@ -38,7 +38,7 @@
     }
 </script>
 
-<style>
+<style scoped>
 .app-header{
     display: grid;
     grid-template-columns: 1fr 66px;
@@ -71,5 +71,6 @@
     display: block;
     width: 30px;
     height: 30px;
+    border-radius: 100%;
 }
 </style>

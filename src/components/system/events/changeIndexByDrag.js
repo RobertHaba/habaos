@@ -8,11 +8,11 @@ export const dragItem = {
         }
     },
     methods:{
-        dragOverOtherBox(widget){
-            this.overDragElement = widget
+        dragOverOtherBox(item){
+            this.overDragElement = item
         },
-        dropItem(widget, itemLists, dbTree){
-            this.activeDragElement = widget
+        dropItem(item, itemLists, changePositionInKeyName){
+            this.activeDragElement = item
             this.itemLists = itemLists
             let indexActiveDrag = this.itemLists.findIndex((el)=>el == this.activeDragElement)
             let isChangedPoition = false
@@ -23,9 +23,10 @@ export const dragItem = {
                         let element = this.itemLists[indexActiveDrag]
                         this.itemLists.splice(indexActiveDrag,1)
                         this.itemLists.splice(index,0,element)
-                        element.positionInWidget = index
-                        item.positionInWidget = indexActiveDrag
-                        this.pushChangesWidgetListToDB(dbTree)
+                        element[changePositionInKeyName] = index
+                        item[changePositionInKeyName] = indexActiveDrag
+                        console.log(changePositionInKeyName);
+                        //this.pushChangesWidgetListToDB(dbTree)
                     }
                 })
             }
@@ -36,7 +37,8 @@ export const dragItem = {
             dbSystem.collection(dbTree[2]).doc(dbTree[3]).set({dummy:'dummy'})
             this.itemLists.forEach((item)=>{
                 item.ready = ''
-                dbSystem.collection(dbTree[2]).doc(dbTree[3]).collection(dbTree[4]).doc(item.positionInWidget.toString()).set(item)
+                //dbSystem.collection(dbTree[2]).doc(dbTree[3]).collection(dbTree[4]).doc(item.positionInList.toString()).set(item)
+                db.ref(dbTree).child(item.id.toString()).set(item)
             })
         },
         getWidgetListFromDB(dbTree, listItems){

@@ -1,14 +1,11 @@
 <template>
     <div class="os-menu-start bg-theme">
         <div class="os-menu-start__section">
-            <categoryTitle title="Widgets" imgURL="http://cdn.haba.usermd.net/os/icons/widgets.svg"/>
-            <widgets />
+            <template v-for="menuComponent in menuComponentsData" :key="menuComponent.id">
+                <categoryTitle :title="menuComponent.title" :imgURL="menuComponent.icon"/>
+                <component :is="menuComponent.component" :dataProp="menuComponent.props" v-if="menuComponent.props"/>
+            </template>
         </div>
-        <div class="os-menu-start__section">
-            <categoryTitle title="Favorites Apps" imgURL="http://cdn.haba.usermd.net/os/icons/heart.svg"/>
-            <favorites />
-        </div>
-        <allApps />
         <options />
     </div>
 </template>
@@ -26,6 +23,42 @@ import options from './options.vue'
             favorites,
             allApps,
             options
+        },
+        props:{
+            allAppData:{
+                type:Array,
+                default:undefined
+            }
+        },
+        data(){
+            return{
+                menuComponentsData:[
+                    {
+                        id:0,
+                        title:'Widgets',
+                        icon:"http://cdn.haba.usermd.net/os/icons/widgets.svg",
+                        component:'widgets',
+                        props:true
+                    },
+                    {
+                        id:1,
+                        title:'Favorites',
+                        icon:"http://cdn.haba.usermd.net/os/icons/heart.svg",
+                        component:'favorites',
+                        props:this.allAppData
+                    },
+                    {
+                        id:2,
+                        title:'All Apps',
+                        icon:"http://cdn.haba.usermd.net/os/icons/apps.svg",
+                        component:'allApps',
+                        props:this.allAppData
+                    }
+                ]
+            }
+        },
+        mounted(){
+            console.log(this.allAppData);
         }
     }
 </script>

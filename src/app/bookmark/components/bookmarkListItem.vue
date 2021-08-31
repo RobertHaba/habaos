@@ -32,7 +32,12 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                 newFavicon:'',
                 sending:false,
                 fileImg:'',
-                modalData: {timeout:1500},
+                modalData: {
+                    timeout:1500,
+                    icon:'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                    title:'Error',
+                    text:'Try again letter'
+                    },
                 favicon:'http://cdn.haba.usermd.net/os/favicon.ico',
                 dropSmallMenuOptions:[{
                     id:0,

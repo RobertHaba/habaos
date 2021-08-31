@@ -2,25 +2,48 @@
   <main class='os-container'>
     <section class="os-main-window">
     </section>
-    <bottomNavbar />
+    <bottomNavbar :allAppData="allAppData" v-if="allAppData.length"/>
     <getUserData />
     <validations />
   </main>
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import getUserData from '@/components/system/getUserData.vue'
 import validations from '@/app/components/validation.vue'
 import bottomNavbar from '@/components/system/navbar/navbar.vue'
+import {createUserData} from '@/components/system/createUserData.js'
 
 export default {
   name: 'App',
+  data(){
+    return{
+      allAppData:[]
+    }
+  },
   components: {
     getUserData,
     bottomNavbar,
     validations
   },
+  methods:{
+    getSystemAppDataFromDB(){
+      let dbPathToSystem = db.collection('admin').doc('system')
+      let dataFromDB
+      dbPathToSystem.collection('allApp').get()
+      .then((data)=>{
+        dataFromDB = data.docs.map(item => item.data())
+      })
+      .finally(()=>{
+        this.allAppData = dataFromDB
+        console.log(this.allAppData);
+      })
+    }
+  },
   mounted(){
+    createUserData.methods.createTreeData('admin')
+    this.getSystemAppDataFromDB()
     this.emitter.emit('getUserData')
   }
 }

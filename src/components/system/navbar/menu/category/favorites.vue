@@ -1,38 +1,32 @@
 <template>
-    <div class="menu-favorites">
+    <div class="menu-favorites" v-if="favoriteAppsData">
         <div class="menu-favorites__container">
-            <button class="favorite-item" v-for="favoriteApp in favoriteAppsData" :key="favoriteApp.id" @click="runApp(favoriteApp.emitToApp)" draggable="true" @dragenter="runDragOver(favoriteApp)" @dragend="runDragEnd(favoriteApp)">
-                <span class="icon" :style="{'background-image' : 'url('+favoriteApp.icon +')'}"></span>
-                <p class="favoritle-item__title c-title">{{favoriteApp.title}}</p>
-            </button>
+            <template v-for="favoriteApp in favoriteAppsData" :key="favoriteApp.id" >
+                <button title="Drag to change position" v-if="favoriteApp.favorite" class="favorite-item" @click="runApp(favoriteApp.emitToApp)" draggable="true" @dragenter="runDragOver(favoriteApp)" @dragend="runDragEnd(favoriteApp)">
+                    <span class="icon" :style="{'background-image' : 'url('+favoriteApp.iconURL +')'}"></span>
+                    <p class="favoritle-item__title c-title">{{favoriteApp.title}}</p>
+                </button>
+            </template>
         </div>
     </div>
 </template>
 
 <script>
+import { db } from '@/firebaseDB';
 import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
     export default {
         mixinx:[dragItem],
+        props:{
+            dataProp:{
+                type: Array,
+                default:undefined
+            }
+        },
         data(){
             return{
-                favoriteAppsData:[
-                    {
-                        id:0,
-                        positionInList:0,
-                        title:'Music',
-                        icon:"http://cdn.haba.usermd.net/os/icons/apps/music.svg",
-                        emitToApp:'osAppRun-music'
-                    },
-                    {
-                        id:1,
-                        positionInList:1,
-                        title:'Calculator',
-                        icon:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg",
-                        emitToApp:'osAppRun-calculator'
-                    }
-                ],
-                dbTree:['admin','system','menu','favorite','list'],
-                itemListsFromDB:[]
+                favoriteAppsData:[],
+                dbTree:'admin/system/allApp/',
+                changePositionInKeyName:'favoriteID'
             }
         },
         methods:{
@@ -43,15 +37,35 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
                 dragItem.methods.dragOverOtherBox(favoriteApp)
             },
             runDragEnd(favoriteApp){
-                dragItem.methods.dropItem(favoriteApp, this.favoriteAppsData, this.dbTree)
+                dragItem.methods.dropItem(favoriteApp, this.favoriteAppsData, this.changePositionInKeyName)
             },
-            async getFavoriteAppsFromDB(){
-                dragItem.methods.getWidgetListFromDB(this.dbTree, this.itemListsFromDB)
-                this.favoriteAppsData = (this.itemListsFromDB)? this.itemListsFromDB:this.favoriteAppsData
+            getOnlyFavoriteApp(){
+                [...this.dataProp].forEach((app)=>{
+                    if(app.favorite){
+                        this.favoriteAppsData.push(app)
+                    }
+                })
+                this.sortFavoriteApp()
+            },
+            sortFavoriteApp(){
+                this.favoriteAppsData.sort((a,b)=>(a.favoriteID > b.favoriteID)?1:(b.favoriteID > a.favoriteID)?-1:0)
+            },
+            updateFavoriteDataInDB(){
+                this.favoriteAppsData.forEach((item)=>{
+                   db.collection('admin').doc('system').collection('allApp').doc(item.id.toString()).set(item)
+                })
             }
         },
+        watch:{
+            favoriteAppsData:{
+                deep:true,
+                handler(){
+                    this.updateFavoriteDataInDB()
+                }
+            },
+        },
         mounted(){
-                this.getFavoriteAppsFromDB()
+            this.getOnlyFavoriteApp()
         }
     }
 </script>
@@ -71,7 +85,11 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
     margin-right: 0.5rem;
     background-color: rgba(255, 255, 255, 0.2);
     border-radius:10px;
+    transition: 0.3s ease;
     cursor: pointer;
+}
+.favorite-item:hover{
+    background-color: rgba(255, 255, 255, 0.4);
 }
 .favoritle-item__title{
     margin-left: 0.5rem;

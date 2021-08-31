@@ -1,7 +1,7 @@
 <template>
         <div class="widgets-container">
-            <div  v-for="widget in widgetLists" :key="widget.id" @dragenter.prevent @dragover.prevent>
-                <component class="widget" :class="'widget--'+widget.name" :is="widget.component" v-if="widget.ready !== false && widget.show"  v-on:checkIfWidgetItsReady="widget.ready = $event" draggable="true" @dragenter="runDragOver(widget)" @dragend="runDragEnd(widget)"/>
+            <div  v-for="widget in widgetLists" :key="widget.id" >
+                <component class="widget" :class="'widget--'+widget.name" :is="widget.component" v-if="widget.ready !== false && widget.show"  v-on:checkIfWidgetItsReady="widget.ready = $event" draggable="true" @dragenter="runDragOver(widget)" @dragend="runDragEnd(widget)" title="Drag to change position"/>
             </div>
         </div>
 </template>
@@ -56,7 +56,7 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
             },
             async getWidgetListFromDB(){
                 dragItem.methods.getWidgetListFromDB(this.dbTree, this.itemListsFromDB)
-                this.widgetLists = (this.itemListsFromDB)? this.itemListsFromDB:this.favoriteAppsData
+                this.widgetLists = (this.itemListsFromDB.length > 0)? this.widgetLists : this.itemListsFromDB
             }
         },
         mounted(){
