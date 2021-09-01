@@ -1,5 +1,5 @@
-<template>
-    <button class="work-navbar-item bg-dark--hover" :class="{'work-navbar-item--active-app':show && app != '','work-navbar-item--app-is-open':minimize}">
+<template >
+    <button v-show="appData.pinned || (!appData.pinned && show)" class="work-navbar-item bg-dark--hover" :class="{'work-navbar-item--active-app':show && app != '','work-navbar-item--app-is-open':minimize}" :data-navbar-os-app="appData.appName">
         <div class="work-navbar-icon-container" @click="minimizeApp()" >
             <span class="work-navbar-icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
         </div>
@@ -15,7 +15,13 @@ export default {
     props:{
         imgURL: String,
         itemTitle: String,
-        app: String
+        app: String,
+        appData:{
+            type:Object,
+            default:function(){
+                return{pinned:true}
+            }
+        }
     },
     components:{
         runApp
@@ -37,14 +43,35 @@ export default {
             if(this.show == true){
                 this.minimize = !this.minimize
             }
+        },
+        moveAppToWorkNavbar(){
+                let appItem = document.querySelector(`[data-navbar-os-app="${this.appData.appName}"]`)
+            if(!this.appData.pinned){
+                console.log(appItem);
+                document.querySelector('#workNavbarDefault').appendChild(appItem)
+            }
+            else{
+                console.log(appItem);
+                document.querySelector('#workNavbarPinned').appendChild(appItem)
+            }
+        }
+    },
+    watch:{
+        'appData.pinned':{
+            deep:false,
+            handler(){
+                this.moveAppToWorkNavbar()
+            }
         }
     },
     mounted(){
         this.emitter.on('osAppRun-'+this.app,()=>{
-            console.log('dziala');
+            console.log('RUN APP włącza dziala');
+            this.moveAppToWorkNavbar()
             this.minimizeApp()
             this.minimize = true
         })
+        console.log(this.data);
     }
 }
 </script>

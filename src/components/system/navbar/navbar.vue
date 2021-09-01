@@ -1,20 +1,20 @@
 <template>
     <nav class="os-navbar">
-      <ul class="os-container-navbar" v-if="allAppData">
-        <navbarListItem class="os-navbar-item os-navbar-item--menu-start bg-theme" imgURL="http://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app=""/>
+      <div class="os-container-navbar" v-if="allAppData">
+        <navbarListItem :appData="{pinned:true}" class="os-navbar-item os-navbar-item--menu-start bg-theme" imgURL="http://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app=""/>
         
-        <menuStart v-show="openStart" :allAppData="allAppData"/>
-        <li class="os-navbar-item bg-theme">
-          <ul class="work-navbar work-navbar--pinned">
+        <menuStart v-show="openStart" :allAppData="allAppData" />
+        <li class="os-navbar-item bg-theme" v-if="allAppData">
+          <ul class="work-navbar work-navbar--pinned" id="workNavbarPinned">
             <template v-for="app in allAppData" :key="app.id" >
-              <navbarListItem :imgURL="app.iconURL" :itemTitle="app.title" :app="app.appName" :data-navbar-os-app="app.name" v-if="app.pinned == true"/>
+              <navbarListItem :imgURL="app.iconURL" :appData="app" :itemTitle="app.title" :app="app.appName"/>
             </template>
           </ul>
           <hr class="vertical-line">
-          <ul class="work-navbar" id="navbarOpenApps">
+          <ul class="work-navbar" id="workNavbarDefault">
           </ul>
         </li>
-      </ul>
+      </div>
     </nav>
 </template>
 
