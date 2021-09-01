@@ -9,9 +9,15 @@ export const createUserData = {
                     positionInList:null,
                     title:'Calcualtor',
                     appName:'calculator',
+                    widget:{
+                        id:null,
+                        component: 'widgetBookmark',
+                        ready:'',
+                        active:false
+                    },
                     favorite:{
                         id:null,
-                        added:false,
+                        active:false,
                     },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calculator.svg",
                     emitToApp:'osAppRun-calculator',
@@ -26,11 +32,11 @@ export const createUserData = {
                         id:null,
                         component: 'widgetMusic',
                         ready:'',
-                        show:true
+                        active:true
                     },
                     favorite:{
                         id:null,
-                        added:false,
+                        active:false,
                     },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/music.svg",
                     emitToApp:'osAppRun-music',
@@ -45,11 +51,11 @@ export const createUserData = {
                         id:null,
                         component: 'widgetWeather',
                         ready:'',
-                        show:true
+                        active:true
                     },
                     favorite:{
                         id:null,
-                        added:true,
+                        active:true,
                     },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/weather.svg",
                     emitToApp:'osAppRun-weather',
@@ -60,9 +66,15 @@ export const createUserData = {
                     positionInList:null,
                     title:'Calendar',
                     appName:'calendar',
+                    widget:{
+                        id:null,
+                        component: 'widgetCalendar',
+                        ready:'',
+                        active:false
+                    },
                     favorite:{
                         id:null,
-                        added:false,
+                        active:false,
                     },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/calendar.svg",
                     emitToApp:'osAppRun-calendar',
@@ -77,11 +89,11 @@ export const createUserData = {
                         id:null,
                         component: 'widgetBookmark',
                         ready:'',
-                        show:true
+                        active:true
                     },
                     favorite:{
                         id:null,
-                        added:true,
+                        active:true,
                     },
                     iconURL:"http://cdn.haba.usermd.net/os/icons/apps/bookmark.svg",
                     emitToApp:'osAppRun-bookmark',

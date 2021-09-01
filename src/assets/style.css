@@ -199,6 +199,10 @@ img {
     filter: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
 }
 
+.hidden {
+    display: none !important;
+}
+
 .bg-dark {
     background-color: rgba(0, 0, 0, 0.5);
 }

@@ -38,14 +38,24 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
             },
             runDragEnd(favoriteApp){
                 dragItem.methods.dropItem(favoriteApp, this.favoriteAppsData, this.favoriteKeyNameInDBObject)
+                this.updateFavoriteDataInDB()
             },
             getOnlyFavoriteApp(){
+                this.favoriteAppsData.length = 0,
                 [...this.dataProp].forEach((app)=>{
-                    if(app.favorite.added){
+                    if(app.favorite.active){
                         this.favoriteAppsData.push(app)
                     }
                 })
-                this.sortFavoriteApp()
+                console.log();
+                if(this.favoriteAppsData.length ==0){
+                    this.hideFavorite()
+                }
+                else{
+                    console.log('asdasd');
+                    this.showFavorite()
+                    this.sortFavoriteApp()
+                }
             },
             sortFavoriteApp(){
                 this.favoriteAppsData.sort((a,b)=>(a.favorite.id > b.favorite.id)?1:(b.favorite.id > a.favorite.id)?-1:0)
@@ -54,15 +64,21 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
                 this.favoriteAppsData.forEach((item)=>{
                    db.collection('admin').doc('system').collection('allApp').doc(item.id.toString()).set(item)
                 })
+            },
+            hideFavorite(){
+                document.querySelector('[data-menu-component=favorites]').classList.add('hidden')
+            },
+            showFavorite(){
+                document.querySelector('[data-menu-component=favorites]').classList.remove('hidden')
             }
         },
         watch:{
-            favoriteAppsData:{
+            dataProp:{
                 deep:true,
                 handler(){
-                    this.updateFavoriteDataInDB()
+                    this.getOnlyFavoriteApp()
                 }
-            },
+            }
         },
         mounted(){
             this.getOnlyFavoriteApp()
@@ -74,6 +90,8 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
 .menu-favorites__container{
     display: flex;
     justify-content: flex-start;
+    padding-bottom: 1rem;
+    overflow-x: auto;
 }
 .favorite-item{
     position: relative;
@@ -83,6 +101,7 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
     height: 100%;
     padding: 0.5rem;
     margin-right: 0.5rem;
+    font-size: 0.9rem;
     background-color: rgba(255, 255, 255, 0.2);
     border-radius:10px;
     transition: 0.3s ease;
@@ -93,7 +112,6 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
 }
 .favoritle-item__title{
     margin-left: 0.5rem;
-    font-size: 0.9rem;
 }
 .icon{
     width: 20px;

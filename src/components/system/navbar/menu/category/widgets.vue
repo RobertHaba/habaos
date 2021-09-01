@@ -1,7 +1,7 @@
 <template>
         <div class="widgets-container" v-if="widgetLists">
             <div  v-for="app in widgetLists" :key="app.id" >
-                <component class="widget" :class="'widget--'+app.appName" :is="app.widget.component" v-if="app.widget.ready !== false && app.widget.show"  v-on:checkIfWidgetItsReady="app.widget.ready = $event" draggable="true" @dragenter="runDragOver(app)" @dragend="runDragEnd(app)" title="Drag to change position"/>
+                <component class="widget" :class="'widget--'+app.appName" :is="app.widget.component" v-if="app.widget.ready !== false && app.widget.active"  v-on:checkIfWidgetItsReady="app.widget.ready = $event" draggable="true" @dragenter="runDragOver(app)" @dragend="runDragEnd(app)" title="Drag to change position"/>
             </div>
         </div>
 </template>
@@ -36,11 +36,12 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
             },
             runDragEnd(widget){
                 dragItem.methods.dropItem(widget, this.widgetLists, this.widgetKeyNameInDBObject)
+                this.updateWidgetDataInDB()
             },
             getWidgetList(){
                 console.log(this.dataProp);
                 [...this.dataProp].forEach((app)=>{
-                    if(app.widget != undefined && app.widget.show){
+                    if(app.widget != undefined && app.widget.active){
                         console.log(app);
                         this.widgetLists.push(app)
                     }
@@ -54,18 +55,15 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
             },
             updateWidgetDataInDB(){
                 this.widgetLists.forEach((item)=>{
-                    console.log(item);
-                    item.widget.ready = '' 
-                   db.collection('admin').doc('system').collection('allApp').doc(item.id.toString()).update(item)
+                   db.collection('admin').doc('system').collection('allApp').doc(item.id.toString()).update(
+                       {widget:{
+                           component:item.widget.component,
+                           id:item.widget.id,
+                           ready:'',
+                           active:item.widget.active
+                       }}
+                   )
                 })
-            }
-        },
-        watch:{
-            widgetLists:{
-                deep:true,
-                handler(){
-                    this.updateWidgetDataInDB()
-                }
             }
         },
         mounted(){

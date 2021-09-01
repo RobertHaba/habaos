@@ -1,10 +1,10 @@
 <template>
     <div class="os-menu-start bg-theme">
         <div class="os-menu-start__section">
-            <template v-for="menuComponent in menuComponentsData" :key="menuComponent.id">
-                <categoryTitle :title="menuComponent.title" :imgURL="menuComponent.icon"/>
-                <component :is="menuComponent.component" :dataProp="menuComponent.props" v-if="menuComponent.props"/>
-            </template>
+            <div v-for="menuComponent in menuComponentsData" :key="menuComponent.id" :data-menu-component="menuComponent.component" :data-menu-component-active="menuComponent.active">
+                <categoryTitle :title="menuComponent.title" :imgURL="menuComponent.icon" v-show="menuComponent.props"/>
+                <component :is="menuComponent.component" :dataProp="menuComponent.props"/>
+            </div>
         </div>
         <options />
     </div>
@@ -38,23 +38,37 @@ import options from './options.vue'
                         title:'Widgets',
                         icon:"http://cdn.haba.usermd.net/os/icons/widgets.svg",
                         component:'widgets',
-                        props:this.allAppData
+                        props:this.allAppData,
+                        active:true
                     },
                     {
                         id:1,
                         title:'Favorites',
                         icon:"http://cdn.haba.usermd.net/os/icons/heart.svg",
                         component:'favorites',
-                        props:this.allAppData
+                        props:this.allAppData,
+                        active:true
                     },
                     {
                         id:2,
                         title:'All Apps',
                         icon:"http://cdn.haba.usermd.net/os/icons/apps.svg",
                         component:'allApps',
-                        props:this.allAppData
+                        props:this.allAppData,
+                        active:true
                     }
-                ]
+                ],
+            }
+        },
+        watch:{
+            allAppData:{
+                deep:true,
+                handler(){
+                    //Live update data on change in DB
+                    this.menuComponentsData.forEach((component)=>{
+                        component.props = this.allAppData
+                    })
+                }
             }
         },
         mounted(){
@@ -77,5 +91,11 @@ import options from './options.vue'
         margin-bottom: 1rem;
     }
     .os-menu-start__section{
+        position: relative;
+        top:0;
+        bottom:40px;
+        width: 100%;
+        height: calc(100% - 50px - 0.5rem);
+        overflow-y: auto;
     }
 </style>

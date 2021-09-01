@@ -5,8 +5,11 @@
                 <li class="app-item" @click="runApp(app.emitToApp)" tabindex="0">
                     <span class="icon" :style="{'background-image' : 'url('+app.iconURL+')'}"></span>
                     <p class="app-item__title c-title">{{app.title}}</p>
-                    <button @click="addToFavorites()">
-                        <span class="icon icon--reverse-color icon--add-to-favorite"></span>
+                    <button @click.stop="addToFavorite(app)">
+                        <span class="icon icon--reverse-color icon--option icon--favorite" :class="{'icon--option-active':app.favorite.active}"></span>
+                    </button>
+                    <button @click.stop="addToPinned(app)">
+                        <span class="icon icon--reverse-color icon--option icon--pinned" :class="{'icon--option-active':app.pinned}"></span>
                     </button>
                 </li>
             </template>
@@ -25,7 +28,8 @@ import { db } from '@/firebaseDB';
         },
         data(){
             return{
-                navbarListAllApps: this.dataProp
+                sending:false,
+                navbarListAllApps: [...this.dataProp],
             }
         },
         methods:{
@@ -35,19 +39,28 @@ import { db } from '@/firebaseDB';
             runApp(emitName){
                 this.emitter.emit(emitName)
             },
-            addToFavorite(){
+            addToFavorite(app){
                 if(!this.sending){
                     this.sending = true
-                    this.favorite = !this.favorite
-                    db.collection('admin').doc('bookmarkApp').collection('bookmarks').doc(this.bookmarkItemData.id).update(
-                            {favorite:this.favorite}
+                    this.favorite = !app.favorite.active
+                    db.collection('admin').doc('system').collection('allApp').doc(app.id.toString()).update(
+                            {favorite:{
+                                id:app.favorite.id,
+                                active:this.favorite
+                            }}
                         )
-                        .then(()=>{
-                            console.log('Data with ID: ' +this.addFormId + ' is successfully sent!');
+                        .finally(()=>{
+                            this.sending = false
                         })
-                        .catch(()=>{
-                            this.emitter.emit('showModal',this.modalData)
-                        })
+                }
+            },
+            addToPinned(app){
+                if(!this.sending){
+                    this.sending = true
+                    this.pinned = !app.pinned
+                    db.collection('admin').doc('system').collection('allApp').doc(app.id.toString()).update(
+                            {pinned:this.pinned}
+                        )
                         .finally(()=>{
                             this.sending = false
                         })
@@ -59,6 +72,15 @@ import { db } from '@/firebaseDB';
                 })
             }
         },
+        watch:{
+            dataProp:{
+                deep:true,
+                handler(){
+                    this.navbarListAllApps =[...this.dataProp]
+                    this.sortByAlphabetical()
+                }
+            }
+        },
         mounted(){
                 this.sortByAlphabetical()
         }
@@ -67,8 +89,7 @@ import { db } from '@/firebaseDB';
 
 <style scoped>
 .menu-all-apps{
-    height: 130px;
-    overflow-y: auto;
+    height: 100%;
 }
 .menu-all-apps-list{
     cursor: pointer;
@@ -76,7 +97,7 @@ import { db } from '@/firebaseDB';
 .app-item{
     display: grid;
     align-items: center;
-    grid-template-columns: 25px 1fr 25px;
+    grid-template-columns: 25px 1fr 25px 25px;
     width: 100%;
     padding: 0.3rem 0;
     transition: 0.3s ease-in;
@@ -86,19 +107,28 @@ import { db } from '@/firebaseDB';
     background-color: rgba(0, 0, 0, 0.35);
     border-radius: 10px;
 }
-.app-item:hover .icon--add-to-favorite{
+.app-item:hover .icon--option{
     opacity: 0.6;
 }
 .icon{
     width: 25px;
     height: 25px;
 }
-.icon--add-to-favorite{
+.icon--option{
     width: 20px;
     height: 20px;
-    background-image: url("http://cdn.haba.usermd.net/os/icons/heart.svg");
     opacity: 0;
     transition: 0.3s ease-in;
+}
+.icon--favorite{
+    background-image: url("http://cdn.haba.usermd.net/os/icons/heart.svg");
+}
+.icon--pinned{
+    background-image: url("http://cdn.haba.usermd.net/os/icons/pinned.svg");
+}
+.icon--option-active{
+    filter: invert(0.5) sepia(1) saturate(35) hue-rotate(
+-51deg);
 }
 .app-item__title{
     margin-left: 0.5rem;

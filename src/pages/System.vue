@@ -30,15 +30,11 @@ export default {
   methods:{
     getSystemAppDataFromDB(){
       let dbPathToSystem = db.collection('admin').doc('system')
-      let dataFromDB
-      dbPathToSystem.collection('allApp').get()
-      .then((data)=>{
-        dataFromDB = data.docs.map(item => item.data())
+      dbPathToSystem.collection('allApp').onSnapshot((snap)=>{
+        console.log(snap);
+        this.allAppData = snap.docs.map(item => item.data())
       })
-      .finally(()=>{
-        this.allAppData = dataFromDB
-        console.log(this.allAppData);
-      })
+      
     }
   },
   mounted(){
