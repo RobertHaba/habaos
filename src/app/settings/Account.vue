@@ -1,5 +1,5 @@
 <template>
-    <section class="account settings-container app-container" :class="'settings-container--' + theme" v-if="render">
+    <section class="account settings-container app-container" v-if="render">
         <settingsHeader imgURL="http://cdn.haba.usermd.net/os/icons/user.svg" title="Account"/>
         <div class="settings-body" v-if="userData !== ''">
             <subTitle text="What do you want to change?" />
@@ -26,7 +26,6 @@ import formPassword from './components/forms/formPassword.vue'
     export default {
         data(){
             return{
-                theme:'dark',
                 name:'accountSettings',
                 render:true,
                 userData:'',
