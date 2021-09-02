@@ -104,14 +104,12 @@ export const createUserData = {
     },
     methods:{
         createTreeData(user){
-            console.log(user);
             let empty = true
             db.collection(user).get()
             .then((data)=>{
                 empty = data.empty
             })
             if(!empty){
-                console.log('run');
                 let docsName = ['system','todoApp','bookmarkApp','musicPlayer']
                 let dummy = {dummy:'dummy'}
                 docsName.forEach((docName)=>{

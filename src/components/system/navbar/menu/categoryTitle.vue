@@ -30,7 +30,7 @@
     }
     .menu-title-container__title{
         font-size: 1rem;
-        color: #FFF;
+        color: var(--font-main-color);
         font-weight: normal;
     }
 </style>

@@ -1,10 +1,10 @@
 <template>
     <div class="menu-favorites" v-if="favoriteAppsData">
-        <div class="menu-favorites__container">
+        <div class="menu-favorites__container scroll">
             <template v-for="favoriteApp in favoriteAppsData" :key="favoriteApp.id" >
                 <button title="Drag to change position" class="favorite-item" @click="runApp(favoriteApp.emitToApp)" draggable="true" @dragenter="runDragOver(favoriteApp)" @dragend="runDragEnd(favoriteApp)">
                     <span class="icon" :style="{'background-image' : 'url('+favoriteApp.iconURL +')'}"></span>
-                    <p class="favoritle-item__title c-title">{{favoriteApp.title}}</p>
+                    <p class="favoritle-item__title">{{favoriteApp.title}}</p>
                 </button>
             </template>
         </div>
@@ -47,12 +47,10 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
                         this.favoriteAppsData.push(app)
                     }
                 })
-                console.log();
                 if(this.favoriteAppsData.length ==0){
                     this.hideFavorite()
                 }
                 else{
-                    console.log('asdasd');
                     this.showFavorite()
                     this.sortFavoriteApp()
                 }
@@ -102,13 +100,14 @@ import {dragItem} from '@/components/system/events/changeIndexByDrag.js'
     padding: 0.5rem;
     margin-right: 0.5rem;
     font-size: 0.9rem;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(184, 184, 184, 0.2);
+    color:var(--font-main-color);
     border-radius:10px;
     transition: 0.3s ease;
     cursor: pointer;
 }
 .favorite-item:hover{
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(184, 184, 184, 0.4);
 }
 .favoritle-item__title{
     margin-left: 0.5rem;

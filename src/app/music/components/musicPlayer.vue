@@ -1,6 +1,6 @@
 <template>
-        <div class="music-player-wrapper" :class="{'music-player-wrapper--small':expand,'music-player-wrapper--dark':theme}" >
-            <section class="music-player-container" :class="{'music-player-container--dark': theme == 'dark', 'animation-open':expand == false, 'animation-close': expand}">
+        <div class="music-player-wrapper" :class="{'music-player-wrapper--small':expand}" >
+            <section class="music-player-container" :class="{'animation-open':expand == false, 'animation-close': expand}">
             <header class="music-player-container-header">
                 <div class="player-header-wrapper player-header-wrapper--info">
                     <h2 class="music-player-header-title">{{song.title}}</h2>
@@ -8,7 +8,7 @@
                 </div>
                 <div class="player-header-wrapper" >
                     <button class="music-player-button" @click="expandPlayer">
-                        <span class="icon icon--arrow-down"></span>
+                        <span class="icon icon--reverse-color icon--arrow-down"></span>
                     </button>
                 </div>
             </header>
@@ -26,18 +26,18 @@
                     </div>
                 </div>
                 <div class="music-player-options">
-                    <button @click="previousAudio()"><span class="icon icon--next icon--previous" ></span></button>
+                    <button @click="previousAudio()"><span class="icon icon--reverse-color icon--next icon--previous" ></span></button>
                     <PlayMusic ref="play"/>
-                    <button @click="nextAudio()"><span class="icon icon--next"></span></button>
+                    <button @click="nextAudio()"><span class="icon icon--reverse-color icon--next"></span></button>
                 </div>
                 <div class="music-player-options music-player-options--others" >
-                    <button @click="repeatAudio()"><span class="icon icon--repeat" :class="{'icon--circle icon--repeat-on': repeat == true}"></span></button>
-                    <button @click="addToFavorites()"><span class="icon icon--heart" :class="{'icon--heart-full': favorite == true}"></span></button>
-                    <button @click="shuffleAudio()"><span class="icon icon--shuffle" :class="{'icon--circle icon--shuffle-on': shuffle == true}"></span></button>
+                    <button @click="repeatAudio()"><span class="icon icon--reverse-color icon--repeat" :class="{'icon--circle icon--repeat-on': repeat == true}"></span></button>
+                    <button @click="addToFavorites()"><span class="icon icon--reverse-color icon--heart" :class="{'icon--heart-full': favorite == true}"></span></button>
+                    <button @click="shuffleAudio()"><span class="icon icon--reverse-color icon--shuffle" :class="{'icon--circle icon--shuffle-on': shuffle == true}"></span></button>
                 </div>
                 </div>
                 <div class="music-player-lists-wrapper" >
-                    <ul class="music-player-lists" >
+                    <ul class="music-player-lists scroll" >
                         <li class="player-list" v-for="music in playListSongs" :key="music.id" :class="{'player-list--active':song.id == music.id}" @click="getMusicFromList(music)">
                             <div class="player-list__img-container">
                                 <img :src="music.img" :alt="'Okładka piosenki - ' + music.title + ' ' + music.author">
@@ -63,7 +63,6 @@ import PlayMusic from './player/PlayMusic'
         name:'player',
         data(){
             return{
-                theme: this.themeColor,
                 audioCurrentTime: '00:00',
                 audioDuration:'',
                 changeTime: false,
@@ -85,7 +84,6 @@ import PlayMusic from './player/PlayMusic'
         },
         props:{
             songObject:Object,
-            themeColor: String,
             playLists: Array,
             dbPlaylistsName: String, 
         },
@@ -99,7 +97,6 @@ import PlayMusic from './player/PlayMusic'
                 }
             },
             watchWhenMusicIsFinished(){
-                console.log('Obecna piosenka się skończyła, przełączanie na następną');
                 if(!this.repeat){
                             this.nextAudio();
                 }
@@ -164,12 +161,10 @@ import PlayMusic from './player/PlayMusic'
                 },50)
             },
             nextAudio(){
-                console.log('Next song');
                 this.repeat = false
                 let lastSong = this.song
                 this.song = ((parseInt(this.playListSongs.indexOf(this.song)) + 1) < this.playListSongs.length )?this.playListSongs[parseInt(this.playListSongs.indexOf(this.song)) + 1] : this.playListSongs[0]
                 if(this.song.id == this.playLists[0].id && this.playLists[0].id==this.playListSongs[0].id  && this.usedShuffle){
-                    console.log('test');
                     if(this.shuffle || lastSong.id !== this.song.id){
                         this.resetCurrentTime()
                     }
@@ -208,11 +203,9 @@ import PlayMusic from './player/PlayMusic'
                 
                 if(this.repeat){
                     audioPlayer.addEventListener('ended',this.repeatOption,true)
-                    console.log('On Repeat');
                 }
                 else{
                     audioPlayer.removeEventListener('ended', this.repeatOption,true)
-                    console.log('Off Repeat');
                 }
             },
             async addToFavorites(){
@@ -220,15 +213,12 @@ import PlayMusic from './player/PlayMusic'
                 this.favorite = true
                 let dbSong = db.collection('admin').doc('musicPlayer').collection(this.dbPlaylistsName)
                 let dbFavorite = db.collection('admin').doc('musicPlayer').collection('favorite')
-                console.log(dbSong);
                 if(await this.seeIfItExistsFavorites(dbFavorite) == false){
                     let songObject = Object.assign(this.song, {'timestamp':+new Date}, {'mainPlaylist':this.dbPlaylistsName})
                     dbFavorite.doc().set(songObject)
-                    console.log('Test');
                     await dbSong.doc(this.song.id).update({favorite:true})
                 }
                 else{
-                    console.log('jest');
                     if(this.dbPlaylistsName != 'favorite'){
                         db.collection('admin').doc('musicPlayer').collection(this.dbPlaylistsName).doc(this.song.id).update({favorite:false})
                     }
@@ -240,14 +230,10 @@ import PlayMusic from './player/PlayMusic'
                 
             },
             async seeIfItExistsFavorites(dbFavorite){
-                console.log(dbFavorite);
                 let snapshot = await dbFavorite.get()
                 let status = false
                 await snapshot.docs.map(doc => { 
-                    console.log(doc.data().id);
-                    console.log(this.song.id);
                     if(doc.data().id == this.song.id){
-                        console.log('Jest taka piosenka');
                         status = true
                         doc.ref.delete()
                         this.song.favorite = false
@@ -320,14 +306,6 @@ import PlayMusic from './player/PlayMusic'
 
 <style scoped>
 
-.music-player-wrapper--dark .icon{
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-          filter: invert(100%);
-}
-.music-player-wrapper--dark .icon--default{
-    -webkit-filter: invert(0%); /* safari 6.0 - 9.0 */
-          filter: invert(0%);
-}
 .icon{
     display: block;
     width: 40px;
@@ -338,7 +316,7 @@ import PlayMusic from './player/PlayMusic'
 
 }
 .icon--circle{
-    background-color: rgb(0, 0, 0);
+    background-color: var(--bg-theme--app-second);
     border-radius: 100px;
 }
 .icon--play{
@@ -425,21 +403,20 @@ import PlayMusic from './player/PlayMusic'
     padding: 0;
     overflow: hidden;
     border-radius: 0;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .music-player-container{
     position: relative;
     top:0;
     left: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
+    color:var(--font-main-color);
     transition: 0.5s ease all;
-}
-.music-player-container--dark{
-    z-index: 1;
-    background-color: #22252D;
-    color: #FFF;
 }
 .music-player-container-header{
     display: flex;
@@ -487,13 +464,6 @@ import PlayMusic from './player/PlayMusic'
 }
 .music-player-progress-bar-wrapper{
     overflow: hidden;
-    border-radius: 10px;
-}
-.music-progress-bar-line{
-    height: 6px;
-    width: 100%;
-    transform: translate(-95%);
-    background-color: rgb(6, 104, 196);
     border-radius: 10px;
 }
 .music-player-progress-bar__button{
@@ -544,14 +514,14 @@ import PlayMusic from './player/PlayMusic'
     height: 60px;
     padding: 0.5rem;
     margin-right: 0.5rem;
-    background-color: rgba(214, 214, 214, 0.082);
+    background-color: var(--bg-theme--app-second);
     border-radius: 5px;
     cursor: pointer;
 }
 
 .player-list--active, .player-list:hover{
     border-radius: 15px;
-    background-color: rgba(214, 214, 214, 0.158);
+    background-color: var(--bg-theme--app-hover);
     transition: 0.3s ease all;
 }
 .player-list__img-container{

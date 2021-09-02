@@ -31,11 +31,16 @@ export default {
     getSystemAppDataFromDB(){
       let dbPathToSystem = db.collection('admin').doc('system')
       dbPathToSystem.collection('allApp').onSnapshot((snap)=>{
-        console.log(snap);
         this.allAppData = snap.docs.map(item => item.data())
       })
       
-    }
+    },
+    
+        checkIfBrowserIsSetToDarkMode(){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                this.theme = 'dark'
+            }
+        },
   },
   mounted(){
     createUserData.methods.createTreeData('admin')

@@ -1,7 +1,7 @@
 <template>
     <div class="recommended" v-if="dailyRecommended !== ''">
         <h3 class="recommended__header-title">Daily recommended</h3>
-        <div class="recommended-wrapper">
+        <div class="recommended-wrapper scroll">
             <div class="recommended-tile" v-on:click="getMusic(song,dailyRecommended, 'dailyRecommended')" v-for="song in dailyRecommended.slice(0,5)" :key="song.id">
                 <picture class="recommended-tile-img-wrapper">
                     <img class="recommended-tile-img-wrapper__img" :src="song.img" :alt="'Okładka piosenki - ' + song.title + ' ' + song.author">
@@ -81,7 +81,7 @@ import { db } from '@/firebaseDB';
     transition: 0.3s ease all;
 }
 .recommended-tile:hover{
-    background-color: rgba(238, 238, 238, 0.075);
+    background-color: var(--bg-theme--app-hover);
     transition: 0.3s ease all;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;

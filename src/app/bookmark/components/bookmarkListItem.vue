@@ -77,7 +77,6 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                             {favorite:this.favorite}
                         )
                         .then(()=>{
-                            console.log('Data with ID: ' +this.addFormId + ' is successfully sent!');
                         })
                         .catch(()=>{
                             this.emitter.emit('showModal',this.modalData)
@@ -110,14 +109,20 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                         this.tryGetFaviconFromSiteURL()
                     }
             },
-            async tryGetFaviconFromSiteURL(){
-                let newTestFavicon = this.bookmarkItemData.url + 'favicon.ico'
-                let testFileImg = await fetch(newTestFavicon).then(r => r.blob());
-                    console.log(testFileImg);
-                    if(testFileImg.size !== this.fileImg.size){
-                        console.log('dziala');
+           async tryGetFaviconFromSiteURL(){
+                    let newTestFavicon = this.bookmarkItemData.url + 'favicon.ico'
+                let responseTestImage
+                try{
+                    responseTestImage = await fetch(newTestFavicon)
+                }
+                catch(e){
+                    console.log(e);
+                }
+                let responseImageBlob = await responseTestImage.blob()
+                    if(responseImageBlob.size !== this.fileImg.size && responseTestImage.status != 404){
                         this.favicon = newTestFavicon
                     }
+                   
             },
             chooseEmitFunctionFromDropMenu(functionName){
                 if(functionName == 'deleteBookmark'){
@@ -136,7 +141,6 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                     setTimeout(()=>{
                         this.showAnswerModal = false
                     },this.answerModalProps.timeout)
-                    console.log('test');
                 }
             },
             deleteBookmarkFromDB(){
@@ -197,13 +201,13 @@ import answerModal from '@/app/components/modals/answerModal.vue'
     height: auto;
     width: 100%;
     padding: 10px;
-    background-color: #393939;
+    background-color: var(--bg-theme--app-second);
     border-radius: 10px;
     margin-bottom: 1rem;
 }
 .bookmark-list-item:hover{
     transition: 0.3s cubic-bezier(.17,.67,.83,.67);
-    background-color: #505050;
+    background-color: var(--bg-theme--app-hover);
 }
 .list-item-icon-wrapper{
     display: flex;
@@ -241,7 +245,7 @@ import answerModal from '@/app/components/modals/answerModal.vue'
 }
 .list-item-content__description{
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--font-second-color);
 }
 .list-item-content__title,
 .list-item-content__description{

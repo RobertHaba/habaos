@@ -1,6 +1,6 @@
 <template>
-                    <button @click="playAudio()">
-                        <span class="icon icon--circle icon--play" data-button='true'></span>
+                    <button @click="playAudio()" class="icon--circle ">
+                        <span class="icon icon--play icon--reverse-color" data-button='true'></span>
                     </button>
 </template>
 
@@ -41,10 +41,6 @@
 </script>
 
 <style scoped>
-.music-player-wrapper--dark .icon{
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-          filter: invert(100%);
-}
 .icon{
     display: block;
     width: 40px;
@@ -55,13 +51,13 @@
 
 }
 .icon--circle{
-    background-color: rgb(0, 0, 0);
+    background-color: var(--bg-theme--app);
     border-radius: 100px;
 }
 .icon--play{
-    background-image: url('../../assets/icons/play.svg');
+    background-image: url('http://cdn.haba.usermd.net/os/icons/play.svg');
 }
 .icon--pause{
-    background-image: url('../../assets/icons/pause.svg');
+    background-image: url('http://cdn.haba.usermd.net/os/icons/pause.svg');
 }
 </style>

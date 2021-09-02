@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-options bg-dark">
+    <div class="menu-options">
             <optionButton class="menu-options-user__img" :imgURL="avatarURL" itemTitle="Account" app="account" v-if="avatarURL != ''"/>
         <hr class="vertical-line">
         <ul class="options-list">
@@ -23,7 +23,6 @@
         methods:{
             async getUserAvatarFromDB(){
                 this.avatarURL = JSON.parse(sessionStorage.getItem('userData')).avatar
-                console.log(this.avatarURL);
             }
         },
         mounted(){
@@ -44,6 +43,7 @@
     width: calc(100% - 2rem);
     height: 50px;
     border-radius: 10px;
+    background-color: rgba(184, 184, 184, 0.3);
 }
 .menu-options-user{
     width: 50px;

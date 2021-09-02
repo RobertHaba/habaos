@@ -1,5 +1,5 @@
 <template>
-    <section class="calendar calendar-container app-container" :class="'calendar-container--' + theme">
+    <section class="calendar calendar-container app-container">
         <div class="app-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <headerApp :today="todayDate" :actuallyDay="actuallyDay"/>
             <calendarBody :actuallyMonth="actuallyMonth" :today="dayNumber" :actuallyMonthNumber="monthNumber"/>
@@ -19,7 +19,6 @@ import todoView from './todoView.vue'
     export default {
         data(){
             return{
-                theme: 'dark',
                 todayDate: '',
                 actuallyMonth:'',
                 day:'',
@@ -109,7 +108,6 @@ import todoView from './todoView.vue'
         mounted(){
             this.getToDayTime()
             this.emitter.on('openTodoEditor',(data)=>{
-                console.log(data.status);
                 this.openTodoEditor = data.status
                 this.activeDate = data.value
             })
@@ -136,12 +134,9 @@ import todoView from './todoView.vue'
     height: 100%;
     max-height: 650px;
     padding: 3rem 1.5rem 1.5rem;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
+    color: var(--font-main-color);
     border-radius: 20px;
     transition: 0.5s ease all;
-}
-.calendar-container--dark{
-    background-color: #22252D;
-    color: #FFF;
 }
 </style>

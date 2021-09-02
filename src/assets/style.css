@@ -7,11 +7,18 @@ input {
     --bg-theme: linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98));
     --bg-theme--first: rgba(98, 44, 102, 1);
     --bg-theme--second: rgba(68, 50, 114, 1);
+    --bg-theme--app: #22252D;
+    --bg-theme--app-second: #393939;
+    --bg-theme--app-hover: #505050;
+    --font-main-color: #FFF;
+    --font-second-color: rgba(255, 255, 255, 0.7);
+    --icon-reverse-color: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: rgba(250, 250, 250, 0.541);
+    color: var(--font-second-color);
+    opacity: 0.6;
 }
 
 input[type=range],
@@ -137,6 +144,15 @@ button {
     box-shadow: inset 7px 10px 12px #f0f0f0;
 }
 
+.scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #ff5ba3 #f0f0f0;
+}
+
+.scroll-hidden {
+    scrollbar-width: none;
+}
+
 
 /*Chrome*/
 
@@ -196,6 +212,10 @@ img {
 }
 
 .icon--reverse-color {
+    filter: var(--icon-reverse-color);
+}
+
+.icon--reverse-white {
     filter: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
 }
 
@@ -292,10 +312,6 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
 }
 
-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
 
 /*Form */
 
@@ -336,7 +352,7 @@ input::placeholder {
     width: calc(100% - 3rem);
     height: 30px;
     background-color: rgba(126, 126, 126, 0.3);
-    color: #FFF;
+    color: var(--font-main-color);
     padding: 0 1rem;
     border: none;
     border-radius: 100px;

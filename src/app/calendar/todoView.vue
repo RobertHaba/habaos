@@ -1,9 +1,9 @@
 <template>
-    <div class="window-addForm-cover window-addForm-cover--dark" @click.self="closeTodoView()" >
+    <div class="window-addForm-cover" @click.self="closeTodoView()" >
         <div class="window-addForm-container" :class="'bg-color--'+todoData.priority">
             <headerTodo :headerTitle="headerTitleText" />
             <div class="window-addForm-main">
-                <div class="addForm-view">
+                <div class="addForm-view scroll-hidden">
                     <h4 class="addForm-view__title">{{todo.title}}</h4>
                     <p class="addForm-view__description">{{todo.description}}
 
@@ -59,7 +59,6 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                 let date = this.todoData.createAt.split(',')
                 db.collection('admin').doc('todoApp').collection('todo').doc(date[0]).collection(date[1].replace('0','')).doc(date[2]).collection('lists').doc(this.todoData.id).delete()
                 .then(()=>{
-                    console.log('Usunięte');
                     this.resetApp()
                     this.checkDayListsLengthDB(date)
                     this.closeTodoView()
@@ -95,12 +94,9 @@ import answerModal from '@/app/components/modals/answerModal.vue'
             },
         },
         mounted(){
-            console.log(this.todoData);
             this.todoCreateAt = this.todoData.createAt.split(',').reverse().join('.')
             this.emitter.on('todoViewRunFunctionFromModal',(runFunction)=>{
-                console.log(runFunction);
-                if(runFunction){ this.removeFromDB() 
-                console.log('asdasd');}
+                if(runFunction){ this.removeFromDB() }
                 this.answerModalShow = false
 
             })
@@ -123,10 +119,9 @@ import answerModal from '@/app/components/modals/answerModal.vue'
 .addForm-view__title::first-letter{
     text-transform: uppercase;
 }
-.addForm-view__description,
-.addForm-view__date{
+.addForm-view__description{
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.774);
+    color: var(--font-second-color);
 }
 .addForm-view__footer{
     display: flex;

@@ -4,7 +4,7 @@
             <template v-for="app in navbarListAllApps" :key="app.id" >
                 <li class="app-item" @click="runApp(app.emitToApp)" tabindex="0">
                     <span class="icon" :style="{'background-image' : 'url('+app.iconURL+')'}"></span>
-                    <p class="app-item__title c-title">{{app.title}}</p>
+                    <p class="app-item__title">{{app.title}}</p>
                     <button @click.stop="addToFavorite(app)">
                         <span class="icon icon--reverse-color icon--option icon--favorite" :class="{'icon--option-active':app.favorite.active}"></span>
                     </button>
@@ -101,10 +101,11 @@ import { db } from '@/firebaseDB';
     width: 100%;
     padding: 0.3rem 0;
     transition: 0.3s ease-in;
+    color:var(--font-second-color)
 }
 .app-item:hover{
     padding-left: 0.3rem;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(184, 184, 184, 0.4);
     border-radius: 10px;
 }
 .app-item:hover .icon--option{

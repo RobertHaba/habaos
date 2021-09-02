@@ -25,11 +25,11 @@
     min-height: 75px;
     padding: 1rem;
     margin-bottom: 1rem;
-    background-color: #393939;
+    background-color: var(--bg-theme--app-second);
     border-left: 6px solid #E67500;
     font-size: 0.8rem;
     border-radius: 5px;
-    color:#FFF;
+    color:var(--font-main-color);
     word-break: break-all;
 }
 .calendar-todo-item-title{
@@ -43,7 +43,7 @@
     width: 100%;
 }
 .calendar-todo-item-description{
-    color: rgb(184, 184, 184);
+    color: var(--font-second-color);
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -54,6 +54,7 @@
     padding: 0.1rem 0.5rem;
     border-radius: 100px;
     font-size: 0.7rem;
+    color:#FFF;
 }
 .bg-color--Low{
     background-color: #4CAF50;

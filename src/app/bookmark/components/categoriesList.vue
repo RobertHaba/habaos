@@ -1,5 +1,5 @@
 <template>
-    <div class="category-list">
+    <div class="category-list scroll">
             <template v-for="category in allCategories" :key="category.title">
                     <categoryItem :class="{'category-list-item--active': activeCategory == category.title}" :title="category.title" @click="getBookmarksByCategory(category.title), scrollToActiveCategory()"/>
             </template>

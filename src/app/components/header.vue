@@ -5,7 +5,7 @@
             <p class="app-header-subtitle" v-if="today">Today is: <time datetime="">{{today}}</time> - {{actuallyDay}}</p>
         </div>
         <div class="app-header-column app-header-column--image">
-            <div class="icon-box-circle bg-theme">
+            <div class="icon-box-circle">
                 <span class="icon" :style="{'background-image' : 'url('+ userAvatar +')'}"></span>
             </div>
         </div>
@@ -66,6 +66,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50px;
+    background-color: var(--bg-theme--first);
 }
 .icon{
     display: block;

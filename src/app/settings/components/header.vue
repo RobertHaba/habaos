@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <span class="icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
+        <span class="icon icon--reverse-color" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
         <h2 class="header-title">{{title}}</h2>
     </div>  
 </template>

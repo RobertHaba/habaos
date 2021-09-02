@@ -67,13 +67,12 @@ import { db } from '@/firebaseDB';
     grid-template-columns:3fr 8fr 2fr;
     align-items: center;
     padding: 1rem 0;
-    border-bottom: 1px solid rgba(199, 199, 199, 0.082);
-    background-color: rgba(199, 199, 199, 0);
+    border-bottom: 1px solid rgba(122, 122, 122, 0.226);
     border-radius: 0px;
     cursor: pointer;
 }
 .favorite-list__item:hover{
-    background-color: rgba(199, 199, 199, 0.082);
+    background-color: rgba(122, 122, 122, 0.226);
     border-radius: 10px;
     transition: 0.3s ease all;
     padding: 1rem 0.5rem ;

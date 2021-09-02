@@ -1,19 +1,19 @@
 <template>
-    <section class="music app-container" :class="'app-container--' + theme" >
+    <section class="music app-container">
         <div class="music-container" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <header class="music-container-header">
                 <h2 class="header-title">Hi, {{user}}!</h2>
                 <ul class="header-nav-actions">
-                    <li class="header-nav-actions__item header-nav-actions__item--avatar">
-                        <button class="btn"><span class="icon icon--default i-user"></span></button>
+                    <li class="header-nav-actions__item">
+                        <button class="btn"><span class="icon i-user"></span></button>
                     </li>
                 </ul>
             </header>
-            <div class="music-wrapper">
+            <div class="music-wrapper scroll-hidden">
                 <Recommended :getMusic="getMusicFromChild"/>
                 <Favorite :getMusic="getMusicFromChild"/>
             </div>
-                    <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :themeColor="theme" :dbPlaylistsName="dbPlaylistsName"/>
+                    <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :dbPlaylistsName="dbPlaylistsName"/>
 
             <footer>
             </footer>
@@ -31,7 +31,6 @@ import MusicPlayer from '../components/musicPlayer.vue'
         name:'Music Home',
         data(){
             return{
-                theme: 'dark',
                 playerView: false,
                 musicToPlay:'',
                 playLists:'',
@@ -86,14 +85,6 @@ import MusicPlayer from '../components/musicPlayer.vue'
 .i-user{
     background-image: url('../assets/icons/user.svg');
 }
-.container--dark .icon{
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-          filter: invert(100%);
-}
-.container--dark .icon--default{
-    -webkit-filter: invert(0%); /* safari 6.0 - 9.0 */
-          filter: invert(0%);
-}
 .app-container{
     position: fixed;
     top:50%;
@@ -104,19 +95,17 @@ import MusicPlayer from '../components/musicPlayer.vue'
     height: 100%;
     max-height: 650px;
     padding-top: 3rem;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
+    color: var(--font-main-color);
     border-radius: 20px;
     transition: 0.5s ease all;
-}
-.app-container--dark{
-    background-color: #22252D;
-    color: #FFF;
 }
 .music-container{
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 0 1.5rem;
+    padding-bottom: 2rem;
     width: 100%;
     height: 100%;
 }
@@ -138,12 +127,8 @@ import MusicPlayer from '../components/musicPlayer.vue'
     width: 40px;
     height: 40px;
     margin-left: 1rem;
-    border:1px solid rgba(255, 255, 255, 0.493);
     border-radius: 100px;
-}
-.header-nav-actions__item--avatar{
-    background-color: rgba(230, 230, 230, 0.068);
-    border:1px solid rgba(230, 230, 230, 0);
+    background-color: var(--bg-theme--app-second);
 }
 .music-wrapper{
     height: calc(100% - 100px);

@@ -130,8 +130,6 @@ import formPassword from './components/forms/formPassword.vue'
                         [input.dataset.accountInputName, input.value]
                     )
                 })
-                console.log(newDataArray);
-                console.log(formInputsArray);
                 if(newDataArray.length != 0){
                     this.newData = newDataArray
                     this.pushDataToDatabase()
@@ -167,14 +165,10 @@ import formPassword from './components/forms/formPassword.vue'
     max-width: 330px;
     height: 100%;
     max-height: 650px;
-    background-color: #FFF;
+    background-image: var(--bg-theme);
+    color:var(--font-main-color);
     border-radius: 20px;
     transition: 0.5s ease all;
-}
-.settings-container--dark{
-    background-color: #22252D;
-    background-image: linear-gradient(135deg, #622c66, #443272); /* <- wybrać theme*/
-    color: #FFF;
 }
 .settings-body{
     height: calc(650px - 140px);

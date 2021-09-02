@@ -1,15 +1,7 @@
 <template>
-    <div class="calculator app-container" :class="{'container--dark' : theme == 'dark'}">
-        <div class="calculator-container" :class="{'calculator-container--dark' : theme == 'dark'}">
-        <div class="calculator-options">
-                <button class="switch-button" title="Change theme to Light" aria-label="Change theme to Light" @click="theme = 'light'">
-                    <span class="icon i-sun"></span>
-                </button>
-                <button class="switch-button" title="Change theme to Dark" aria-label="Change theme to Dark" @click="theme = 'dark'">
-                    <span class="icon i-moon"></span>
-                </button>
-        </div>
-        <div class="calculator-view" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
+    <div class="calculator app-container">
+        <div class="calculator-container">
+        <div class="calculator-view" >
             <p class="calculations">
                 <span class="calculations-text">{{numberFirst}}</span>
                 <span class="calculations-operator">{{operator}}</span>
@@ -17,7 +9,7 @@
             </p>
             <p class="result" :aria-label='"Math result: "+ result'>{{result}}</p>
         </div>
-        <div class="calculator-buttons">
+        <div class="calculator-buttons" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <button class="btn btn--orange" v-on:click="reset()" title='Click to clear' aria-label="Click to clear">AC</button>
             <button class="btn btn--orange" v-on:click="reverseSign()" title='Click to reverse symbol' aria-label="Click to reverse symbol">+/-</button>
             <button class="btn btn--orange" @click="operator = '%', calculationOf('%')" title='Click to add percentage symbol' aria-label="Click to add percentage symbol" data-key='%'>%</button>
@@ -54,15 +46,9 @@ export default {
             result:'0',
             lastOperator: '',
             operator:'',
-            theme: 'light'
         }
     },
     methods:{
-        reset(){
-            let themeColor = this.theme
-            Object.assign(this.$data, this.$options.data.apply(this))
-            this.theme = themeColor
-        },
         removeLastChar(){
             this.number = ''
             if(this.numberSecond == '' && this.operator == ''){
@@ -187,16 +173,10 @@ export default {
                     el.focus()
                 }
             })
-        },
-        checkIfBrowserIsSetToDarkMode(){
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                this.theme = 'dark'
-            }
         }
     },
     mounted(){
         this.keyClickEvents()
-        this.checkIfBrowserIsSetToDarkMode()
     }
 }
 </script>
@@ -219,18 +199,8 @@ button:focus{
     background-size: 100%;
     
 }
-.i-sun{
-    background: url('../assets/icons/sun.svg');
-}
-.i-moon{
-    background: url('../assets/icons/moon.svg');
-}
 .i-arrow{
     background-image: url('../assets/icons/left-arrow.svg');
-}
-.container--dark .switch-button .icon{
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-          filter: invert(100%);
 }
 .app-container{
   position: fixed;
@@ -247,53 +217,16 @@ button:focus{
 .calculator-container{
     position: relative;
     display: grid;
-    grid-template-rows: 80px 3fr 6fr;
+    grid-template-rows: 6fr 8fr;
     width: 100%;
     min-width: 330px;
     min-height: 650px;
     height: 100%;
     max-height: 650px;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
     border-radius: 20px;
     box-shadow: 4px 4px 15px -5px rgba(0, 0, 0, 0.14);
     transition: 0.5s ease all;
-}
-.calculator-container--dark{
-    background-color: #22252D;
-}
-.calculator-options{
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    height: 80px;
-}
-.switch-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 35px;
-    border: none;
-    transition: 0.5s ease all;
-}
-.calculator-container--dark .switch-button{
-    background-color: #292D36;
-}
-.switch-button:first-child{
-    border-top-left-radius: 100px;
-    border-bottom-left-radius: 100px;
-}
-.switch-button:last-child{
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
-}
-
-.switch-button:focus{
-    background-color: #DDD;
-}
-
-.calculator-container--dark .switch-button:focus{
-    background-color: rgb(78, 78, 78);
 }
 
 .calculator-view{
@@ -337,6 +270,7 @@ button:focus{
     width: 100%;
     overflow-x: auto;
     font-size: 2rem;
+    color:var(--font-main-color)
 }
 .calculator-buttons{
     display: grid;
@@ -346,12 +280,10 @@ button:focus{
     align-items: center;
     width: 100%;
     padding: 1rem;
-    background-color: rgb(250, 250, 250);
+    background-color: var(--bg-theme--app-second);
+    opacity: 0.6;
     border-radius: 20px;
     transition: 0.5s ease all;
-}
-.calculator-container--dark .calculator-buttons{
-    background-color: #292D36;
 }
 .btn{
     width: 50px;
@@ -359,11 +291,9 @@ button:focus{
     border:none;
     border-radius: 100px;
     font-weight: bold;
+    color:var(--font-main-color);
+    background-color: var(--bg-theme--app);
     transition: 0.5s ease background-color;
-}
-.calculator-container--dark .btn{
-    color:#DDD;
-    background-color: #242931;
 }
 .btn--remove{
     display: flex;

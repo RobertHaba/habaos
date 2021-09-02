@@ -1,6 +1,6 @@
 <template>
-    <div class="os-menu-start bg-theme">
-        <div class="os-menu-start__section">
+    <div class="os-menu-start">
+        <div class="os-menu-start__section scroll-hidden">
             <div v-for="menuComponent in menuComponentsData" :key="menuComponent.id" :data-menu-component="menuComponent.component" :data-menu-component-active="menuComponent.active">
                 <categoryTitle :title="menuComponent.title" :imgURL="menuComponent.icon" v-show="menuComponent.props"/>
                 <component :is="menuComponent.component" :dataProp="menuComponent.props"/>
@@ -71,9 +71,6 @@ import options from './options.vue'
                 }
             }
         },
-        mounted(){
-            console.log(this.allAppData);
-        }
     }
 </script>
 
@@ -85,7 +82,9 @@ import options from './options.vue'
         bottom: 60px;
         padding: 1rem;
         border-radius: 10px;
-        z-index: 999;
+        background-image: var(--bg-theme);
+        z-index: 999999;
+        box-shadow: 0px 0px 10px -2px rgb(117 117 117 / 57%);
     }
     .os-menu-start div{
         margin-bottom: 1rem;
@@ -96,6 +95,7 @@ import options from './options.vue'
         bottom:40px;
         width: 100%;
         height: calc(100% - 50px - 0.5rem);
+        padding: 0 0.2rem;
         overflow-y: auto;
     }
 </style>

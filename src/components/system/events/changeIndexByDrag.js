@@ -14,7 +14,6 @@ export const dragItem = {
             this.activeDragElement = item
             this.itemLists = itemLists
             let indexActiveDrag = this.itemLists.findIndex((el)=>el == this.activeDragElement)
-            console.log(indexActiveDrag);
             let isChangedPoition = false
             if(this.activeDragElement != this.overDragElement){
                 this.itemLists.forEach((item,index) =>{
@@ -25,8 +24,6 @@ export const dragItem = {
                         this.itemLists.splice(index,0,element)
                         element[changeIDInObject].id = index
                         item[changeIDInObject].id = indexActiveDrag
-                        console.log(element);
-                        console.log(item);
                     }
                 })
             }

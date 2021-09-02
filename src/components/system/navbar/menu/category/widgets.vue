@@ -1,5 +1,5 @@
 <template>
-        <div class="widgets-container" v-if="widgetLists">
+        <div class="widgets-container scroll" v-if="widgetLists">
             <div  v-for="app in widgetLists" :key="app.id" >
                 <component class="widget" :class="'widget--'+app.appName" :is="app.widget.component" v-if="app.widget.ready !== false && app.widget.active"  v-on:checkIfWidgetItsReady="app.widget.ready = $event" draggable="true" @dragenter="runDragOver(app)" @dragend="runDragEnd(app)" title="Drag to change position"/>
             </div>
@@ -39,10 +39,8 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
                 this.updateWidgetDataInDB()
             },
             getWidgetList(){
-                console.log(this.dataProp);
                 [...this.dataProp].forEach((app)=>{
                     if(app.widget != undefined && app.widget.active){
-                        console.log(app);
                         this.widgetLists.push(app)
                     }
                 })
@@ -50,7 +48,6 @@ import widgetWeather from '@/app/weather/widget/weather.vue'
                 
             },
             sortWidget(){
-                console.log('Sorotwanie');
                 this.widgetLists.sort((a,b)=>(a.widget.id>b.widget.id)?1:(b.widget.id>a.widget.id)?-1:0)
             },
             updateWidgetDataInDB(){

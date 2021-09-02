@@ -18,7 +18,6 @@ export default {
       if (!siteUrlInput.match(regexURL) || siteUrlInput === "") {
         validationTest = false
       } else {
-        console.log('poprawne');
         let fullSiteUrl;
         fullSiteUrl = "http://" + siteUrlInput;
         siteUrlInput = siteUrlInput.match(regexHTTP)
@@ -26,13 +25,11 @@ export default {
           : fullSiteUrl;
           validationTest = true
       }
-      console.log(await validationTest);
       this.emitter.emit(emitProps[1], [await validationTest, await siteUrlInput])
     },
   },
   mounted() {
     this.emitter.on("bookmarkURLValidation", (value) => {
-      console.log("asdasd");
       this.bookmarkURLValidation(value);
     });
   },

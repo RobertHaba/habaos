@@ -1,5 +1,5 @@
 <template>
-    <li class="list-item" :class="['list-item--' + orientation, 'list-item--' + theme]" v-for="weather in object" :key="weather.id" >
+    <li class="list-item" :class="['list-item--' + orientation]" v-for="weather in object" :key="weather.id" >
         <p class="list-item__text">{{weather.text}}</p>
         <div class="icon" :style="'background-image: url('+weather.icon+')'"></div>
         <p class="list-item__temperature">{{weather.mainTemperature}}<span class="temperature-dot"></span></p>
@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        props:['object', 'orientation', 'theme'],
+        props:['object', 'orientation'],
     }
 </script>
 

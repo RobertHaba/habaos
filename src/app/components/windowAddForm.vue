@@ -1,5 +1,5 @@
 <template>
-    <div class="window-addForm-cover window-addForm-cover--dark" @click.self="closeTodoEditor()">
+    <div class="window-addForm-cover" @click.self="closeTodoEditor()">
         <div class="window-addForm-container" >
             <windowHeader :headerTitle="headerTitleText" />
             <div class="window-addForm-main" >
@@ -9,7 +9,7 @@
 
                 <div class="window-addForm-main__column" >
                     <div class="addForm-input-box"><p class="window-addForm-column-title">{{addSettings.tagData.name}}</p><p class="validation-alert" v-if="this.priorityData.validation === false">Chose priority</p></div>
-                    <div class="window-addForm-buttons-wrapper">
+                    <div class="window-addForm-buttons-wrapper scroll">
                         <template v-for="tag in addSettings.tagValues" :key="tag" >
                             <windowBtn class="addForm-button" :class="{'addForm-button--active':priorityData.value == tag.title}" :btnTitle="tag.title" :btnBgColor="tag.bgColor" @click="priorityData.value = tag.title; scrollToActiveTag()"/>
                         </template>
@@ -68,7 +68,6 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
                         data.validation = false
                     }
                 });
-                console.log(this.addFormData);
                 if(await this.validationStatus && this.addFormData.length == (this.addSettings.inputs.length + 1)){
                     this.sendToDB()
                 }
@@ -93,8 +92,6 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
                 
             },
             sendToDB(){
-                console.log('Sending to DB ID: ' +this.addFormId + ' with data:');
-                console.log(this.addFormData);
                 if(this.addSettings.app == 'todoApp'){
                     let objectTodoData = {
                         id: this.addFormId,
@@ -108,7 +105,6 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
                         objectTodoData
                     )
                     .then(()=>{
-                        console.log('Data with ID: ' +this.addFormId + ' is successfully sent!');
                         this.modalData = {
                             title:'Succes',
                             text:'Your data has been successfully sent!',
@@ -141,7 +137,6 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
                         objectTodoData
                     )
                     .then(()=>{
-                        console.log('Data with ID: ' +this.addFormId + ' is successfully sent!');
                         this.modalData = {
                             title:'Succes',
                             text:'Your data has been successfully sent!',
@@ -176,11 +171,9 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
                 this.emitter.emit(this.addSettings.emits.openEditor,false)
             },
             scrollToActiveTag(){
-                console.log('asda');
                 setTimeout(()=>{
                     let activeCategory = document.querySelector('.addForm-button--active')
                     let previewCategoryContainer = document.querySelector('.window-addForm-buttons-wrapper')
-                    console.log(activeCategory);
                     previewCategoryContainer.scrollLeft = activeCategory.offsetLeft - activeCategory.offsetWidth
                 },160)
             }
@@ -218,9 +211,10 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
     border-radius: 20px;
     transition: 0.5s ease all;
 }
-.window-addForm-cover--dark{
+.window-addForm-cover{
+    transition: 0.3s ease all;
     background-color: #3e424da2;
-    color: #FFF;
+    color: var(--font-main-color);
 }
 .window-addForm-container{
     position: absolute;
@@ -229,12 +223,15 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
     height: 480px;
     background-color: #662B65;
 }
+.calendar-todo-header{
+    color:#FFF;
+}
 .window-addForm-main{
     bottom: 0;
     max-height: 400px;
     border-radius: 20px;
     padding: 2rem 1.5rem 1.5rem;
-    background-color: #22252d;
+    background-color: var(--bg-theme--app);
 
 }
 .window-addForm-main__column{
@@ -252,7 +249,7 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
 .window-addForm-main__column textarea{
     padding: 0.3rem;
     background-color: rgba(255, 255, 255, 0);
-    color: #FFF;
+    color: var(--font-main-color);
     border-bottom:1px solid #662B65;
 }
 .window-addForm-main__column textarea{
@@ -305,7 +302,7 @@ import defaultModal from '@/app/components/modals/defaultModal.vue'
     z-index: 2;
     width: 100%;
     height: 50px;
-    background-color: #2C2F36;
+    background-color: var(--bg-theme--app-second);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 

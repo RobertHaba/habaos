@@ -1,5 +1,5 @@
 <template>
-    <section class="bookmark bookmark-container app-container app-bookmark" :class="'bookmark-container--' + theme" >
+    <section class="bookmark bookmark-container app-container app-bookmark">
         <div class="app-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
             <headerComponent/>
             <searchBar />
@@ -17,7 +17,7 @@
                         <span class="icon icon--reverse-color" :style="{'background-image': 'url(' + sortIcon + ')'}"></span>
                     </div>
                     <button class="btn-app-circle btn-app-circle--sort" @click="showFilterOptions = !showFilterOptions">
-                        <span class="icon icon--sort icon--reverse-color"></span>
+                        <span class="icon icon--sort icon--reverse-white"></span>
                         <dropSmallMenu v-show="showFilterOptions" :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu"/>
                     </button>
                     
@@ -44,7 +44,6 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     export default {
         data(){
             return{
-                theme: 'dark',
                 styleSectionTitle:{
                     fontSize: '1rem',
                     padding: '0'
@@ -228,7 +227,6 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
             this.getBookmarkFromDB()
             this.activeDate = new Date().toLocaleDateString('en-CA').split('-').join('.')
             this.emitter.on('openBookmarkEditor',(data)=>{
-                console.log(data);
                 this.openBookmarkAddForm = data
             })
             this.emitter.on('resetDataInBookmarkApp',()=>{
@@ -261,13 +259,10 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     height: 100%;
     max-height: 650px;
     padding: 3rem 1.5rem 1.5rem;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
+    color: var(--font-main-color);
     border-radius: 20px;
     transition: 0.5s ease all;
-}
-.bookmark-container--dark{
-    background-color: #22252D;
-    color: #FFF;
 }
 .app-wrapper{
     width: 100%;
@@ -299,14 +294,15 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     height: 30px;
     padding: 0.3rem 1rem;
     font-size: 0.8rem;
-    color: rgb(255, 255, 255);
     border-radius: 100px;
     font-weight: bold;
     border: 2px solid var(--bg-theme--first);
+    color: var(--font-main-color);
     transition: 0.3s cubic-bezier(.17,.67,.83,.67);
 }
 .button-bookmark-all:hover{
     background-color: var(--bg-theme--first);
+    color: #FFF;
 }
 .icon{
     width: 14px;

@@ -25,7 +25,6 @@
             .then(data=>{
                 let resWeather = data
                 this.weather = resWeather.current
-                console.log(this.weather);
                 let status = (this.weather != '')? true : false
                 this.$emit("checkIfWidgetItReadyChild",status)
             })

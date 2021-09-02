@@ -1,7 +1,7 @@
 <template>
-    <div class="calendar-months-wrapper">
+    <div class="calendar-months-wrapper scroll">
         <div class="calendar-months-container">
-            <div class="calendar-months-item bg-theme--no-gradient" v-for="(month, index) in monthsArray" :key="index" :class="{'calendar-months-item--active' : month == activeMonth}" @click="activeMonthIndex = index, activeMonth = month ">
+            <div class="calendar-months-item" v-for="(month, index) in monthsArray" :key="index" :class="{'calendar-months-item--active' : month == activeMonth}" @click="activeMonthIndex = index, activeMonth = month ">
                 {{month}}
             </div>
         </div>
@@ -36,7 +36,6 @@
                 setTimeout(()=>{
                     document.querySelector('.calendar-months-item--active').scrollIntoView({behavior: "smooth", inline: "center"})
                 }, 100)
-                console.log(document.querySelector('.calendar-months-item--active'));
             },
 
         },
@@ -77,12 +76,14 @@
     height: 25px;
     padding: 0 1rem;
     margin:1rem 1rem 0 0;
-    border-radius: 50px;
     font-size: 0.8rem;
+    color: #FFF;
+    background-color: var(--bg-theme--first);
+    border-radius: 50px;
 }
 .calendar-months-item--active{
-    background-color: #FFF;
-    color: #662B65;
+    background-color: var(--bg-theme--app-second);
+    color: var(--font-main-color);
     font-weight: bold;
 }
 </style>

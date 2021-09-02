@@ -4,7 +4,7 @@
         <p class="widget-subtitle c-subtitle">Shy Girl</p>
         <div class="widget-options">
             <button class="widget-button widget-button--previous"></button>
-            <button class="widget-button widget-button--play"></button>
+            <button class="widget-button widget-button--play icon--reverse-white"></button>
             <button class="widget-button widget-button--next"></button>
         </div>
     </div>
@@ -46,7 +46,7 @@
     }
     .widget-button--play{
         margin: 0 0.8rem;
-        background-image: url('http://cdn.haba.usermd.net/os/icons/play-white.svg');
+        background-image: url('http://cdn.haba.usermd.net/os/icons/play.svg');
     }
     .widget-button--next{
         background-image: url('http://cdn.haba.usermd.net/os/icons/next-white.svg');

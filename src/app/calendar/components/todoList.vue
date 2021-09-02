@@ -5,7 +5,7 @@
             <p class="btn-app-circle calendar-todo-header__number">{{(todos !== '')? todos.length : 0}}</p>
             <p class="btn-app-circle" @click="openTodoWindow('openTodoEditor', activeDate)">+</p>
         </div>
-        <div class="calendar-todo-list" v-if="todos !== ''" >
+        <div class="calendar-todo-list scroll-hidden" v-if="todos !== ''" >
             <template  v-for="todo in todos" :key="todo.id" >
                 <todoItem :todoData="todo" @click="openTodoWindow('openTodoView',todo)"/>
             </template>
@@ -32,7 +32,6 @@ import todoItem from './todoItem.vue'
         methods:{
             async getDataFromDB(){
                 let splitDate = this.activeDate.split('.')
-                console.log(splitDate);
                 await db.collection('admin').doc('todoApp').collection('todo').doc(splitDate[0]).collection(splitDate[1].replace('0','')).doc(splitDate[2]).collection('lists').get()
                 .then(res =>{
                     this.todos = res.docs.map(doc => doc.data())
@@ -82,6 +81,7 @@ import todoItem from './todoItem.vue'
 }
 .calendar-todo-header__text{
     font-weight: bold;
+    color:var(--font-main-color);
 }
 .calendar-todo-header__number{
     font-size: 1rem;

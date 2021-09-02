@@ -1,5 +1,5 @@
 <template>
-    <div class="bookmark-list" id="bookmarkAppList">
+    <div class="bookmark-list scroll-hidden" id="bookmarkAppList">
         <template v-for="bookmarkItemData in bookmarksSorted" :key="bookmarkItemData.id" >
             <bookmarkListItem :bookmarkItemData='bookmarkItemData'/>
         </template>
@@ -43,7 +43,6 @@ import bookmarkListItem from './bookmarkListItem.vue'
                 }
             },
             sortByLatest(){
-                console.log('asd');
                 this.bookmarksSorted = this.bookmarksListData.slice()
             },
             sortByOldest(){
@@ -89,7 +88,7 @@ import bookmarkListItem from './bookmarkListItem.vue'
     height: 70px;
     width: 100%;
     padding: 10px;
-    background-color: #393939;
+    background-color: var(--bg-theme--app-second);
     border-radius: 10px;
 }
 .bookmark-item-alert__text{

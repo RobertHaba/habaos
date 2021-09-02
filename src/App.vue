@@ -10,7 +10,6 @@ export default {
     }
   },
   mounted() {
-    console.log(sessionStorage.getItem('authenticated'));
     if(sessionStorage.getItem('authenticated') != 'true'){
       if(!this.authenticated || sessionStorage.getItem('authenticated') != 'true') {
         this.$router.replace({ name: "login" });

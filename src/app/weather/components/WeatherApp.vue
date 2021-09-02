@@ -1,14 +1,6 @@
 <template>
-    <div class="weather container" :class="'container--' + theme">
-        <section class="weather-container" :class="'weather-container--' + theme"  v-if="weather !== ''">
-            <div class="weather-options">
-                <button class="switch-button" title="Change theme to Light" aria-label="Change theme to Light" @click="theme = 'light'">
-                    <span class="theme-icon i-light"></span>
-                </button>
-                <button class="switch-button" title="Change theme to Dark" aria-label="Change theme to Dark" @click="theme = 'dark'">
-                    <span class="theme-icon i-dark"></span>
-                </button>
-            </div>
+    <div class="weather container">
+        <section class="weather-container" v-if="weather !== ''">
             <div class="weahter-wallpaper">
                 <div class="weather-sun"></div>
                 <div class="wallpaper-icon i-cloud"></div>
@@ -28,15 +20,15 @@
             </ul>
             <div class="hours-wrapper hours-weather" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
                 <h3 class="hours-weather__title">Today</h3>
-                <div class="hours-weather-wrapper">
+                <div class="hours-weather-wrapper scroll">
                     <ul class="hours-weather__list">
-                        <List :object="todayWeatherInHours" orientation="vertical" :theme="theme"/>
+                        <List :object="todayWeatherInHours" orientation="vertical"/>
                     </ul>
                 </div>
             </div>
-            <div class="week-weather-wrapper" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
+            <div class="week-weather-wrapper scroll" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
                 <ul class="week-weather-list">
-                    <List :object="weekWeather" orientation="horizontal" :theme="theme"/>
+                    <List :object="weekWeather" orientation="horizontal"/>
                 </ul>
             </div>
         </section>
@@ -58,7 +50,6 @@ export default {
             ],
             weekWeather:[
             ],
-            theme:'light',
             city:'',
             geolocationCoordinates: '',
             sun:'',
@@ -71,11 +62,6 @@ export default {
         List
     },
     methods:{
-        checkIfBrowserIsSetToDarkMode(){
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                this.theme = 'dark'
-            }
-        },
         getCity(){
                 this.city = JSON.parse(sessionStorage.getItem('userData')).location
                 this.getWeather()
@@ -87,7 +73,6 @@ export default {
             .then(data=>{
                 let resWeather = data
                 this.weather = resWeather
-                console.log(resWeather);
                 this.getCurrentWeatherDetails()
                 this.getSunsetAndSunrise()
                 this.todayWeatherInHours = this.getForecastWeather(resWeather.forecast.forecastday[0].hour)
@@ -138,7 +123,6 @@ export default {
         }
     },
     mounted(){
-        this.checkIfBrowserIsSetToDarkMode()
         this.getCity()
             this.emitter.on('updateLocationInWeatherApp',()=>{
                 this.getCity()
@@ -181,14 +165,11 @@ export default {
     height: 100%;
     max-height: 650px;
     padding: 3rem 1.5rem;
-    background-color: #FFF;
+    background-color: var(--bg-theme--app);
+    color: var(--font-main-color);
     border-radius: 20px;
     box-shadow: 4px 4px 15px -5px rgba(0, 0, 0, 0.14);
     transition: 0.5s ease all;
-}
-.weather-container--dark{
-    background-color: #22252D;
-    color: #FFF;
 }
 .weahter-header{
     display: flex;
@@ -205,11 +186,7 @@ export default {
     position: relative;
     font-size: 4rem;
     font-weight: 500;
-    color: #1f3b5e;
-}
-
-.weather-container--dark .weahter-header__temperature{
-    color: #FFF;
+    color: var(--font-second-color);
 }
 .temperature-dot{
     position: absolute;
@@ -217,21 +194,15 @@ export default {
     width: 13px;
     height: 13px;
     transform: translateX(100%);
-    border:2px solid #273a52;
+    border:2px solid var(--font-second-color);
     border-radius: 100px;
-}
-.weather-container--dark .temperature-dot{
-    border-color: #DDD;
 }
 .weahter-header__info{
     padding: 0.5rem 1rem;
     width: max-content;
-    background-color: #F7F7F7;
+    background-color: var(--bg-theme--app-second);
     border-radius: 100px;
     font-size: 0.8rem;
-}
-.weather-container--dark .weahter-header__info{
-    background-color: #2b3458;
 }
 .weahter-wallpaper{
     position: absolute;
@@ -307,7 +278,7 @@ export default {
 }
 .hours-weather__title{
     font-size: 0.9rem;
-    color: #526781b6;
+    color: var(--font-second-color);
 }
 .hours-weather-wrapper{
     position: relative;
@@ -325,61 +296,5 @@ export default {
     margin-top: 2rem;
     height: 100px;
     overflow-y: auto;
-}
-.theme-icon{
-    display: block;
-    width: 1rem;
-    height: 1rem;
-    background-size: 100%;
-}
-.container--dark .switch-button .theme-icon{
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-          filter: invert(100%);
-}
-.i-light{
-    background: url('../assets/icons/light.svg');
-}
-.i-dark{
-    background: url('../assets/icons/dark.svg');
-}
-
-.weather-options{
-    position: absolute;
-    top:-2rem;
-    left:50%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    height: 80px;
-    transform: translateX(-50%);
-    z-index: 100099;
-}
-.switch-button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 35px;
-    border: none;
-    transition: 0.5s ease all;
-}
-.weather-container--dark .switch-button{
-    background-color: #292D36;
-}
-.switch-button:first-child{
-    border-top-left-radius: 100px;
-    border-bottom-left-radius: 100px;
-}
-.switch-button:last-child{
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
-}
-
-.switch-button:focus{
-    background-color: #DDD;
-}
-
-.weather-container--dark .switch-button:focus{
-    background-color: rgb(78, 78, 78);
 }
 </style>

@@ -121,7 +121,6 @@ import  {db}  from '@/firebaseDB';
                 await this.addTodoPropertyToDay()
             },
             addTodoPropertyToDay(){
-                console.log(this.daysWithTodo);
                 this.daysWithTodo.forEach((todoDay)=>{
                     this.allDaysCalendar.forEach(day => {
                         day.forEach(item => {
@@ -174,7 +173,7 @@ import  {db}  from '@/firebaseDB';
     width: 100%;
     padding: 1rem;
     margin-top: 1rem;
-    background-color: #323232;
+    background-color: var(--bg-theme--app-second);
     border-radius: 20px;
 }
 .calendar-days-column{
@@ -197,7 +196,8 @@ import  {db}  from '@/firebaseDB';
     height: auto;
 }
 .calendar-days-column__item--others{
-    color: rgba(206, 206, 206, 0.6);
+    color: var(--font-second-color);
+    opacity: 0.6;
 }
 .calendar-days-column__item--active-day{
     font-weight: bold;
@@ -218,5 +218,6 @@ import  {db}  from '@/firebaseDB';
     font-weight: bold;
     background-color: #662b65;
     border-radius: 100%;
+    color:#FFF;
 }
 </style>

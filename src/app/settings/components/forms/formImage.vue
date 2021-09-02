@@ -22,7 +22,6 @@
                 let expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
                 let regex = new RegExp(expression);
                 this.readyToChange = (this.imgURL.match(regex)) ? true : false
-                console.log(this.readyToChange);
             }
         },
         mounted(){

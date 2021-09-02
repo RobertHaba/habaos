@@ -1,6 +1,6 @@
 <template>
     <div class="list-header">
-        <span class="icon" :style="{'background-image' : 'url('+ imgURL +')'}"> </span>
+        <span class="icon icon--reverse-color" :style="{'background-image' : 'url('+ imgURL +')'}"> </span>
         <p class="list-header__title">{{title}}</p>
     </div>
 </template>

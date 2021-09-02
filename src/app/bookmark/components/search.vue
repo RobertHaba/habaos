@@ -1,7 +1,7 @@
 <template>
-    <div class="search-bar bg-theme--no-gradient">
+    <div class="search-bar">
         <span class="icon"></span>
-        <input class="search-bar__input bg-theme--no-gradient" type="text" placeholder="Let's search!" @keyup="loadSearch()" v-model.trim="searchText"/>
+        <input class="search-bar__input" type="text" placeholder="Let's search!" @keyup="loadSearch()" v-model.trim="searchText"/>
     </div>
 </template>
 
@@ -38,8 +38,6 @@
                 })
                 if(this.searchText != "" && bookmarksListLength == 0){
                     this.emitter.emit('bookmarksListShowAlert',{status:true,text:"Ohh.. No data"})
-                    console.log(this.searchText);
-                    console.log('No data');
                 }
                 else if(bookmarksListLength > 0 ){
                     this.emitter.emit('bookmarksListShowAlert',{status:false,text:"Ohh.. No data"})
@@ -65,6 +63,7 @@
     grid-template-columns: 40px 1fr;
     width: 100%;
     height: 30px;
+    background-color: var(--bg-theme--first);
     border-radius: 50px;
 }
 .icon{
@@ -78,6 +77,10 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 0 0.5rem;
+    background-color: var(--bg-theme--first);
+    color: #FFF;
+}
+.search-bar__input::placeholder{
     color: #FFF;
 }
 </style>

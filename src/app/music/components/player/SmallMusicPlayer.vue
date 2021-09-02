@@ -27,7 +27,6 @@
         },
         methods:{
             expandPlayer(e){
-                console.log();
                 if(e.target.dataset.button !== 'true'){
                 this.$parent.expandPlayer()
                 }
@@ -56,10 +55,10 @@
         z-index: 200;
         height: 50px;
         width: 100%;
-        background-color: #2a2c30;
+        background-color: var(--bg-theme--app-second);
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
-        color: #FFF;
+        color: var(--font-main-color);
     }
     .small-player-image{
         width: 100%;
