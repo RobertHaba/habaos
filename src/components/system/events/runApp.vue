@@ -1,6 +1,6 @@
 <template>
     <div class="os-appBox" v-if="app!=''">
-            <component :is="app" :v-if="app" :id="'app-'+app" @dragstart="dragging" @dragend='drop' draggable='true' @click="addTopPosition('app-'+app)"/>
+            <component :is="app" :v-if="app" :id="'app-'+app" @dragstart="dragStart($event),addTopPosition('app-'+app)" @dragend='drop' draggable='true' @click="addTopPosition('app-'+app)"/>
     </div>
 </template> 
 
@@ -24,28 +24,41 @@ import bookmark from '@/app/bookmark/bookmarkApp.vue'
         props:{
             app:String
         },
+        data(){
+            return{
+                highestZIndex:0,
+                dragStartPropX:0,
+                dragStartPropY:0
+            }
+        },
         methods: {
             moveToDesktop(){
                 if(this.app != ''){
-                    console.log(this.app);
                         let appBox = document.querySelector('.os-appBox ' + '.'+this.app)
-                    console.log(appBox);
                         document.querySelector('.os-main-window').appendChild(appBox.parentElement)
                         appBox.classList.add('app-top-index')
+                         this.addTopPosition('app-'+this.app)
                 }
             },
-            dragging(e){
-                let item = e.target
-                this.removeTopPositionFromOther()
-                item.classList.add('app-top-index')
-
+            dragStart(e){
+                console.log('DRAG START ELEMENT');
+                console.log(e);
+                    this.dragStartPropX = {
+                        screenX : e.screenX,
+                        x:e.x
+                    }
+                    this.dragStartPropY = {
+                        screenY : e.screenY,
+                        y:e.y
+                    }
             },
             drop(e){
-                console.log(e);
                 let left, top, item, padding
+                console.log('Drop END ELEMENT');
+                console.log(e);
                 item = e.target
-                left = e.x
-                top = e.y
+                left = e.screenX - this.dragStartPropX.screenX + this.dragStartPropX.x
+                top = e.screenY - this.dragStartPropY.screenY + this.dragStartPropY.y
                 padding = 10
                 if(left <= (item.offsetWidth /2) + padding){
                     left = (item.offsetWidth / 2) + padding
@@ -64,25 +77,30 @@ import bookmark from '@/app/bookmark/bookmarkApp.vue'
                 item.style.transform = 'translate(-50%,0)'
             },
             addTopPosition(id){
-                this.removeTopPositionFromOther()
-                document.querySelector('#'+id).classList.add('app-top-index')
+                let osAppBoxs = document.querySelectorAll('.os-appBox')
+                let appItem = document.querySelector('#'+id).parentElement
+                    appItem.style.zIndex = this.getHighestZIndexFromApps(osAppBoxs)
             },
-            removeTopPositionFromOther(){
-                let items = document.querySelectorAll('.app-top-index')
-                items.forEach((item)=>{
-                    item.classList.remove('app-top-index')
-                })
+            getHighestZIndexFromApps(osAppBoxs){
+                let appArray = [...osAppBoxs]
+                appArray.sort((a,b) => b.style.zIndex - a.style.zIndex)[0]
+                let newIndex = parseInt(appArray[0].style.zIndex)
+                newIndex = (!newIndex)? 1 : newIndex + 1
+                return newIndex
+
             }
         },
         mounted(){
-            console.log('dziala');
+            if(this.app){
+                this.addTopPosition('app-'+this.app)
+            }
             this.moveToDesktop()
         }
     }
 </script>
 
 <style scoped>
-.app-top-index{
-    z-index: 400;
+.os-appBox{
+    position: relative;
 }
 </style>
