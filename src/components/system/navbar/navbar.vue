@@ -16,14 +16,14 @@
             </ul>
           </div>
           <ul class="os-navbar-setting">
-            <li class="navbar-setting-item bg-dark--hover" v-for="componentItem in navbarSettingComponents" :key="componentItem.id" @click="runSetting()">
+            <li class="navbar-setting-item bg-dark--hover" v-for="componentItem in navbarSettingComponents" :key="componentItem.id" @click="componentItem.functionName">
               <p class="navbar-setting-item__title bg-dark">{{componentItem.text}}</p>
               <span class="icon icon--reverse-color" :style="{'background-image':'url('+ componentItem.icon +')'}"></span>
               <component :is="componentItem.name" v-if="componentItem.name"/>
             </li>
             <li class="navbar-setting-item navbar-setting-item--date">
-              <time datetime="12:30">12:30</time>
-              <time datetime="01.09.2021">01.09.2021</time>
+              <time :datetime="time">{{time}}</time>
+              <time :datetime="todayDate">{{todayDate}}</time>
             </li>
           </ul>
         </div>
@@ -36,7 +36,13 @@ import navbarListItem from './navbarListItem'
 import menuStart from './menu/menuStart'
 import brightnessSetting from '../settings/brightnessSetting.js'
     export default {
-        props:['allAppData'],
+        props:{
+          allAppData:Array,
+          showStartMenu:{
+            type:Boolean,
+            default:false,
+          },
+        },
         mixins:[brightnessSetting],
         components:{
             navbarListItem,
@@ -44,41 +50,62 @@ import brightnessSetting from '../settings/brightnessSetting.js'
         },
         data(){
           return{
-            openStart: false,
+            openStart: this.showStartMenu,
             navbarSettingComponents:[
               {
                 id:0,
                 text:'Sound',
-                name:'soundSetting',
+                isFunction:false,
+                functionName:'',
                 icon:'http://cdn.haba.usermd.net/os/icons/volume.svg',
                 status:false
               },
               {
                 id:1,
-                text:'Network',
-                name:false,
-                icon:'http://cdn.haba.usermd.net/os/icons/wifi.svg',
-                status:false
-              },
-              {
-                id:2,
                 text:'Switch brightness mode',
-                name:false,
+                isFunction:true,
+                functionName:this.runSetting,
                 icon:'http://cdn.haba.usermd.net/os/icons/brightness.svg',
                 status:false
               }
             ],
             themesID:0,
-
+            todayDate:'',
+            time:"13:37",
           }
         },
         methods:{
           runSetting(){
             this.themesID = (this.themesID === 0)? 1:0
             this.changeBrightness(this.themesID)
-          }
+          },
+          getDateAndTime(){
+            let date = new Date()
+            this.todayDate = date.toJSON().slice(0,10).replace(/-/g,'.').split('.').reverse().join('.');
+            console.log(this.todayDate);
+            setInterval(()=>{
+              this.timer()
+            },1000);
+          },
+          timer(){
+            let date = new Date()
+            let minutes = (date.getMinutes() < 10)? '0'+date.getMinutes():date.getMinutes()
+            let hours = (date.getHours() < 10)? '0'+date.getHours():date.getHours()
+            this.time = hours + ':' + minutes
+          },
+        },
+        watch:{
+            showStartMenu:{
+                deep:true,
+                handler(){
+                    this.openStart = false
+                }
+            }
+        },
+        mounted(){
+          this.getDateAndTime()
         }
-    }
+        }
 </script>
 
 <style scoped>

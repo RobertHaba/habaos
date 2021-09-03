@@ -1,0 +1,67 @@
+{
+    "locations": [{
+            "name": "Gdańsk",
+            "value": "Gdansk"
+        },
+        {
+            "name": "Szczecin",
+            "value": "Szczecin"
+        },
+        {
+            "name": "Olsztyn",
+            "value": "Olsztyn"
+        },
+        {
+            "name": "Zielona Góra",
+            "value": "Zielona Gora"
+        },
+        {
+            "name": "Poznań",
+            "value": "Poznań"
+        },
+        {
+            "name": "Bydgoszcz",
+            "value": "Bydgoszcz"
+        },
+        {
+            "name": "Warszawa",
+            "value": "Warszawa"
+        },
+        {
+            "name": "Białystok",
+            "value": "Bialystok"
+        },
+        {
+            "name": "Wrocław",
+            "value": "Wroclaw"
+        },
+        {
+            "name": "Łódź",
+            "value": "Lodz"
+        },
+        {
+            "name": "Lublin",
+            "value": "Lublin"
+        },
+        {
+            "name": "Opole",
+            "value": "Opole"
+        },
+        {
+            "name": "Katowice",
+            "value": "Katowice"
+        },
+        {
+            "name": "Kraków",
+            "value": "Krakow"
+        },
+        {
+            "name": "Rzeszów",
+            "value": "Rzeszow"
+        },
+        {
+            "name": "Kielce",
+            "value": "Kielce"
+        }
+    ]
+}

@@ -26,8 +26,9 @@ import todoView from './todoView.vue'
                 openTodoEditor: false,
                 todoView: false,
                 activeDate:'',
+                actuallyDay:'',
                 todoData:'',
-                
+                monthNumber:'',
                 todoAddViewSettings:{
                     title:'Create a new task',
                     editorTitle:'Edit task',
@@ -103,6 +104,7 @@ import todoView from './todoView.vue'
                 this.todayDate = this.day.toJSON().slice(0,10).replace(/-/g,'.');
                 this.actuallyMonth =this.day.toLocaleString('en-us', {month:'long'})
                 this.actuallyDay =this.day.toLocaleString('en-us', {weekday:'long'})
+                console.log(this.todayDate);
             },
         },
         mounted(){

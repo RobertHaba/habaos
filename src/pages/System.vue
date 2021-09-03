@@ -1,8 +1,8 @@
 <template>
   <main class='os-container'>
-    <section class="os-main-window">
+    <section class="os-main-window" @click="closeStartMenu()">
     </section>
-    <bottomNavbar :allAppData="allAppData" v-if="allAppData.length"/>
+    <bottomNavbar :allAppData="allAppData" v-if="allAppData.length" :showStartMenu="showStartMenu"/>
     <getUserData />
     <validations />
   </main>
@@ -19,7 +19,8 @@ export default {
   name: 'App',
   data(){
     return{
-      allAppData:[]
+      allAppData:[],
+      showStartMenu:false
     }
   },
   components: {
@@ -34,6 +35,9 @@ export default {
         this.allAppData = snap.docs.map(item => item.data())
       })
       
+    },
+    closeStartMenu(){
+      this.showStartMenu = !this.showStartMenu
     },
     
         checkIfBrowserIsSetToDarkMode(){

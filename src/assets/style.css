@@ -4,7 +4,7 @@ input {
 }
 
 :root {
-    --bg-theme: linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98));
+    --bg-theme: linear-gradient(135deg, rgba(98, 44, 102, 0.98), #2E377A);
     --bg-theme--first: rgba(98, 44, 102, 1);
     --bg-theme--second: rgba(68, 50, 114, 1);
     --bg-theme--app: #22252D;
@@ -13,6 +13,8 @@ input {
     --font-main-color: #FFF;
     --font-second-color: rgba(255, 255, 255, 0.7);
     --icon-reverse-color: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
+    --register-main-color: #2E377A;
+    --register-second-color: #D82E44;
 }
 
 input::placeholder,
@@ -209,6 +211,10 @@ img {
 
 .icon--sort {
     background-image: url('http://cdn.haba.usermd.net/os/icons/sort.svg');
+}
+
+.icon--logo {
+    background-image: url('http://cdn.haba.usermd.net/os/icons/rocket.svg');
 }
 
 .icon--reverse-color {
