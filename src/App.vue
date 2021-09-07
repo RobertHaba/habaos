@@ -1,26 +1,9 @@
-<template>
-  <router-view @authenticated="setAuthenticated"></router-view>
+<template id='#app'>
+<router-view></router-view>
 </template>
+
 <script>
 export default {
-  name:'home',
-  data(){
-    return{
-      authenticated:false
-    }
-  },
-  mounted() {
-    if(sessionStorage.getItem('authenticated') != 'true'){
-      if(!this.authenticated || sessionStorage.getItem('authenticated') != 'true') {
-        this.$router.replace({ name: "login" });
-      }
-    }
-    
-  },
-  methods: {
-            setAuthenticated(status) {
-                this.authenticated = status;
-            },
-  }
+    name: 'home',
 }
 </script>

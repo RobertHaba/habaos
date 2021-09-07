@@ -1,94 +1,117 @@
 <template>
-    <section class="music app-container">
-        <div class="music-container" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
-            <header class="music-container-header">
-                <h2 class="header-title">Hi, {{user}}!</h2>
-                <ul class="header-nav-actions">
-                    <li class="header-nav-actions__item">
-                        <button class="btn"><span class="icon i-user"></span></button>
-                    </li>
-                </ul>
-            </header>
-            <div class="music-wrapper scroll-hidden">
-                <Recommended :getMusic="getMusicFromChild"/>
-                <Favorite :getMusic="getMusicFromChild"/>
-            </div>
-                    <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :dbPlaylistsName="dbPlaylistsName"/>
-
-            <footer>
-            </footer>
+<section class="music app-container">
+    <div class="music-container" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
+        <header class="music-container-header">
+            <h2 class="header-title">Hi, {{user}}!</h2>
+            <ul class="header-nav-actions">
+                <li class="header-nav-actions__item">
+                    <button class="btn"><span class="icon i-user"></span></button>
+                </li>
+            </ul>
+        </header>
+        <div class="music-wrapper scroll-hidden">
+            <Recommended :getMusic="getMusicFromChild" :recommendedMusicDB="recommendedMusicFromDB" v-if="recommendedMusicFromDB.length" />
+            <Favorite :getMusic="getMusicFromChild" :favoriteMusicDB="favoriteMusicFromDB" v-if="favoriteMusicFromDB.length" />
         </div>
+        <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :dbPlaylistsName="dbPlaylistsName" />
 
-    </section>
+        <footer>
+        </footer>
+    </div>
+
+</section>
 </template>
 
 <script>
-import { db } from '@/firebaseDB';
+import {
+    db
+} from '@/firebaseDB'
 import Favorite from '../components/home/Favorite.vue'
 import Recommended from '../components/home/Recommended.vue'
 import MusicPlayer from '../components/musicPlayer.vue'
-    export default {
-        name:'Music Home',
-        data(){
-            return{
-                playerView: false,
-                musicToPlay:'',
-                playLists:'',
-                fireBase:'',
-                dbPlaylistsName:'',
-                user:'admin'
-            }
+export default {
+    name: 'Music Home',
+    data() {
+        return {
+            playerView: false,
+            musicToPlay: '',
+            playLists: '',
+            dbPlaylistsName: '',
+            user: 'admin',
+            recommendedMusicFromDB: [],
+            favoriteMusicFromDB: []
+        }
+    },
+    inject: ['account'],
+    components: {
+        Recommended,
+        Favorite,
+        MusicPlayer,
+    },
+    methods: {
+        getMusicFromChild(name, songs, dbName) {
+            this.playerView = false
+            setTimeout(() => {
+                this.playerView = true
+            }, 50)
+            this.musicToPlay = name
+            this.playLists = songs
+            this.dbPlaylistsName = dbName
         },
-        components:{
-            Recommended,
-            Favorite,
-            MusicPlayer,
-        },
-        methods:{
-            getMusicFromChild(name, songs, dbName){
-                this.playerView = false
-                setTimeout(()=>{
-                    this.playerView = true
-                },50)
-                this.musicToPlay = name
-                this.playLists = songs
-                this.dbPlaylistsName = dbName
-            },
-            getDataFromFireBase(){
-                this.firebase = db
-
-            }
-        },
-        mounted() {
-            this.getDataFromFireBase()
-        },
+        getMusicFromDB() {
+            let musicDB = db.collection(this.account).doc('musicPlayer')
+            musicDB.collection('dailyRecommended')
+                .onSnapshot((querySnapshot) => {
+                    this.recommendedMusicFromDB.length = 0
+                    querySnapshot.forEach((doc) => {
+                        this.recommendedMusicFromDB.push(doc.data())
+                    })
+                    console.log(this.recommendedMusicFromDB);
+                })
+            musicDB.collection('favorite')
+                .onSnapshot((querySnapshot) => {
+                    this.favoriteMusicFromDB.length = 0
+                    querySnapshot.forEach((doc) => {
+                        this.favoriteMusicFromDB.push(doc.data())
+                    })
+                })
+        }
+    },
+    mounted() {
+        this.getMusicFromDB()
     }
-</script>
-<style scoped>
 
-.btn{
-    border:none;
+}
+</script>
+
+<style scoped>
+.btn {
+    border: none;
     border-radius: 100px;
     font-weight: bold;
     background-color: unset;
     transition: 0.5s ease background-color;
 }
-.icon{
+
+.icon {
     display: block;
     width: 1rem;
     height: 1rem;
     background-size: 100%;
 }
-.i-search{
+
+.i-search {
     background-image: url('../assets/icons/search.svg');
 }
-.i-user{
+
+.i-user {
     background-image: url('../assets/icons/user.svg');
 }
-.app-container{
+
+.app-container {
     position: fixed;
-    top:50%;
-    left:50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 330px;
@@ -100,7 +123,8 @@ import MusicPlayer from '../components/musicPlayer.vue'
     border-radius: 20px;
     transition: 0.5s ease all;
 }
-.music-container{
+
+.music-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -109,7 +133,8 @@ import MusicPlayer from '../components/musicPlayer.vue'
     width: 100%;
     height: 100%;
 }
-.music-container-header{
+
+.music-container-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -117,10 +142,12 @@ import MusicPlayer from '../components/musicPlayer.vue'
     height: 60px;
     margin-bottom: 2rem;
 }
-.header-nav-actions{
+
+.header-nav-actions {
     display: flex;
 }
-.header-nav-actions__item{
+
+.header-nav-actions__item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,8 +157,9 @@ import MusicPlayer from '../components/musicPlayer.vue'
     border-radius: 100px;
     background-color: var(--bg-theme--app-second);
 }
-.music-wrapper{
+
+.music-wrapper {
     height: calc(100% - 100px);
-    overflow-y:auto;
+    overflow-y: auto;
 }
 </style>

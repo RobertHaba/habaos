@@ -2,7 +2,7 @@
     <div class="settings-form-wrapper" :data-account-data-get='readyToChange' >
         <label :for="formProps.id"></label>
         <select :id="formProps.id" :name="formProps.id" class="settings-form-select" v-model="option" @click="checkInput()" data-account-value data-account-input-name="location">
-            <option v-for="city in formProps.cities" :key="city.id" :value="city.name">{{city.name}}</option>
+            <option v-for="city in formProps.cities" :key="city.id" :value="city.value">{{city.name}}</option>
         </select>
     </div>
 </template>
@@ -31,6 +31,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

@@ -185,9 +185,10 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
             defaultModal,
             dropSmallMenu
         },
+        inject:['account'],
         methods:{
             getBookmarkFromDB(){
-                db.collection('admin').doc('bookmarkApp').collection('bookmarks').orderBy('id','desc').get()
+                db.collection(this.account).doc('bookmarkApp').collection('bookmarks').orderBy('id','desc').get()
                 .then(res =>{
                     this.bookmarksListData = res.docs.map(doc => doc.data())
                 })

@@ -4,46 +4,47 @@
             <div class="login-form__avatar">
                 <img class="img" src="http://cdn.haba.usermd.net/os/img/user.jpg" alt="">
             </div>
-            <p class="login-form__nick">
-                Admin - {{password}}
-            </p>
-            <input class="login-form__input" type="text" placeholder="Password" id="loginPassword" v-model="password"/>
+            <input class="login-form__input" type='text' placeholder="email" v-model="email">
+            <input class="login-form__input" type="password" placeholder="Password" id="loginPassword" v-model="password"/>
             <button @click="login">Zaloguj</button>
         </div>
     </section>
 </template>
 
 <script>
-import { db } from '../firebaseDB';
+import { fBase } from '@/firebaseDB';
     export default {
         name: 'login',
         data(){
             return{
+                email:'',
                 password:''
             }
         },
+
         methods:{
             login(){
                 this.checkPassword()
             },
-            async checkPassword(){
-                let status = false
-                db.collection("admin").where("password", "==", this.password)
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach(() => {
-                        status = true
-                        this.$emit("authenticated", status);
-                        sessionStorage.setItem('authenticated', status)
-                        this.$router.replace({ name: "home" });
-                    });
-                        sessionStorage.setItem('authenticated', status)
+            getEmailFromLocalStorage(){
+                this.email = localStorage.getItem('email')
+            },
+            checkPassword(){
+                fBase.auth().signInWithEmailAndPassword(this.email,this.password)
+                .then((data)=>{
+                    console.log(data);
+                    sessionStorage.setItem('uid',data.user.uid)
+                    sessionStorage.setItem('authenticated',true)
+                    console.log(this.$userEmail);
+                    this.$router.push({ path: '/system'})
                 })
-                .catch(() => {
-                        this.$emit("authenticated", false);
-                        sessionStorage.setItem('authenticated', false)
-                });
+                .catch((err)=>{
+                    console.log(err);
+                })
             }
+        },
+        mounted(){
+            this.getEmailFromLocalStorage()
         }
 
     }

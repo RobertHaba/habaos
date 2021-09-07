@@ -1,68 +1,87 @@
 <template>
-    <div class="recommended" v-if="dailyRecommended !== ''">
-        <h3 class="recommended__header-title">Daily recommended</h3>
-        <div class="recommended-wrapper scroll">
-            <div class="recommended-tile" v-on:click="getMusic(song,dailyRecommended, 'dailyRecommended')" v-for="song in dailyRecommended.slice(0,5)" :key="song.id">
-                <picture class="recommended-tile-img-wrapper">
-                    <img class="recommended-tile-img-wrapper__img" :src="song.img" :alt="'Okładka piosenki - ' + song.title + ' ' + song.author">
-                </picture>
-                <div class="recommended-tile__info tile-info">
-                    <h4 class="tile-info__song">{{song.title}}</h4>
-                    <h4 class="tile-info__author">{{song.author}}</h4>
-                </div>
+<div class="recommended" v-if="dailyRecommended !== ''">
+    <h3 class="recommended__header-title">Daily recommended</h3>
+    <div class="recommended-wrapper scroll">
+        <div class="recommended-tile" v-on:click="getMusic(song,dailyRecommended, 'dailyRecommended')" v-for="song in dailyRecommended.slice(0,5)" :key="song.id">
+            <picture class="recommended-tile-img-wrapper">
+                <img class="recommended-tile-img-wrapper__img" :src="song.img" :alt="'Okładka piosenki - ' + song.title + ' ' + song.author">
+            </picture>
+            <div class="recommended-tile__info tile-info">
+                <h4 class="tile-info__song">{{song.title}}</h4>
+                <h4 class="tile-info__author">{{song.author}}</h4>
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { db } from '@/firebaseDB';
-    export default {
-        name:'Daily Recommended',
-        data(){
-            return{
-                dailyRecommended:''
-            }
-        },
-        props:{
-            getMusic: Function,
-        },
-        methods:{
-            async getDataFromFireBase(){
-                let snapshot = await db.collection('admin').doc('musicPlayer').collection('dailyRecommended').get()
-                this.dailyRecommended = snapshot.docs.map(doc => doc.data())
-                this.changeSongID()
-            },
-            async changeSongID(){
-                let snapshot = await db.collection('admin').doc('musicPlayer').collection('dailyRecommended').get()
-                 this.dailyRecommended.forEach(async (item, index) =>{
-                    item.id = await snapshot.docs[index].id
+import {
+    db
+} from '@/firebaseDB';
+export default {
+    name: 'Daily Recommended',
+    data() {
+        return {
+            dailyRecommended: this.recommendedMusicDB,
+            watchIsLive: false,
+        }
+    },
+    props: {
+        getMusic: Function,
+        recommendedMusicDB: Array,
+    },
+    inject: ['account'],
+    methods: {
+        changeSongID() {
+            db.collection(this.account).doc('musicPlayer').collection('dailyRecommended')
+                .get()
+                .then((snapshot) => {
+                    this.dailyRecommended.forEach((item, index) => {
+                        console.log(index);
+                        console.log(snapshot.docs[index].id);
+                        item.id = snapshot.docs[index].id
+                        db.collection(this.account).doc('musicPlayer').collection('dailyRecommended').doc(snapshot.docs[index].id).update(item)
+                    })
                 })
+
+        }
+    },
+    watch: {
+        dailyRecommended: {
+            deep: true,
+            handler() {
+                if (!this.watchIsLive) {
+                    this.watchIsLive = true
+                    this.changeSongID()
+                }
             }
-        },
-        mounted() {
-            this.getDataFromFireBase()
-        },
-    }
+        }
+    },
+    mounted() {},
+}
 </script>
 
 <style scoped>
-.recommended{
+.recommended {
     position: relative;
     width: 100%;
 }
-.recommended__header-title{
+
+.recommended__header-title {
     opacity: 0.8;
     margin-bottom: 1rem;
 }
-.recommended-wrapper{
+
+.recommended-wrapper {
     display: flex;
     position: relative;
     align-items: flex-end;
     overflow-x: auto;
     padding-bottom: 1rem;
 }
-.recommended-tile{
+
+.recommended-tile {
     position: relative;
     display: grid;
     grid-template-rows: 6fr 2fr;
@@ -74,42 +93,50 @@ import { db } from '@/firebaseDB';
     background-color: rgba(207, 207, 207, 0.164);
     cursor: pointer;
 }
-.recommended-tile:first-child{
+
+.recommended-tile:first-child {
     width: 180px;
     min-width: 180px;
     height: 200px;
     transition: 0.3s ease all;
 }
-.recommended-tile:hover{
+
+.recommended-tile:hover {
     background-color: var(--bg-theme--app-hover);
     transition: 0.3s ease all;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
 }
-.recommended-tile-img-wrapper{
-    overflow:hidden;
+
+.recommended-tile-img-wrapper {
+    overflow: hidden;
 }
-.recommended-tile-img-wrapper__img{
+
+.recommended-tile-img-wrapper__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 }
-.recommended-tile__info{
+
+.recommended-tile__info {
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 0 1rem;
 }
-.tile-info__song{
+
+.tile-info__song {
     font-size: 0.8rem;
     opacity: 0.8;
 }
-.recommended-tile:first-child .tile-info__song{
+
+.recommended-tile:first-child .tile-info__song {
     font-size: 0.9rem;
 }
-.tile-info__author{
+
+.tile-info__author {
     opacity: 0.6;
     font-size: 0.7rem;
     font-weight: normal;

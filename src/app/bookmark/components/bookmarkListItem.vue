@@ -68,12 +68,13 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                 },
             }
         },
+        inject:['account'],
         methods:{
             addToFavorite(){
                 if(!this.sending){
                     this.sending = true
                     this.favorite = !this.favorite
-                    db.collection('admin').doc('bookmarkApp').collection('bookmarks').doc(this.bookmarkItemData.id).update(
+                    db.collection(this.account).doc('bookmarkApp').collection('bookmarks').doc(this.bookmarkItemData.id).update(
                             {favorite:this.favorite}
                         )
                         .then(()=>{
@@ -144,7 +145,7 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                 }
             },
             deleteBookmarkFromDB(){
-                db.collection('admin').doc('bookmarkApp').collection('bookmarks').doc(this.bookmarkItemData.id).delete()
+                db.collection(this.account).doc('bookmarkApp').collection('bookmarks').doc(this.bookmarkItemData.id).delete()
                 .finally(()=>{
                     this.emitter.emit('resetDataInBookmarkApp')
                 })
@@ -170,7 +171,7 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                         favicon: this.favicon,
                         url:this.bookmarkItemData.url,
                     }
-                db.collection('admin').doc('bookmarkApp').collection('widget').doc('bookmark').set(
+                db.collection(this.account).doc('bookmarkApp').collection('widget').doc('bookmark').set(
                     createWidgetData
                 )
                 this.emitter.emit('widgetBookmarkUpdateData')

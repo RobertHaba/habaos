@@ -1,7 +1,7 @@
 <template>
     <div class="settings-form-wrapper" :data-account-data-get='readyToChange' @keyup="checkInput()">
             <p class="settings-form-wrapper__text"></p>
-            <input type="text" class="settings-form-input" placeholder="Your name - 3-20 length" v-model="text" maxlength="20" data-account-value data-account-input-name="name">
+            <input type="text" class="settings-form-input" placeholder="Your name - 2-12 length" v-model="text" maxlength="12" data-account-value data-account-input-name="name">
     </div>
 </template>
 <script>
@@ -18,7 +18,7 @@
         },
         methods:{
             checkInput(){
-                this.readyToChange = (this.text.length >= 3 && this.text.length <= 20)
+                this.readyToChange = (this.text.length >= 2 && this.text.length <= 12)
             }
         },
         mounted(){

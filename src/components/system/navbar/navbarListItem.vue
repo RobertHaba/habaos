@@ -1,7 +1,7 @@
 <template >
     <button v-show="appData.pinned || (!appData.pinned && show)" class="work-navbar-item" :class="{'work-navbar-item--active-app':show && app != '','work-navbar-item--app-is-open':minimize}" :data-navbar-os-app="appData.appName">
         <div class="work-navbar-icon-container" @click="minimizeApp()" >
-            <span class="work-navbar-icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
+            <span class="icon" :style="{'background-image' : 'url(' + imgURL + ')'}"></span>
         </div>
         <p class="work-navbar-item__title bg-dark">{{itemTitle}}</p>
         <runApp v-if="show" v-show="minimize" :app="app" ref="appOpen"/>
@@ -118,13 +118,10 @@ export default {
         width: 100%;
         height: 100%;
     }
-    .work-navbar-icon{
+    .icon{
         display: block;
         height: 30px;
         width: 30px;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        background-position: center;
     } 
     .work-navbar-item__title{
         display: none;

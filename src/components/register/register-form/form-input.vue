@@ -3,7 +3,7 @@
     <label class="form-item__label" :for="itemData.label">{{itemData.label}}</label>
     <component :is="itemData.tag" class="form-item__input" :type="itemData.type" :name="itemData.label" :id="itemData.id" :placeholder="itemData.placeholder" :minlength="itemData.minLght" :maxlength="itemData.maxLght" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" @keyup="validation(itemData.validation)" />
     <div class="form-item__wrapper form-item-wrapper">
-        <p class="form-item-wrapper__message" v-if="(sendStatus && itemData.value.length == 0) || (sendStatus && itemData.validationStatus === false)">{{itemData.validationComunicat}}</p>
+        <p class="form-item-wrapper__message" v-if="(sendStatus && itemData.value.length == 0) || (sendStatus && itemData.validationStatus === false)">{{itemData.validationMessage}}</p>
         <p class="form-item-wrapper__message" v-if="(itemData.value.length !== 0)">Remaining: {{availableCharacters}}</p>
     </div>
 </div>
@@ -35,15 +35,12 @@ export default {
         validationByLght(input) {
             input.validationStatus = (input.value.length >= input.minLght && input.value.length <= input.maxLght) ? true : false
             if (input.value.length <= input.minLght) {
-                input.validationComunicat = `Please enter more than ${input.minLght} signs.`
+                input.validationMessage = `Please enter more than ${input.minLght} signs.`
             }
         },
-        validationPassword(input) {
-            let regularExpression = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-            let regexTest = regularExpression.test(this.itemData.value)
-            console.log(regexTest);
-            input.validationStatus = regexTest
-            input.validationComunicat = `Please enter min.6 chars, one letter and one number.`
+        validationByRegex(input){
+            input.validationStatus = input.regexData.regex.test(input.value)
+            input.validationMessage = input.regexData.message 
         },
     },
 
