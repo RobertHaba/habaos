@@ -16,7 +16,7 @@
             </li>
         </template>
         <p class="favorite-text" v-if="favoriteSongs == ''">
-            Aktualnie nie posiadasz ulubionych kawałków, dodaj piosenki do ulubionych i słuchaj ich kiedy chcesz!
+            Currently you don't have favorite tracks, add songs to favorites and listen to them whenever you want!
         </p>
     </ul>
 </div>

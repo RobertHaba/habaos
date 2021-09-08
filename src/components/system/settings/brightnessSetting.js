@@ -5,7 +5,7 @@ export default {
                 [
                     ['--bg-theme','linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98))'],
                     ['--bg-theme--first','rgba(98, 44, 102, 1)'],
-                    ['--bg-theme--second','linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98))'],
+                    ['--bg-theme--second','rgba(68, 50, 114, 1)'],
                     ['--bg-theme--app','#22252D'],
                     ['--bg-theme--app-second','#393939'],
                     ['--bg-theme--app-hover','#505050'],
@@ -17,8 +17,8 @@ export default {
                 ],
                 [
                     ['--bg-theme','linear-gradient(135deg, #ffffff, #FFF)'],
-                    ['--bg-theme--first','rgba(98, 44, 102, 1)'],
-                    ['--bg-theme--second','linear-gradient(135deg, rgba(98, 44, 102, 0.98), rgba(68, 50, 114, 0.98))'],
+                    ['--bg-theme--first','#FFF'],
+                    ['--bg-theme--second','#FFF'],
                     ['--bg-theme--app','#FFF'],
                     ['--bg-theme--app-second','#EFEFEF'],
                     ['--bg-theme--app-hover','#E0E0E0'],

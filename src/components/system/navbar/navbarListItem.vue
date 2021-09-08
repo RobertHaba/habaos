@@ -61,10 +61,10 @@ export default {
         }
     },
     mounted(){
-        this.emitter.on('osAppRun-'+this.app,()=>{
+        this.emitter.on('osAppRun-'+this.app,(data)=>{
             this.moveAppToWorkNavbar()
             this.minimizeApp()
-            this.minimize = true
+            this.minimize = data.status
         })
     }
 }

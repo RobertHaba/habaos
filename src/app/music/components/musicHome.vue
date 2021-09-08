@@ -11,7 +11,7 @@
         </header>
         <div class="music-wrapper scroll-hidden">
             <Recommended :getMusic="getMusicFromChild" :recommendedMusicDB="recommendedMusicFromDB" v-if="recommendedMusicFromDB.length" />
-            <Favorite :getMusic="getMusicFromChild" :favoriteMusicDB="favoriteMusicFromDB" v-if="favoriteMusicFromDB.length" />
+            <Favorite :getMusic="getMusicFromChild" :favoriteMusicDB="favoriteMusicFromDB" />
         </div>
         <MusicPlayer v-if="playerView" :songObject="musicToPlay" :playLists="playLists" :dbPlaylistsName="dbPlaylistsName" />
 

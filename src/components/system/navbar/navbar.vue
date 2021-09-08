@@ -19,7 +19,7 @@
                 <li class="navbar-setting-item bg-dark--hover" v-for="componentItem in navbarSettingComponents" :key="componentItem.id" @click="componentItem.functionName">
                     <p class="navbar-setting-item__title bg-dark">{{componentItem.text}}</p>
                     <span class="icon icon--reverse-color" :style="{'background-image':'url('+ componentItem.icon +')'}"></span>
-                    <component :is="componentItem.name" v-if="componentItem.name" />
+                    <component :is="componentItem.name" v-if="componentItem.name && componentItem.status" @click.stop/>
                 </li>
                 <li class="navbar-setting-item navbar-setting-item--date">
                     <time :datetime="time">{{time}}</time>
@@ -32,10 +32,13 @@
 </template>
 
 <script>
-import {db} from '@/firebaseDB';
+import {
+    db
+} from '@/firebaseDB';
 import navbarListItem from './navbarListItem'
 import menuStart from './menu/menuStart'
 import brightnessSetting from '../settings/brightnessSetting.js'
+import volumeSettings from '../settings/volumeSettings.vue'
 export default {
     props: {
         allAppData: Array,
@@ -48,6 +51,7 @@ export default {
     components: {
         navbarListItem,
         menuStart,
+        volumeSettings
     },
     data() {
         return {
@@ -55,8 +59,9 @@ export default {
             navbarSettingComponents: [{
                     id: 0,
                     text: 'Sound',
-                    isFunction: false,
-                    functionName: '',
+                    isFunction: true,
+                    name: 'volumeSettings',
+                    functionName: this.showVolumeSetting,
                     icon: 'http://cdn.haba.usermd.net/os/icons/volume.svg',
                     status: false
                 },
@@ -71,16 +76,22 @@ export default {
             ],
             themesID: '',
             todayDate: '',
+            showSetting:false,
             time: "13:37",
         }
     },
-    inject: ['themeID','account'],
+    inject: ['themeID', 'account'],
     methods: {
         runSetting() {
             this.themesID = (this.themesID === 0) ? 1 : 0
-            let themeName = (this.themesID === 1)? 'light' : 'dark'
-            db.collection(this.account).doc('user').update({theme:themeName})
+            let themeName = (this.themesID === 1) ? 'light' : 'dark'
+            db.collection(this.account).doc('user').update({
+                theme: themeName
+            })
             this.changeBrightness(this.themesID)
+        },
+        showVolumeSetting() {
+            this.navbarSettingComponents[0].status = !this.navbarSettingComponents[0].status
         },
         getDateAndTime() {
             let date = new Date()
@@ -107,9 +118,9 @@ export default {
         themeID: {
             deep: true,
             handler() {
-              console.log('asdasd');
-              this.themesID = this.themeID.userThemeID
-              this.changeBrightness(this.themesID)
+                console.log('asdasd');
+                this.themesID = this.themeID.userThemeID
+                this.changeBrightness(this.themesID)
             }
         }
     },
@@ -193,6 +204,7 @@ export default {
 }
 
 .navbar-setting-item {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -215,7 +227,7 @@ export default {
 .navbar-setting-item:hover .navbar-setting-item__title {
     position: absolute;
     display: block;
-    top: -35px;
+    bottom: calc(100% + 0.7rem);
     padding: 0.3rem 1rem;
     opacity: 1;
     z-index: 9999;

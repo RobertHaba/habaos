@@ -40,7 +40,7 @@ export default {
             this.navbarListAllApps.sort((a, b) => a.title.localeCompare(b.title))
         },
         runApp(emitName) {
-            this.emitter.emit(emitName)
+            this.emitter.emit(emitName,{status:true})
         },
         addToFavorite(app) {
             if (!this.sending) {

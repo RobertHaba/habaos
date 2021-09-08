@@ -207,31 +207,27 @@ export default {
             }
         },
         async addToFavorites() {
-            this.song.favorite = true
-            this.favorite = true
-            let dbSong = db.collection(this.account).doc('musicPlayer').collection(this.dbPlaylistsName)
+            let dbRecommended = db.collection(this.account).doc('musicPlayer').collection('dailyRecommended')
             let dbFavorite = db.collection(this.account).doc('musicPlayer').collection('favorite')
-            if (await this.seeIfItExistsFavorites(dbFavorite) == false && this.dbPlaylistsName == 'dailyRecommended') {
-                console.log('Wysyłanie');
-                if (this.dbPlaylistsName != 'favorite') {
+            if (await this.seeIfItExistsFavorites(dbFavorite) == false) {
+                    this.song.favorite = true
+                    this.favorite = true
                     let songObject = Object.assign(this.song, {
                         'timestamp': +new Date
                     }, {
                         'mainPlaylist': this.dbPlaylistsName
                     })
                     dbFavorite.doc(this.song.id).set(songObject)
-                    await dbSong.doc(this.song.id).update({
+                    await dbRecommended.doc(this.song.id).update({
                         favorite: true
                     })
-                }
             } else {
-                if (this.dbPlaylistsName == 'dailyRecommended') {
-                   dbSong.doc(this.song.id).update({
+                   dbRecommended.doc(this.song.id).update({
                         favorite: false
                     })
-                } else {
                     dbFavorite.doc(this.song.id).delete()
-                }
+                this.song.favorite = false
+                this.favorite = false
             }// naprawić wysyłanie ulubionych
 
         },
@@ -288,6 +284,7 @@ export default {
 
     },
     mounted() {
+        document.querySelector('audio').volume = localStorage.getItem('audioVolume')
         this.playerOptions(true)
     },
 }

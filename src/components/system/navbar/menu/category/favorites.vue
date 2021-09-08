@@ -36,7 +36,7 @@ export default {
     inject: ['account'],
     methods: {
         runApp(emitName) {
-            this.emitter.emit(emitName)
+            this.emitter.emit(emitName,{status:true})
         },
         runDragOver(favoriteApp) {
             dragItem.methods.dragOverOtherBox(favoriteApp)
