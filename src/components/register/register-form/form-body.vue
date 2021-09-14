@@ -46,7 +46,7 @@ export default {
                     id: 'signup-email',
                     tag: 'input',
                     label: 'Email',
-                    placeholder: 'ex. RocketMan',
+                    placeholder: 'ex. tommy@mail.com',
                     minLght: 2,
                     maxLght: 999,
                     type: 'text',
@@ -64,7 +64,7 @@ export default {
                     id: 'signup-password',
                     tag: 'input',
                     label: 'Password',
-                    placeholder: 'Min. length 6 signs',
+                    placeholder: 'Length 6-12',
                     minLght: 6,
                     maxLght: 12,
                     type: 'password',
@@ -81,7 +81,7 @@ export default {
                     id: 'signup-name',
                     tag: 'input',
                     label: 'Name',
-                    placeholder: 'ex. Joe',
+                    placeholder: 'ex. Tommy',
                     minLght: 2,
                     maxLght: 20,
                     type: 'text',
@@ -93,7 +93,7 @@ export default {
             ],
             userID: '',
             userLocation: 'Gdansk',
-            userTheme: 'light',
+            userTheme: 'dark',
             trySendStatus: false,
             validationError: false,
             sendStatus: false,
@@ -194,15 +194,12 @@ export default {
 </script>
 
 <style scoped>
-.logo-red {
-    color: var(--register-second-color);
-}
-
 .register-content__form {
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 100%;
+    max-width: 330px;
     min-height: 550px;
     padding: 3rem 1.5rem;
     background-color: rgba(0, 0, 0, 0.4);

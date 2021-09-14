@@ -1,14 +1,7 @@
 <template>
 <section class="music app-container">
     <div class="music-container" draggable="true" ondragstart="event.preventDefault(); event.stopPropagation();">
-        <header class="music-container-header">
-            <h2 class="header-title">Hi, {{user}}!</h2>
-            <ul class="header-nav-actions">
-                <li class="header-nav-actions__item">
-                    <button class="btn"><span class="icon i-user"></span></button>
-                </li>
-            </ul>
-        </header>
+        <headerComponent />
         <div class="music-wrapper scroll-hidden">
             <Recommended :getMusic="getMusicFromChild" :recommendedMusicDB="recommendedMusicFromDB" v-if="recommendedMusicFromDB.length" />
             <Favorite :getMusic="getMusicFromChild" :favoriteMusicDB="favoriteMusicFromDB" />
@@ -26,6 +19,7 @@
 import {
     db
 } from '@/firebaseDB'
+import headerComponent from '../../components/header.vue'
 import Favorite from '../components/home/Favorite.vue'
 import Recommended from '../components/home/Recommended.vue'
 import MusicPlayer from '../components/musicPlayer.vue'
@@ -47,6 +41,7 @@ export default {
         Recommended,
         Favorite,
         MusicPlayer,
+        headerComponent
     },
     methods: {
         getMusicFromChild(name, songs, dbName) {

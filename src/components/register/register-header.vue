@@ -30,11 +30,11 @@ export default {
 .register-header{
     display: grid;
     grid-template-columns: 8fr 4fr;
-    margin-bottom: 6rem;
+    margin-bottom: 6em;
 
 }
 .register-header__title{
-    font-size: 3rem;
+    font-size: 3em;
 }
 .register-header__logo-container{
     display: flex;
@@ -46,7 +46,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
 }
 .logo-column--icon{
     align-items: center;
@@ -54,21 +54,36 @@ export default {
     margin: 0;
 }
 .logo-title{
-    font-size: 1.8rem;
+    font-size: 1.8em;
 }
 .logo-version{
     width: 120px;
-    padding: 0.1rem 0;
+    padding: 0.1em 0;
     text-align: center;
+    font-size: 1em;
     color:var(--register-main-color);
     background-color: #FFF;
     border-radius: 100px;
 }
-.logo-red{
-    color: var(--register-second-color);
-}
 .icon--logo{
     width: 45px;
     height: 45px;
+}
+
+@media (max-width:1050px) {
+    .register-header{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        font-size: 12px;
+    }
+    .register-header__title{
+        text-align: center;
+        font-size: 2.5em;
+    }
+    .logo-column{
+        justify-content: space-evenly;
+    }
+    
 }
 </style>

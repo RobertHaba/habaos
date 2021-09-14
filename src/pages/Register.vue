@@ -2,11 +2,9 @@
 <main class="register">
     <section class="register__layout">
         <registerHeader :headerData="headerData" />
-        <div class="register-content" >
-            <formBody :headerData="headerData" :installationDataProp="installationData"/>
-            <div class="register-content__news">
-
-            </div>
+        <div class="register-content">
+            <formBody :headerData="headerData" :installationDataProp="installationData" />
+            <registerNews v-if="!installationData.installation" />
         </div>
         <div class="installation" v-if="installationData.installation">
             <div class="installation__bar-box">
@@ -20,12 +18,14 @@
 
 <script>
 import registerHeader from '@/components/register/register-header';
+import registerNews from '@/components/register/register-news';
 import formBody from '@/components/register/register-form/form-body';
 export default {
     name: 'Login',
     components: {
         formBody,
-        registerHeader
+        registerHeader,
+        registerNews
     },
     data() {
         return {
@@ -49,6 +49,7 @@ export default {
 
 <style scoped>
 .register {
+    position: relative;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -58,14 +59,19 @@ export default {
 }
 
 .register__layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     max-width: 1400px;
     padding: 5rem;
 }
 
 .register-content {
+    position: relative;
     display: grid;
     grid-template-columns: 330px 1fr;
     grid-gap: 6rem;
+    width: 100%;
 }
 
 .installation {
@@ -105,5 +111,26 @@ export default {
 
 .package-name {
     color: var(--register-second-color);
+}
+
+@media (max-width:1050px) {
+    .register{
+        display: block;
+        height: auto;
+    }
+    .register-content{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    .register__layout{
+        padding: 3rem;
+    }
+}
+
+@media (max-width:600px) {
+    .register__layout{
+        padding: 3rem 1rem;
+    }
 }
 </style>

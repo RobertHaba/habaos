@@ -77,7 +77,6 @@
     padding: 0 1rem;
     margin:1rem 1rem 0 0;
     font-size: 0.8rem;
-    color: #FFF;
     background-color: var(--bg-theme--first);
     border-radius: 50px;
 }
