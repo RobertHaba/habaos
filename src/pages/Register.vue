@@ -55,7 +55,7 @@ export default {
     width: 100%;
     height: 100vh;
     color: #FFF;
-    background-color: var(--register-main-color);
+    background-color: var(--subpage-main-color);
 }
 
 .register__layout {
@@ -110,7 +110,7 @@ export default {
 }
 
 .package-name {
-    color: var(--register-second-color);
+    color: var(--subpage-second-color);
 }
 
 @media (max-width:1050px) {

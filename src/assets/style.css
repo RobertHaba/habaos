@@ -13,8 +13,9 @@ input {
     --font-main-color: #FFF;
     --font-second-color: rgba(255, 255, 255, 0.7);
     --icon-reverse-color: invert(100%) sepia(0%) saturate(3979%) hue-rotate(42deg) brightness(99%) contrast(107%);
-    --register-main-color: #2E377A;
-    --register-second-color: #D82E44;
+    --subpage-main-color: #2E377A;
+    --subpage-second-color: rgb(216, 46, 68);
+    --subpage-second-color--opacity: rgba(216, 46, 68, 0.4);
 }
 
 input::placeholder,
@@ -244,6 +245,10 @@ img {
     background-color: rgba(0, 0, 0, 0.35);
 }
 
+.logo-red {
+    color: var(--subpage-second-color);
+}
+
 .c-title {
     color: #FFF;
 }
@@ -317,10 +322,6 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
 }
 
-.logo-red {
-    color: var(--register-second-color);
-}
-
 
 /*Form */
 
@@ -380,8 +381,13 @@ input[type=range]::-webkit-slider-thumb {
     background-position-y: 5px;
 }
 
-.os-appBox .app-container {
+.os-appBox .app-container,
+.box-shadow {
     box-shadow: 4px 4px 10px -2px rgba(117, 117, 117, 0.568);
+}
+
+.box-shadow-dark {
+    box-shadow: 4px 4px 10px -2px rgba(0, 0, 0, 0.4);
 }
 
 .menu-options-user__img .icon {

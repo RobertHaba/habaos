@@ -2,10 +2,10 @@
 <div class="register-news-container">
     <h2 class="register-news-container__title">What's new in Falcon<span class="logo-red">One</span> relase</h2>
     <div class="register-news-header-wrapper">
-        <button class="register-news-header-button" :class="{'register-news-header-button--active':activeNews == newsHeader.id}" @click="activeNews = newsHeader.id, scrollToActiveNews()" v-for="newsHeader in newsItems" :key="newsHeader.id">{{newsHeader.title}}</button>
+        <button class="register-news-header-button box-shadow-dark" :class="{'register-news-header-button--active':activeNews == newsHeader.id}" @click="activeNews = newsHeader.id, scrollToActiveNews()" v-for="newsHeader in newsItems" :key="newsHeader.id">{{newsHeader.title}}</button>
     </div>
     <div class="register-news-content">
-        <div class="register-news-content__image-box">
+        <div class="register-news-content__image-box box-shadow-dark">
             <img :src="newsItems[activeNews].imgSrc" class="register-news-content-image" />
         </div>
         <div class="register-news-content-column">
@@ -108,7 +108,7 @@ export default {
 
 .register-news-header-button--active {
     font-weight: bold;
-    background-color: var(--register-second-color);
+    background-color: var(--subpage-second-color--opacity);
 }
 
 .register-news-content__image-box {

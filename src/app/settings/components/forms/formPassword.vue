@@ -6,7 +6,7 @@
         </div>
         <div class="settings-form-column">
                 <label class="settings-form-label">{{formProps.label2}}</label>
-                <input type="text" class="settings-form-input" placeholder="New password 3-20 length" v-model="newPassword" minlength="3" maxlength="20" data-account-value data-account-input-name="password">
+                <input type="text" class="settings-form-input" placeholder="New password 6-12 length" v-model="newPassword" minlength="6" maxlength="12" data-account-value data-account-input-name="password">
         </div>
     </div>
 </template>

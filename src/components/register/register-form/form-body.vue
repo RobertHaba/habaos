@@ -1,5 +1,5 @@
 <template>
-<div class="register-content__form register-form" v-if="!sendStatus">
+<div class="register-content__form register-form box-shadow-dark" v-if="!sendStatus">
     <h3 class="register-form__title">SignUP to Falcon<span class="logo-red">One</span></h3>
     <div class="register-form__wrapper">
         <template v-for="item in formItems" :key="item.id">
@@ -22,6 +22,7 @@
     </div>
     <div class="form-footer">
         <button class="form-button form-subbmit" :disabled="trySendStatus" @click="sendData()">Join to Rocket<span class="logo-red">OS</span></button>
+        <p class="form-footer-text">Do you have an account? <router-link class="form-footer-text__link" to="/login">Login</router-link> </p>
     </div>
 
 </div>
@@ -151,7 +152,7 @@ export default {
             this.installationData.step = 2
 
             this.newAccountData = await {
-                avatar: 'https://imgproxy.ohmydev.pl/WxZTX2DX9QNQxKrsIuI13d6ZMDdN_6WvvGRLNzg0_Hk/pr:profile_mini/plain/https://bucket.ohmydev.pl/images/posts/1a238cac09f0b5da543534876694b987.jpg',
+                avatar: 'http://cdn.haba.usermd.net/os/img/user.webp',
                 location: this.userLocation,
                 name: this.formItems[2].value,
                 theme: this.userTheme,
@@ -183,6 +184,25 @@ export default {
             deep: true,
             handler() {
                 localStorage.setItem('email', this.formItems[0].value)
+                let userObjects = {
+                    email:this.formItems[0].value,
+                    name:this.formItems[2].value,
+                    avatarSrc:'http://cdn.haba.usermd.net/os/img/user.webp',
+
+                }
+                let memberUsersFromStorage = localStorage.getItem('memberUsers')
+                console.log(JSON.parse(memberUsersFromStorage));
+                if(memberUsersFromStorage !== null){
+                    let memberUsersArray
+                    memberUsersArray= JSON.parse(memberUsersFromStorage)
+                    console.log(memberUsersArray);
+                    memberUsersArray.unshift(userObjects)
+                    console.log(memberUsersArray);
+                    localStorage.setItem('memberUsers', JSON.stringify(memberUsersArray))
+                }
+                else{
+                    localStorage.setItem('memberUsers', JSON.stringify(userObjects))
+                }
                 localStorage.setItem('uid', this.userID)
                 this.$router.push({
                     path: 'login'
@@ -223,14 +243,14 @@ export default {
 }
 
 .form-item-select__option {
-    background-color: var(--register-main-color);
+    background-color: var(--subpage-main-color);
 }
 
 .form-button {
     position: relative;
     padding: 0.3rem 1.5rem;
     background-color: #FFF;
-    color: var(--register-main-color);
+    color: var(--subpage-main-color);
     font-weight: bold;
     border-radius: 30px;
 }
@@ -250,7 +270,7 @@ export default {
     left:0;
     bottom: -0.5rem;
     width: 100%;
-    border-bottom: 2px solid var(--register-second-color);
+    border-bottom: 2px solid var(--subpage-second-color);
 }
 .form-button:hover{
     border-radius: 3px;
@@ -258,7 +278,16 @@ export default {
 }
 .form-footer {
     display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+.form-footer-text{
+    font-size: 0.8em;
+    margin-top: 0.5rem;
+}
+.form-footer-text__link{
+    color: var(--subpage-second-color);
 }
 </style><style>
 .form-item__label,
@@ -273,7 +302,7 @@ export default {
     color: #FFF;
     background-color: unset;
     border: none;
-    border-bottom: 2px solid var(--register-second-color);
+    border-bottom: 2px solid var(--subpage-second-color);
 }
 
 .form-item-wrapper {

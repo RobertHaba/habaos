@@ -101,10 +101,29 @@ export default {
                 db.collection(this.account).doc('user').update({
                     [item[0]]: item[1]
                 }).then(() => {
+                    this.updateMemberData()
                     this.emitter.emit('getUserData')
                 })
             })
 
+        },
+        updateMemberData(){
+            let memberUsersStorage = JSON.parse(localStorage.getItem('memberUsers'))
+            let sessionEmail = sessionStorage.getItem('email')
+            console.log(this.newData);
+            if(memberUsersStorage !== null){
+                if(!Array.isArray(memberUsersStorage)){
+                    memberUsersStorage = [memberUsersStorage]
+                }
+                memberUsersStorage.forEach((member) =>{
+                    if(member.email.toLowerCase() == sessionEmail.toLowerCase()){
+                        member.avatarSrc = (this.newData[0][0] == 'avatar')? this.newData[0][1]:member.avatarSrc
+                        member.name = (this.newData[0][0]  == 'name')? this.newData[0][1]:member.name
+                        member.name = (this.newData[1] && this.newData[1][0]  == 'name')? this.newData[1][1]:member.name
+                    }
+                })
+                localStorage.setItem('memberUsers',JSON.stringify(memberUsersStorage))
+            }
         },
         getDataFromForm() {
             let formInputsArray = document.querySelectorAll('[data-account-data-get=true] > [data-account-value]')

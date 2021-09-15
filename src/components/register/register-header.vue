@@ -61,7 +61,7 @@ export default {
     padding: 0.1em 0;
     text-align: center;
     font-size: 1em;
-    color:var(--register-main-color);
+    color:var(--subpage-main-color);
     background-color: #FFF;
     border-radius: 100px;
 }

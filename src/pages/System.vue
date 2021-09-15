@@ -21,7 +21,8 @@ export default {
             allAppData: [],
             showStartMenu: false,
             account: '',
-            userThemeID:''
+            userThemeID:'',
+            userData:''
         }
     },
     components: {
@@ -46,7 +47,9 @@ export default {
           .then((res)=>{
             console.log(this.themeID);
             console.log(res.data().theme);
+            this.userData = res.data()
             this.userThemeID = (res.data().theme == 'light')?1:0
+            this.checkIfUserExistInLocalStorage()
           })
         },
         checkIfBrowserIsSetToDarkMode() {
@@ -54,6 +57,39 @@ export default {
                 this.theme = 'dark'
             }
         },
+        checkIfUserExistInLocalStorage(){
+            let membersStorage = JSON.parse(localStorage.getItem('memberUsers'))
+            let activeSessionEmail = sessionStorage.getItem('email')
+            let activeMember
+            console.log(membersStorage);
+            console.log(activeSessionEmail);
+            if(Array.isArray(membersStorage)){
+                activeMember = membersStorage.find(member => member.email.toLowerCase() == activeSessionEmail.toLowerCase())
+            }
+            else if(membersStorage !== null){
+                activeMember = (membersStorage.email.toLowerCase() == activeSessionEmail.toLowerCase())?true:undefined
+                console.log(activeMember);
+            }
+            else if(membersStorage == null){
+                membersStorage = []
+            }
+            if(activeMember == undefined){
+                    this.addUserToMemberStorage(activeSessionEmail,membersStorage)
+                }
+        },
+        addUserToMemberStorage(activeSessionEmail,membersStorage){
+            let memberObject = {
+                email:activeSessionEmail,
+                avatarSrc:this.userData.avatar,
+                name:this.userData.name
+            }
+            if(!Array.isArray(membersStorage)){
+                membersStorage = [membersStorage]
+            }
+            console.log(membersStorage);
+            membersStorage.unshift(memberObject)
+            localStorage.setItem('memberUsers',JSON.stringify(membersStorage))
+        }
     },
     provide(){
       let themeID = {}

@@ -19,7 +19,7 @@
                 <li class="navbar-setting-item bg-dark--hover" v-for="componentItem in navbarSettingComponents" :key="componentItem.id" @click="componentItem.functionName">
                     <p class="navbar-setting-item__title bg-dark">{{componentItem.text}}</p>
                     <span class="icon icon--reverse-color" :style="{'background-image':'url('+ componentItem.icon +')'}"></span>
-                    <component :is="componentItem.name" v-if="componentItem.name && componentItem.status" @click.stop/>
+                    <component :is="componentItem.name" v-if="componentItem.name && componentItem.status" @click.stop />
                 </li>
                 <li class="navbar-setting-item navbar-setting-item--date">
                     <time :datetime="time">{{time}}</time>
@@ -58,6 +58,14 @@ export default {
             openStart: this.showStartMenu,
             navbarSettingComponents: [{
                     id: 0,
+                    text: 'Fullscreen',
+                    isFunction: true,
+                    name: '',
+                    functionName: this.fullScreenMode,
+                    icon: 'http://cdn.haba.usermd.net/os/icons/fullscreen.svg',
+                    status: false
+                }, {
+                    id: 1,
                     text: 'Sound',
                     isFunction: true,
                     name: 'volumeSettings',
@@ -66,7 +74,7 @@ export default {
                     status: false
                 },
                 {
-                    id: 1,
+                    id: 2,
                     text: 'Switch brightness mode',
                     isFunction: true,
                     functionName: this.runSetting,
@@ -76,8 +84,8 @@ export default {
             ],
             themesID: '',
             todayDate: '',
-            showSetting:false,
-            time: "13:37",
+            showSetting: false,
+            time: "11:11",
         }
     },
     inject: ['themeID', 'account'],
@@ -91,7 +99,19 @@ export default {
             this.changeBrightness(this.themesID)
         },
         showVolumeSetting() {
-            this.navbarSettingComponents[0].status = !this.navbarSettingComponents[0].status
+            this.navbarSettingComponents[1].status = !this.navbarSettingComponents[1].status
+        },
+        fullScreenMode(useByUser) {
+            if(!useByUser){
+                this.navbarSettingComponents[0].icon = (document.fullscreenElement)?'http://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg':'http://cdn.haba.usermd.net/os/icons/fullscreen.svg'
+            }
+            else if (!document.fullscreenElement) {
+                this.navbarSettingComponents[0].icon = 'http://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg'
+                document.documentElement.requestFullscreen()
+            } else if (document.exitFullscreen) {
+                this.navbarSettingComponents[0].icon = 'http://cdn.haba.usermd.net/os/icons/fullscreen.svg'
+                document.exitFullscreen()
+            }
         },
         getDateAndTime() {
             let date = new Date()
@@ -126,6 +146,7 @@ export default {
     },
     mounted() {
         this.getDateAndTime()
+        this.fullScreenMode(false)
     }
 }
 </script>
