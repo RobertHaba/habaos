@@ -63,7 +63,7 @@
     grid-template-columns: 40px 1fr;
     width: 100%;
     height: 30px;
-    background-color: var(--bg-theme--first);
+    background-color: rgba(98, 44, 102, 1);
     border-radius: 50px;
 }
 .icon{
@@ -77,7 +77,7 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 0 0.5rem;
-    background-color: var(--bg-theme--first);
+    background-color: rgba(98, 44, 102, 1);
     color: #FFF;
 }
 .search-bar__input::placeholder{

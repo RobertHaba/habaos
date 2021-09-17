@@ -1,6 +1,6 @@
 <template>
 <section class="account settings-container app-container" v-if="render">
-    <settingsHeader imgURL="http://cdn.haba.usermd.net/os/icons/user.svg" title="Account" />
+    <settingsHeader imgURL="https://cdn.haba.usermd.net/os/icons/user.svg" title="Account" />
     <div class="settings-body" v-if="userData !== ''">
         <subTitle text="What do you want to change?" />
         <div class="settings-form-container" v-for="form in content.body" :key="form._id">
@@ -18,14 +18,14 @@ import {
     db
 } from '@/firebaseDB';
 import data from '@/data/data.json'
-import settingsHeader from './components/header.vue'
-import settingsFooter from './components/footer.vue'
-import subTitle from './components/subtitle.vue'
-import formTitle from './components/forms/title.vue'
-import formImage from './components/forms/formImage.vue'
-import formText from './components/forms/formText.vue'
-import formSelect from './components/forms/formSelect.vue'
-import formPassword from './components/forms/formPassword.vue'
+import settingsHeader from './components/accountHeader.vue'
+import settingsFooter from './components/accountFooter.vue'
+import subTitle from './components/accountSubtitle.vue'
+import formTitle from './components/forms/accountTitle.vue'
+import formImage from './components/forms/accountFormImage.vue'
+import formText from './components/forms/accountFormText.vue'
+import formSelect from './components/forms/accountFormSelect.vue'
+import formPassword from './components/forms/accountFormPassword.vue'
 export default {
     data() {
         return {
@@ -38,7 +38,7 @@ export default {
                         _id: 'form-avatar',
                         component: 'formImage',
                         title: 'Avatar',
-                        icon: 'http://cdn.haba.usermd.net/os/icons/picture.svg',
+                        icon: 'https://cdn.haba.usermd.net/os/icons/picture.svg',
                         props: {
                             img: '',
 
@@ -48,14 +48,14 @@ export default {
                         _id: 'form-text',
                         component: 'formText',
                         title: 'Name',
-                        icon: 'http://cdn.haba.usermd.net/os/icons/picture.svg',
+                        icon: 'https://cdn.haba.usermd.net/os/icons/picture.svg',
                         props: {}
                     },
                     {
                         _id: 'form-city',
                         component: 'formSelect',
                         title: 'City',
-                        icon: 'http://cdn.haba.usermd.net/os/icons/pin.svg',
+                        icon: 'https://cdn.haba.usermd.net/os/icons/pin.svg',
                         props: {
                             id: 'settings-account-user',
                             cities: data.locations
@@ -65,7 +65,7 @@ export default {
                         _id: 'form-password',
                         component: 'formPassword',
                         title: 'Password',
-                        icon: 'http://cdn.haba.usermd.net/os/icons/lock.svg',
+                        icon: 'https://cdn.haba.usermd.net/os/icons/lock.svg',
                         props: {
                             label1: 'Old',
                             label2: 'New'

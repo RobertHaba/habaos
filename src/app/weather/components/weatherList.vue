@@ -25,7 +25,7 @@
     margin: 0.5rem 0;
 }
 .i-cloud-with-sun{
-    background-image: url('../../assets/icons/cloud-with-sun.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/cloud-with-sun.svg');
 }
 .list-item{
     display: flex;

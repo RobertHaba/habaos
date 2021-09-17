@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <defaultModal :modalProps="modalData" v-if="modalData !== ''" />
+    <modalDefault :modalProps="modalData" v-if="modalData !== ''" />
 </div>
 </template>
 
@@ -34,7 +34,7 @@ import {
 import windowHeader from './windowHeader.vue'
 import windowInput from './windowInput.vue'
 import windowBtn from './windowBtn.vue'
-import defaultModal from '@/app/components/modals/defaultModal.vue'
+import modalDefault from '@/app/components/modals/modalDefault.vue'
 export default {
     props: {
         activeDate: String,
@@ -44,7 +44,7 @@ export default {
         windowHeader,
         windowInput,
         windowBtn,
-        defaultModal
+        modalDefault
     },
     data() {
         return {
@@ -82,7 +82,7 @@ export default {
                 this.modalData = {
                     title: 'Failed',
                     text: 'Complete the form correctly',
-                    icon: 'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                    icon: 'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                     timeout: 4000
                 }
             }
@@ -114,7 +114,7 @@ export default {
                         this.modalData = {
                             title: 'Succes',
                             text: 'Your data has been successfully sent!',
-                            icon: 'http://cdn.haba.usermd.net/os/icons/happy-face.svg',
+                            icon: 'https://cdn.haba.usermd.net/os/icons/happy-face.svg',
                             timeout: 4000
                         }
                         this.headerTitleText = 'Edit task'
@@ -123,7 +123,7 @@ export default {
                         this.modalData = {
                             title: 'Error',
                             text: 'Your data has not been sent!',
-                            icon: 'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                            icon: 'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                             timeout: 4000
                         }
                     })
@@ -145,7 +145,7 @@ export default {
                         this.modalData = {
                             title: 'Succes',
                             text: 'Your data has been successfully sent!',
-                            icon: 'http://cdn.haba.usermd.net/os/icons/happy-face.svg',
+                            icon: 'https://cdn.haba.usermd.net/os/icons/happy-face.svg',
                             timeout: 4000
                         }
                         this.headerTitleText = 'Edit task'
@@ -154,7 +154,7 @@ export default {
                         this.modalData = {
                             title: 'Error',
                             text: 'Your data has not been sent!',
-                            icon: 'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                            icon: 'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                             timeout: 4000
                         }
                     })

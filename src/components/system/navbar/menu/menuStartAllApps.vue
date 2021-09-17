@@ -132,11 +132,11 @@ export default {
 }
 
 .icon--favorite {
-    background-image: url("http://cdn.haba.usermd.net/os/icons/heart.svg");
+    background-image: url("https://cdn.haba.usermd.net/os/icons/heart.svg");
 }
 
 .icon--pinned {
-    background-image: url("http://cdn.haba.usermd.net/os/icons/pinned.svg");
+    background-image: url("https://cdn.haba.usermd.net/os/icons/pinned.svg");
 }
 
 .icon--option-active {

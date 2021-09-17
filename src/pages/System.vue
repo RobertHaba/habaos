@@ -10,7 +10,7 @@
 
 <script>
 import {db} from '@/firebaseDB';
-import getUserData from '@/components/system/getUserData.vue'
+import getUserData from '@/components/system/settings/systemGetUserData.vue'
 import validations from '@/app/components/validation.vue'
 import bottomNavbar from '@/components/system/navbar/navbar.vue'
 
@@ -115,7 +115,7 @@ export default {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url('http://cdn.haba.usermd.net/os/background/bg.jpg');
+    background-image: url('https://cdn.haba.usermd.net/os/background/bg.jpg');
     background-size: cover;
     display: grid;
     grid-template-rows: 1fr 60px;

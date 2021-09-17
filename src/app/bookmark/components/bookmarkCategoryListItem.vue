@@ -1,6 +1,6 @@
 <template>
     <button class="category-list-item" :class="'bookmark-category--' + title.toLowerCase()">
-        <span class="icon list-item-icon" :style="{'background-image' : `url(http://cdn.haba.usermd.net/os/icons/bookmark/bookmark-${title.toLowerCase()}.svg)`}"></span>
+        <span class="icon list-item-icon" :style="{'background-image' : `url(https://cdn.haba.usermd.net/os/icons/bookmark/bookmark-${title.toLowerCase()}.svg)`}"></span>
         <p class="list-item-title">{{title}}</p>
     </button>
 </template>

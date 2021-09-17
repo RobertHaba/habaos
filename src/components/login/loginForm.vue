@@ -55,7 +55,7 @@ export default {
                 },
             ],
             validationMessage: '',
-            avatarSrc:'http://cdn.haba.usermd.net/os/icons/user-white.svg',
+            avatarSrc:'https://cdn.haba.usermd.net/os/icons/user-white.svg',
             activeUser:'',
             memberUsers: ''
         }
@@ -74,11 +74,11 @@ export default {
                     console.log(newSrc);
                 }
                 else{
-                    newSrc = 'http://cdn.haba.usermd.net/os/icons/user-white.svg'
+                    newSrc = 'https://cdn.haba.usermd.net/os/icons/user-white.svg'
                 }
             }
             else{
-                newSrc = 'http://cdn.haba.usermd.net/os/icons/user-white.svg'
+                newSrc = 'https://cdn.haba.usermd.net/os/icons/user-white.svg'
             }
             return newSrc
         }

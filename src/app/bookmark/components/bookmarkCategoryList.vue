@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import categoryItem from './categoryListItem.vue'
+import categoryItem from './bookmarkCategoryListItem.vue'
     export default {
         props:{
             categories: Array

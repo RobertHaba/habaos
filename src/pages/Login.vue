@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import headerLogin from '@/components/login/login-header.vue'
-import formLogin from '@/components/login/login-form.vue'
+import headerLogin from '@/components/login/loginHeader.vue'
+import formLogin from '@/components/login/loginForm.vue'
 export default {
     name: 'login',
     components: {
@@ -81,10 +81,10 @@ export default {
     margin-right: 0.5rem;
 }
 .icon--fullscreen{
-    background-image: url('http://cdn.haba.usermd.net/os/icons/fullscreen.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/fullscreen.svg');
 }
 
 .icon--fullscreen-exit{
-    background-image: url('http://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg');
 }
 </style>

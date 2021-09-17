@@ -15,15 +15,16 @@
             </p>
         </div>
         <div class="os-modal-footer">
-                <btn btnBgColor="#FFF" btnTitle="Close" btnFontColor="#662B65" @click="modalStatus = false"/>
+                <btn btnBgColor="#FF0000" btnTitle="No" btnFontColor="#FFFFFF" @click="runEvent(false)" />
+                <btn btnBgColor="#FFFFFF" btnTitle="Yes" btnFontColor="#662B65" @click="runEvent(true)"/>
         </div>
     </div>
 </template>
 
 <script>
-import btn from '@/components/system/singleButton.vue'
+import btn from './modalButton.vue'
     export default {
-        props:['modalProps'], //timeout,title,text,icon,
+        props:['modalProps'], //timeout, icon,title,text, doEmitFunction
         data(){
             return{
                 modalStatus: true,
@@ -35,9 +36,13 @@ import btn from '@/components/system/singleButton.vue'
         methods:{
             timeoutModal(){
                 setTimeout(()=>{
-                    this.modalStatus = false
+                    this.runEvent(false)
                 },this.modalProps.timeout)
-            }
+            },
+            runEvent(status){
+                this.modalStatus = false
+                this.emitter.emit(this.modalProps.doEmitFunction, status)
+            },
         },
         mounted(){
             this.timeoutModal()
@@ -100,8 +105,8 @@ import btn from '@/components/system/singleButton.vue'
     background-color: rgba(255, 255, 255, 0.247);
 }
 .icon{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 .os-modal-title{
     font-weight: bold;
@@ -115,7 +120,7 @@ import btn from '@/components/system/singleButton.vue'
 }
 .os-modal-footer{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 </style>

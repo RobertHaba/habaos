@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import registerHeader from '@/components/register/register-header';
-import registerNews from '@/components/register/register-news';
-import formBody from '@/components/register/register-form/form-body';
+import registerHeader from '@/components/register/registerHeader';
+import registerNews from '@/components/register/registerNews';
+import formBody from '@/components/register/registerFormBody';
 export default {
     name: 'Login',
     components: {

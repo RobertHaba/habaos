@@ -55,9 +55,9 @@
     border-radius: 100px;
 }
 .icon--play{
-    background-image: url('http://cdn.haba.usermd.net/os/icons/play.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/play.svg');
 }
 .icon--pause{
-    background-image: url('http://cdn.haba.usermd.net/os/icons/pause.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/pause.svg');
 }
 </style>

@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import categoryTitle  from './categoryTitle.vue'
-import widgets from './category/widgets.vue'
-import favorites from './category/favorites.vue'
-import allApps from './category/allApps.vue'
-import options from './options.vue'
+import categoryTitle  from './menuStartCategoryTitle.vue'
+import widgets from './menuStartWidgets.vue'
+import favorites from './menuStartFavorites.vue'
+import allApps from './menuStartAllApps.vue'
+import options from './menuStartOptions.vue'
     export default {
         components:{
             categoryTitle,
@@ -36,7 +36,7 @@ import options from './options.vue'
                     {
                         id:0,
                         title:'Widgets',
-                        icon:"http://cdn.haba.usermd.net/os/icons/widgets.svg",
+                        icon:"https://cdn.haba.usermd.net/os/icons/widgets.svg",
                         component:'widgets',
                         props:this.allAppData,
                         active:true
@@ -44,7 +44,7 @@ import options from './options.vue'
                     {
                         id:1,
                         title:'Favorites',
-                        icon:"http://cdn.haba.usermd.net/os/icons/heart.svg",
+                        icon:"https://cdn.haba.usermd.net/os/icons/heart.svg",
                         component:'favorites',
                         props:this.allAppData,
                         active:true
@@ -52,7 +52,7 @@ import options from './options.vue'
                     {
                         id:2,
                         title:'All Apps',
-                        icon:"http://cdn.haba.usermd.net/os/icons/apps.svg",
+                        icon:"https://cdn.haba.usermd.net/os/icons/apps.svg",
                         component:'allApps',
                         props:this.allAppData,
                         active:true

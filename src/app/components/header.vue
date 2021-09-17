@@ -66,7 +66,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    background-color: var(--bg-theme--first);
+    background-color: rgba(98, 44, 102, 1);
 }
 .icon{
     display: block;

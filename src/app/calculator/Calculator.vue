@@ -200,7 +200,7 @@ button:focus{
     
 }
 .i-arrow{
-    background-image: url('../assets/icons/left-arrow.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/left-arrow.svg');
 }
 .app-container{
   position: fixed;

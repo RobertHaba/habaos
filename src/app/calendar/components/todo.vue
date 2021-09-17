@@ -14,13 +14,13 @@
                 </div>
             </div>
             <div class="window-addForm-footer window-addForm-footer--space">
-                <todoBtn class="addForm-button" btnTitle="Remove" btnBgColor="#AD1E1E" @click="answerModalShow = true" />
+                <todoBtn class="addForm-button" btnTitle="Remove" btnBgColor="#AD1E1E" @click="modalAnswerShow = true" />
                 <todoBtn class="addForm-button" btnTitle="Edit" btnBgColor="#50B4EC" @click="editTodo" />
                 <todoBtn class="addForm-button" btnTitle="Complete" btnBgColor="#4CAF50" @click="removeFromDB" />
             </div>
         </div>
     </div>
-    <answerModal :modalProps="answerModalProps" v-if="answerModalShow" />
+    <modalAnswer :modalProps="modalAnswerProps" v-if="modalAnswerShow" />
 </div>
 </template>
 
@@ -28,28 +28,28 @@
 import {
     db
 } from '@/firebaseDB';
-import headerTodo from './components/headerTodo.vue'
-import todoBtn from './components/todoBtn.vue'
-import answerModal from '@/app/components/modals/answerModal.vue'
+import headerTodo from './todoHeader.vue'
+import todoBtn from './todoBtn.vue'
+import modalAnswer from '@/app/components/modals/modalAnswer.vue'
 export default {
     props: ['todoData'],
     components: {
         headerTodo,
         todoBtn,
-        answerModal
+        modalAnswer
     },
     data() {
         return {
             headerTitleText: 'Task view',
             todo: this.todoData,
-            answerModalProps: {
+            modalAnswerProps: {
                 title: 'Delete',
                 text: 'Do you want to delete the task?',
-                icon: 'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                icon: 'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                 timeout: 8000,
                 doEmitFunction: 'todoViewRunFunctionFromModal'
             },
-            answerModalShow: false,
+            modalAnswerShow: false,
             todoCreateAt: ''
         }
     },
@@ -100,7 +100,7 @@ export default {
             if (runFunction) {
                 this.removeFromDB()
             }
-            this.answerModalShow = false
+            this.modalAnswerShow = false
 
         })
     }

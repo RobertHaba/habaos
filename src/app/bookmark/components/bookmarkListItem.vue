@@ -10,21 +10,21 @@
         <span class="icon icon--reverse-color list-item-favorite" :class="{'list-item-favorite--active': favorite}" @click="addToFavorite()" onclick="return false;">
         </span>
         <dropSmallMenu :buttonsOption="dropSmallMenuOptions" @dropMenuEmitFunction="chooseEmitFunctionFromDropMenu" onclick="return false"/>
-        <answerModal onclick="return false" :modalProps="answerModalProps" v-if="showAnswerModal"/>
+        <modalAnswer onclick="return false" :modalProps="modalAnswerProps" v-if="showAnswerModal"/>
     </a>
 </template>
 
 <script>
 import { db } from '@/firebaseDB';
-import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
-import answerModal from '@/app/components/modals/answerModal.vue'
+import dropSmallMenu from '@/app/components/dropSmallMenu.vue'
+import modalAnswer from '@/app/components/modals/modalAnswer.vue'
     export default {
         props:{
             bookmarkItemData:Object
         },
         components:{
             dropSmallMenu,
-            answerModal
+            modalAnswer
         },
         data(){
             return{
@@ -34,34 +34,34 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                 fileImg:'',
                 modalData: {
                     timeout:1500,
-                    icon:'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                    icon:'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                     title:'Error',
                     text:'Try again letter'
                     },
-                favicon:'http://cdn.haba.usermd.net/os/favicon.ico',
+                favicon:'https://cdn.haba.usermd.net/os/favicon.ico',
                 dropSmallMenuOptions:[{
                     id:0,
-                    url:'http://cdn.haba.usermd.net/os/icons/trash.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/trash.svg',
                     title:'Delete bookmark',
                     functionName:'deleteBookmark'
                 },
                 {
                     id:1,
-                    url:'http://cdn.haba.usermd.net/os/icons/edit.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/edit.svg',
                     title:'Edit bookmark',
                     functionName:'editBookmark'
                 },
                 {
                     id:2,
-                    url:'http://cdn.haba.usermd.net/os/icons/widgets.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/widgets.svg',
                     title:'Set in widget',
                     functionName:'setToWidget'
                 }],
                 showAnswerModal:false,
                 showAnswerIsRunning:false,
-                answerModalProps:{
+                modalAnswerProps:{
                     timeout:3000,
-                    icon:'http://cdn.haba.usermd.net/os/icons/sad-face.svg',
+                    icon:'https://cdn.haba.usermd.net/os/icons/sad-face.svg',
                     title:'Delete',
                     text:'Do you want to delete: ' + this.bookmarkItemData.title +'?',
                     doEmitFunction: 'bookmarkAppDeleteBookmark-'+ this.bookmarkItemData.id
@@ -141,7 +141,7 @@ import answerModal from '@/app/components/modals/answerModal.vue'
                     this.showAnswerModal = true
                     setTimeout(()=>{
                         this.showAnswerModal = false
-                    },this.answerModalProps.timeout)
+                    },this.modalAnswerProps.timeout)
                 }
             },
             deleteBookmarkFromDB(){
@@ -265,7 +265,7 @@ import answerModal from '@/app/components/modals/answerModal.vue'
     justify-self: center;
     width:20px;
     height: 20px;
-    background-image: url('http://cdn.haba.usermd.net/os/icons/heart.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/heart.svg');
 }
 .list-item-favorite--active{
     filter: invert(0.5) sepia(1) saturate(35) hue-rotate(-51deg);

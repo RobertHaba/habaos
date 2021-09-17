@@ -15,7 +15,7 @@ import headerApp from '../components/header.vue'
 import calendarBody from './components/calendarBody.vue'
 import todoList from './components/todoList.vue'
 import todoAdd from '../components/windowAddForm.vue'
-import todoView from './todoView.vue'
+import todoView from './components/todo.vue'
     export default {
         data(){
             return{

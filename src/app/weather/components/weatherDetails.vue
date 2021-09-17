@@ -26,19 +26,19 @@
     order:1;
 }
 .i-wind{
-    background-image: url('../../assets/icons/wind.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/wind.svg');
 }
 .i-down-arrow{
-    background-image: url('../../assets/icons/down-arrow.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/down-arrow.svg');
 }
 .i-water-drop{
-    background-image: url('../../assets/icons/drop.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/drop.svg');
 }
 .i-morning-sun{
-    background-image: url('../../assets/icons/morning-sun.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/morning-sun.svg');
 }
 .i-moon{
-    background-image: url('../../assets/icons/moon.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/moon.svg');
 }
 .list-item{
     display: flex;

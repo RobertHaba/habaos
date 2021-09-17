@@ -20,7 +20,7 @@
             getWeather(){
                 
                 this.city = JSON.parse(sessionStorage.getItem('userData')).location
-            fetch('http://api.weatherapi.com/v1/forecast.json?key=5b4fe3990258407d8ee214311212005&q=' + this.city + '&days=3&aqi=no&alerts=no')
+            fetch('https://api.weatherapi.com/v1/forecast.json?key=5b4fe3990258407d8ee214311212005&q=' + this.city + '&days=3&aqi=no&alerts=no')
             .then(res => res.json())
             .then(data=>{
                 let resWeather = data

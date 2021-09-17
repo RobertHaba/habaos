@@ -1,12 +1,12 @@
 <template>
     <div class="footer" >
-        <systemButton imgURL="http://cdn.haba.usermd.net/os/icons/close.svg" btnClass="btn--negative" btnText="Cancel" @click="cancelData()"/>
-        <systemButton imgURL="http://cdn.haba.usermd.net/os/icons/check.svg" btnClass="btn--positive" btnText="Save" @click="sendData()"/>
+        <systemButton imgURL="https://cdn.haba.usermd.net/os/icons/close.svg" btnClass="btn--negative" btnText="Cancel" @click="cancelData()"/>
+        <systemButton imgURL="https://cdn.haba.usermd.net/os/icons/check.svg" btnClass="btn--positive" btnText="Save" @click="sendData()"/>
     </div>  
 </template>
 
 <script>
-import systemButton from '@/components/system/button.vue'
+import systemButton from './accountButton.vue'
     export default {
         components:{
             systemButton

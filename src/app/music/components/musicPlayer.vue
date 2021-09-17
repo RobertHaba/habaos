@@ -307,15 +307,15 @@ export default {
 }
 
 .icon--play {
-    background-image: url('../assets/icons/play.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/play.svg');
 }
 
 .icon--pause {
-    background-image: url('../assets/icons/pause.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/pause.svg');
 }
 
 .icon--next {
-    background-image: url('../assets/icons/next.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/next.svg');
 }
 
 .icon--previous {
@@ -323,31 +323,31 @@ export default {
 }
 
 .icon--repeat {
-    background-image: url('../assets/icons/repeat.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/repeat.svg');
 }
 
 .icon--repeat-on {
-    background-image: url('../assets/icons/repeat-on.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/repeat-on.svg');
 }
 
 .icon--shuffle {
-    background-image: url('../assets/icons/random.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/random.svg');
 }
 
 .icon--shuffle-on {
-    background-image: url('../assets/icons/random-on.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/random-on.svg');
 }
 
 .icon--heart {
-    background-image: url('../assets/icons/heart.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/heart.svg');
 }
 
 .icon--heart-full {
-    background-image: url('../assets/icons/heart-full.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/heart-full.svg');
 }
 
 .icon--arrow-down {
-    background-image: url('../assets/icons/arrow-down.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/arrow-down.svg');
 }
 
 @keyframes openFromRightToLeft {

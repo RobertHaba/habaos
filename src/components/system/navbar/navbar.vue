@@ -1,7 +1,7 @@
 <template>
 <nav class="os-navbar">
     <div class="os-container-navbar" v-if="allAppData">
-        <navbarListItem :appData="{pinned:true}" class="os-navbar-menu-start" imgURL="http://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app="" />
+        <navbarListItem :appData="{pinned:true}" class="os-navbar-menu-start" imgURL="https://cdn.haba.usermd.net/os/icons/rocket.svg" itemTitle="Start" @click="openStart = !openStart" app="" />
 
         <menuStart v-show="openStart" :allAppData="allAppData" />
         <div class="os-navbar-container" v-if="allAppData">
@@ -37,8 +37,8 @@ import {
 } from '@/firebaseDB';
 import navbarListItem from './navbarListItem'
 import menuStart from './menu/menuStart'
-import brightnessSetting from '../settings/brightnessSetting.js'
-import volumeSettings from '../settings/volumeSettings.vue'
+import brightnessSetting from '../settings/systemBrightnessSetting.js'
+import volumeSettings from '../settings/systemVolumeSettings.vue'
 export default {
     props: {
         allAppData: Array,
@@ -62,7 +62,7 @@ export default {
                     isFunction: true,
                     name: '',
                     functionName: this.fullScreenMode,
-                    icon: 'http://cdn.haba.usermd.net/os/icons/fullscreen.svg',
+                    icon: 'https://cdn.haba.usermd.net/os/icons/fullscreen.svg',
                     status: false
                 }, {
                     id: 1,
@@ -70,7 +70,7 @@ export default {
                     isFunction: true,
                     name: 'volumeSettings',
                     functionName: this.showVolumeSetting,
-                    icon: 'http://cdn.haba.usermd.net/os/icons/volume.svg',
+                    icon: 'https://cdn.haba.usermd.net/os/icons/volume.svg',
                     status: false
                 },
                 {
@@ -78,7 +78,7 @@ export default {
                     text: 'Switch brightness mode',
                     isFunction: true,
                     functionName: this.runSetting,
-                    icon: 'http://cdn.haba.usermd.net/os/icons/brightness.svg',
+                    icon: 'https://cdn.haba.usermd.net/os/icons/brightness.svg',
                     status: false
                 }
             ],
@@ -103,13 +103,13 @@ export default {
         },
         fullScreenMode(useByUser) {
             if(!useByUser){
-                this.navbarSettingComponents[0].icon = (document.fullscreenElement)?'http://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg':'http://cdn.haba.usermd.net/os/icons/fullscreen.svg'
+                this.navbarSettingComponents[0].icon = (document.fullscreenElement)?'https://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg':'https://cdn.haba.usermd.net/os/icons/fullscreen.svg'
             }
             else if (!document.fullscreenElement) {
-                this.navbarSettingComponents[0].icon = 'http://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg'
+                this.navbarSettingComponents[0].icon = 'https://cdn.haba.usermd.net/os/icons/fullscreen-exit.svg'
                 document.documentElement.requestFullscreen()
             } else if (document.exitFullscreen) {
-                this.navbarSettingComponents[0].icon = 'http://cdn.haba.usermd.net/os/icons/fullscreen.svg'
+                this.navbarSettingComponents[0].icon = 'https://cdn.haba.usermd.net/os/icons/fullscreen.svg'
                 document.exitFullscreen()
             }
         },
@@ -214,7 +214,7 @@ export default {
 }
 
 .os-navbar-icon--menu-start {
-    background-image: url('http://cdn.haba.usermd.net/os/icons/rocket.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/rocket.svg');
 }
 
 .work-navbar,

@@ -33,8 +33,8 @@ import {
     fBase
 } from '@/firebaseDB';
 import data from '@/data/data.json'
-import formInput from './form-input.vue'
-import createUserDataMixin from '@/components/system/createUserData.js'
+import formInput from '../assets/form/form-input.vue'
+import createUserDataMixin from '@/components/system/settings/systemCreateUserData.js'
 export default {
     mixins: [createUserDataMixin],
     props: {
@@ -144,6 +144,7 @@ export default {
                     console.log(err);
                     this.trySendStatus = false
                     this.formItems[0].validationStatus = false
+                    this.validationError = true
                     this.formItems[0].validationMessage = 'This account is already assigned to OS.'
                 })
         },
@@ -152,7 +153,7 @@ export default {
             this.installationData.step = 2
 
             this.newAccountData = await {
-                avatar: 'http://cdn.haba.usermd.net/os/img/user.webp',
+                avatar: 'https://cdn.haba.usermd.net/os/img/user.webp',
                 location: this.userLocation,
                 name: this.formItems[2].value,
                 theme: this.userTheme,
@@ -187,14 +188,14 @@ export default {
                 let userObjects = {
                     email:this.formItems[0].value,
                     name:this.formItems[2].value,
-                    avatarSrc:'http://cdn.haba.usermd.net/os/img/user.webp',
+                    avatarSrc:'https://cdn.haba.usermd.net/os/img/user.webp',
 
                 }
                 let memberUsersFromStorage = localStorage.getItem('memberUsers')
                 console.log(JSON.parse(memberUsersFromStorage));
                 if(memberUsersFromStorage !== null){
                     let memberUsersArray
-                    memberUsersArray= JSON.parse(memberUsersFromStorage)
+                    memberUsersArray= (Array.isArray(memberUsersFromStorage))?JSON.parse(memberUsersFromStorage):[JSON.parse(memberUsersFromStorage)]
                     console.log(memberUsersArray);
                     memberUsersArray.unshift(userObjects)
                     console.log(memberUsersArray);

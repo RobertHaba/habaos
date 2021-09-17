@@ -27,34 +27,34 @@ export default {
             newsItems: [{
                     id: 0,
                     title: 'More better app',
-                    imgSrc: 'http://cdn.haba.usermd.net/os/img/app.webp',
+                    imgSrc: 'https://cdn.haba.usermd.net/os/img/app.webp',
                     text: 'New better application - weather app, calculator, calendar integrated with todo, music player, bookmarks manager',
                 },
                 {
                     id: 1,
                     title: 'Theme',
-                    imgSrc: 'http://cdn.haba.usermd.net/os/img/theme.webp',
+                    imgSrc: 'https://cdn.haba.usermd.net/os/img/theme.webp',
                     text: 'Now you can choose your favorite theme: dark or light!',
 
                 },
                 {
                     id: 2,
                     title: 'Gesture',
-                    imgSrc: 'http://cdn.haba.usermd.net/os/img/gesture.webp',
+                    imgSrc: 'https://cdn.haba.usermd.net/os/img/gesture.webp',
                     text: 'We added gesture support for closing applications!',
 
                 },
                 {
                     id: 3,
                     title: 'Widgets',
-                    imgSrc: 'http://cdn.haba.usermd.net/os/img/widgets.webp',
+                    imgSrc: 'https://cdn.haba.usermd.net/os/img/widgets.webp',
                     text: 'You can already use the widgets that are located in the start menu. Use the weather widget and add a shortcut to your most visited page',
 
                 },
                 {
                     id: 4,
                     title: 'Live work',
-                    imgSrc: 'http://cdn.haba.usermd.net/os/img/live.webp',
+                    imgSrc: 'https://cdn.haba.usermd.net/os/img/live.webp',
                     text: 'RocketOS supports using your system account on other devices. So you can use your data where and how you want!',
 
                 },

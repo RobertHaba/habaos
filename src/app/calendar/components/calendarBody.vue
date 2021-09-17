@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import monthLists from "./monthLists.vue"
-import monthDays from "./daysInMonth.vue"
+import monthLists from "./calendarMonthLists.vue"
+import monthDays from "./calendarDaysInMonth.vue"
 export default {
     props:{
         actuallyMonth: String,

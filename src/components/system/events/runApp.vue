@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import calculator from '@/app/calculator/components/Calculator.vue'
-import weather from '@/app/weather/components/WeatherApp.vue'
+import calculator from '@/app/calculator/Calculator.vue'
+import weather from '@/app/weather/components/Weather.vue'
 import music from '@/app/music/components/musicHome.vue'
 import account from '@/app/settings/Account.vue'
-import calendar from '@/app/calendar/calendarApp.vue'
-import bookmark from '@/app/bookmark/bookmarkApp.vue'
+import calendar from '@/app/calendar/Calendar.vue'
+import bookmark from '@/app/bookmark/Bookmark.vue'
 export default {
     name: 'runApp',
     components: {

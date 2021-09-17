@@ -46,12 +46,12 @@
     }
     .widget-button--play{
         margin: 0 0.8rem;
-        background-image: url('http://cdn.haba.usermd.net/os/icons/play.svg');
+        background-image: url('https://cdn.haba.usermd.net/os/icons/play.svg');
     }
     .widget-button--next{
-        background-image: url('http://cdn.haba.usermd.net/os/icons/next-white.svg');
+        background-image: url('https://cdn.haba.usermd.net/os/icons/next-white.svg');
     }
     .widget-button--previous{
-        background-image: url('http://cdn.haba.usermd.net/os/icons/previous-white.svg');
+        background-image: url('https://cdn.haba.usermd.net/os/icons/previous-white.svg');
     }
 </style>

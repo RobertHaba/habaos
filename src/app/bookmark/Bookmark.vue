@@ -26,7 +26,7 @@
             </div>
             <bookmarksList :bookmarksListData="bookmarksListData" v-if="bookmarksListData" />
             <bookmarkAdd v-if="openBookmarkAddForm" :activeDate="activeDate" :addSettings="bookmarkAddViewSettings"/>
-            <defaultModal :modalProps="modalData" v-if="modalData !== ''"/>
+            <modalDefault :modalProps="modalData" v-if="modalData !== ''"/>
         </div>
     </section>
 </template>
@@ -34,13 +34,13 @@
 <script>
 import { db } from '@/firebaseDB';
 import headerComponent from '../components/header.vue'
-import searchBar from './components/search.vue'
+import searchBar from './components/bookmarkSearch.vue'
 import sectionTitle from '../components/title.vue'
-import categoriesList from './components/categoriesList.vue'
-import bookmarksList from './components/bookmarksList.vue'
+import categoriesList from './components/bookmarkCategoryList.vue'
+import bookmarksList from './components/bookmarkList.vue'
 import bookmarkAdd from '../components/windowAddForm.vue'
-import defaultModal from '@/app/components/modals/defaultModal.vue'
-import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
+import modalDefault from '@/app/components/modals/modalDefault.vue'
+import dropSmallMenu from '@/app/components/dropSmallMenu.vue'
     export default {
         data(){
             return{
@@ -56,29 +56,29 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
                 showButtonToReturnAllItems:false,
                 bookmarksHeaderCategoryTitle:'All',
                 showFilterOptions:false,
-                sortIcon:'http://cdn.haba.usermd.net/os/icons/latest.svg',
+                sortIcon:'https://cdn.haba.usermd.net/os/icons/latest.svg',
                 dropSmallMenuOptions:[
                 {
                     id:0,
-                    url:'http://cdn.haba.usermd.net/os/icons/latest.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/latest.svg',
                     title:'Sort by lastest to oldest',
                     functionName:'sortLatest'
                 },
                 {
                     id:1,
-                    url:'http://cdn.haba.usermd.net/os/icons/oldest.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/oldest.svg',
                     title:'Sort by oldest to lastest',
                     functionName:'sortOldest'
                 },
                 {
                     id:2,
-                    url:'http://cdn.haba.usermd.net/os/icons/alphabetical-order.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/alphabetical-order.svg',
                     title:'Sort from A - Z',
                     functionName:'sortAlphabetical'
                 },
                 {
                     id:3,
-                    url:'http://cdn.haba.usermd.net/os/icons/alphabetical-order-reverse.svg',
+                    url:'https://cdn.haba.usermd.net/os/icons/alphabetical-order-reverse.svg',
                     title:'Sort from Z - A',
                     functionName:'sortAlphabeticalReverse'
                 }],
@@ -182,7 +182,7 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
             categoriesList,
             bookmarksList,
             bookmarkAdd,
-            defaultModal,
+            modalDefault,
             dropSmallMenu
         },
         inject:['account'],
@@ -314,7 +314,7 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
 }
 .btn-app-circle--sort{
     position: relative;
-    background-color: var(--bg-theme--first);
+    background-color: rgba(98, 44, 102, 1);
 }
 .drop-small-menu{
     display: flex;
@@ -322,7 +322,7 @@ import dropSmallMenu from '@/components/system/dropSmallMenu.vue'
     right: 0;
     z-index: 9;
     align-items: center;
-    background-color: var(--bg-theme--first);
+    background-color: rgba(98, 44, 102, 1);
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
    

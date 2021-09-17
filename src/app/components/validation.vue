@@ -19,7 +19,7 @@ export default {
         validationTest = false
       } else {
         let fullSiteUrl;
-        fullSiteUrl = "http://" + siteUrlInput;
+        fullSiteUrl = "https://" + siteUrlInput;
         siteUrlInput = siteUrlInput.match(regexHTTP)
           ? siteUrlInput
           : fullSiteUrl;

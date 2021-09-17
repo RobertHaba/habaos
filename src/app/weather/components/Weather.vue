@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import Details from './lists/Details'
-import List from './lists/List'
+import Details from './weatherDetails'
+import List from './weatherList'
 export default {
     data(){
         return{
@@ -68,7 +68,7 @@ export default {
                 
         },
         getWeather(){
-            fetch('http://api.weatherapi.com/v1/forecast.json?key=5b4fe3990258407d8ee214311212005&q=' + this.city + '&days=3&aqi=no&alerts=no')
+            fetch('https://api.weatherapi.com/v1/forecast.json?key=5b4fe3990258407d8ee214311212005&q=' + this.city + '&days=3&aqi=no&alerts=no')
             .then(res => res.json())
             .then(data=>{
                 let resWeather = data
@@ -231,7 +231,7 @@ export default {
     width: 130px;
     height: 130px;
     background-size: 100%;
-    background-image: url('../assets/icons/cloud.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/cloud.svg');
     opacity: 0.98;
     animation: cloudWind 1.7s ease-in infinite;
 }
@@ -272,7 +272,7 @@ export default {
     left:-1.5rem;
     width: calc(100% + 3rem);
     height:50px;
-    background-image: url('../assets/icons/line.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/line.svg');
     background-repeat: no-repeat;
     opacity: 0.4;
 }

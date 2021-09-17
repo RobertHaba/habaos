@@ -96,11 +96,11 @@ export default {
 }
 
 .i-search {
-    background-image: url('../assets/icons/search.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/search.svg');
 }
 
 .i-user {
-    background-image: url('../assets/icons/user.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/music/user.svg');
 }
 
 .app-container {

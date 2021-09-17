@@ -2,7 +2,7 @@
 <a v-if="bookmark.status != ''" :href="bookmark.url" class="widget-tile">
     <div class="widget-column">
         <span class="icon icon--circle" :style="{'background-image': 'url(' + bookmark.favicon + ')'}"></span>
-        <span class="icon icon--reverse-white icon--widget-animation" :style="{'background-image': 'url(http://cdn.haba.usermd.net/os/icons/bookmark.svg)'}"></span>
+        <span class="icon icon--reverse-white icon--widget-animation" :style="{'background-image': 'url(https://cdn.haba.usermd.net/os/icons/bookmark.svg)'}"></span>
     </div>
     <p class="widget-title c-title">{{bookmark.title}}</p>
 </a>

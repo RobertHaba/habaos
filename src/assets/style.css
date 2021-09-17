@@ -202,19 +202,19 @@ img {
 }
 
 .icon--sad-face {
-    background-image: url('http://cdn.haba.usermd.net/os/icons/sad-face.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/sad-face.svg');
 }
 
 .icon--filter {
-    background-image: url('http://cdn.haba.usermd.net/os/icons/filter.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/filter.svg');
 }
 
 .icon--sort {
-    background-image: url('http://cdn.haba.usermd.net/os/icons/sort.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/sort.svg');
 }
 
 .icon--logo {
-    background-image: url('http://cdn.haba.usermd.net/os/icons/rocket.svg');
+    background-image: url('https://cdn.haba.usermd.net/os/icons/rocket.svg');
 }
 
 .icon--reverse-color {
@@ -375,7 +375,7 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     /* Safari and Chrome */
     appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='https://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-position-x: calc(100% - 0.5rem);
     background-position-y: 5px;
