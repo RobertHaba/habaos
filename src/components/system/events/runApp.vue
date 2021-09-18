@@ -6,7 +6,7 @@
 
 <script>
 import calculator from '@/app/calculator/Calculator.vue'
-import weather from '@/app/weather/components/Weather.vue'
+import weather from '@/app/weather/Weather.vue'
 import music from '@/app/music/components/musicHome.vue'
 import account from '@/app/settings/Account.vue'
 import calendar from '@/app/calendar/Calendar.vue'

@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import Details from './weatherDetails'
-import List from './weatherList'
+import Details from './components/weatherDetails'
+import List from './components/weatherList'
 export default {
     data(){
         return{
