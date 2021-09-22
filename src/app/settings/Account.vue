@@ -25,7 +25,6 @@ import formTitle from './components/forms/accountTitle.vue'
 import formImage from './components/forms/accountFormImage.vue'
 import formText from './components/forms/accountFormText.vue'
 import formSelect from './components/forms/accountFormSelect.vue'
-import formPassword from './components/forms/accountFormPassword.vue'
 export default {
     data() {
         return {
@@ -61,16 +60,6 @@ export default {
                             cities: data.locations
                         }
                     },
-                    {
-                        _id: 'form-password',
-                        component: 'formPassword',
-                        title: 'Password',
-                        icon: 'https://cdn.haba.usermd.net/os/icons/lock.svg',
-                        props: {
-                            label1: 'Old',
-                            label2: 'New'
-                        }
-                    },
                 ]
             }
         }
@@ -83,7 +72,6 @@ export default {
         formImage,
         formText,
         formSelect,
-        formPassword,
     },
     inject: ['account'],
     methods: {
@@ -94,7 +82,6 @@ export default {
             this.content.body[0].props.img = this.userData.avatar
             this.content.body[1].props.name = this.userData.name
             this.content.body[2].props.city = this.userData.location
-            this.content.body[3].props.oldPassword = this.userData.password
         },
         async pushDataToDatabase() {
             this.newData.forEach((item) => {
@@ -110,7 +97,6 @@ export default {
         updateMemberData(){
             let memberUsersStorage = JSON.parse(localStorage.getItem('memberUsers'))
             let sessionEmail = sessionStorage.getItem('email')
-            console.log(this.newData);
             if(memberUsersStorage !== null){
                 if(!Array.isArray(memberUsersStorage)){
                     memberUsersStorage = [memberUsersStorage]

@@ -45,8 +45,6 @@ export default {
         getUserTheme(){
           db.collection(this.account).doc('user').get()
           .then((res)=>{
-            console.log(this.themeID);
-            console.log(res.data().theme);
             this.userData = res.data()
             this.userThemeID = (res.data().theme == 'light')?1:0
             this.checkIfUserExistInLocalStorage()
@@ -61,14 +59,11 @@ export default {
             let membersStorage = JSON.parse(localStorage.getItem('memberUsers'))
             let activeSessionEmail = sessionStorage.getItem('email')
             let activeMember
-            console.log(membersStorage);
-            console.log(activeSessionEmail);
             if(Array.isArray(membersStorage)){
                 activeMember = membersStorage.find(member => member.email.toLowerCase() == activeSessionEmail.toLowerCase())
             }
             else if(membersStorage !== null){
                 activeMember = (membersStorage.email.toLowerCase() == activeSessionEmail.toLowerCase())?true:undefined
-                console.log(activeMember);
             }
             else if(membersStorage == null){
                 membersStorage = []
@@ -86,7 +81,6 @@ export default {
             if(!Array.isArray(membersStorage)){
                 membersStorage = [membersStorage]
             }
-            console.log(membersStorage);
             membersStorage.unshift(memberObject)
             localStorage.setItem('memberUsers',JSON.stringify(membersStorage))
         }

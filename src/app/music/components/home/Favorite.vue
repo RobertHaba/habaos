@@ -34,9 +34,6 @@ export default {
         getMusic: Function,
         favoriteMusicDB: Array,
     },
-    mounted(){
-        console.log('załadowano');
-    }
 }
 </script>
 

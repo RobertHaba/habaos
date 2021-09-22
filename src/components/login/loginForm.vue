@@ -11,7 +11,7 @@
         <button class="login-form__button" @click="login">Login</button>
     </div>
     <ul class="login-member-users">
-        <li class="login-member-users__item login-member-user" :class="{'login-member-users__item--active':(formItems[0].value && formItems[0].value.toLowerCase() == user.email.toLowerCase())}" v-for="user in memberUsers" :key="user.name">
+        <li class="login-member-users__item login-member-user" :class="{'login-member-users__item--active':((formItems[0].value && user.email) && formItems[0].value.toLowerCase() == user.email.toLowerCase())}" v-for="user in memberUsers" :key="user.name">
             <button class="login-member-user__button"  @click="loadMemberUserToForm(user), activeUser=user.email"><img class="img img--member" :src="user.avatarSrc" alt="">{{user.name}}</button>
         </li>
     </ul>
@@ -71,7 +71,6 @@ export default {
             let activeUser = this.memberUsers.find(user => user.email.toLowerCase() == inputEmail.toLowerCase())
                 if(activeUser && activeUser.email.toLowerCase() == inputEmail.toLowerCase()){
                     newSrc = (!activeUser)? this.avatarSrc : activeUser.avatarSrc
-                    console.log(newSrc);
                 }
                 else{
                     newSrc = 'https://cdn.haba.usermd.net/os/icons/user-white.svg'
@@ -91,15 +90,12 @@ export default {
             let memberUsersFromStorage = localStorage.getItem('memberUsers')
             memberUsersFromStorage = JSON.parse(memberUsersFromStorage)
             if(memberUsersFromStorage != null){
-                console.log(Array.isArray(memberUsersFromStorage));
-                console.log(typeof memberUsersFromStorage);
                 this.memberUsers = (!Array.isArray(memberUsersFromStorage))? [memberUsersFromStorage]:memberUsersFromStorage
             }
         },
         checkPassword() {
             fBase.auth().signInWithEmailAndPassword(this.formItems[0].value, this.formItems[1].value)
                 .then((data) => {
-                    console.log(data);
                     sessionStorage.setItem('email', this.formItems[0].value)
                     sessionStorage.setItem('uid', data.user.uid)
                     sessionStorage.setItem('authenticated', true)

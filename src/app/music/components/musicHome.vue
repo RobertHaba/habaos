@@ -61,7 +61,6 @@ export default {
                     querySnapshot.forEach((doc) => {
                         this.recommendedMusicFromDB.push(doc.data())
                     })
-                    console.log(this.recommendedMusicFromDB);
                 })
             musicDB.collection('favorite')
                 .onSnapshot((querySnapshot) => {

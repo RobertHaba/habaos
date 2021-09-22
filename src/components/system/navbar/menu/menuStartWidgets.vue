@@ -14,11 +14,11 @@ import {
     dragItem
 } from '@/components/system/events/changeIndexByDrag.js'
 import widgetBookmark from '@/app/bookmark/widget/bookmarkWidget.vue'
-import widgetMusic from '@/app/music/widget/music.vue'
+//import widgetMusic from '@/app/music/widget/music.vue'
 import widgetWeather from '@/app/weather/widget/weather.vue'
 export default {
     components: {
-        widgetMusic,
+        //widgetMusic,
         widgetWeather,
         widgetBookmark
     },

@@ -43,8 +43,6 @@ export default {
             }
         },
         dragStart(e) {
-            console.log('DRAG START ELEMENT');
-            console.log(e);
             this.dragStartPropX = {
                 screenX: e.screenX,
                 x: e.x
@@ -56,7 +54,6 @@ export default {
         },
         drop(e) {
             let left, top, item, padding
-            console.log(e);
             item = e.target
             this.appItem = item
             this.getMousePosition()
@@ -78,20 +75,17 @@ export default {
             item.style.top = top + 'px'
             item.style.left = left + 'px'
             item.style.transform = 'translate(-50%,0)'
-            console.log(this.mousePositionY);
         },
         getMousePosition() {
             document.addEventListener('mousemove', this.setMousePosition)
         },
         setMousePosition(event) {
-            console.log(event);
             this.mousePositionY = event.screenY
             document.removeEventListener('mousemove', this.setMousePosition)
             this.hideAppOnSwipeDown()
         },
         hideAppOnSwipeDown() {
             if(this.mousePositionY >= (window.innerHeight - (this.appItem.offsetHeight/2)) ){
-                console.log('asdas');
                 this.emitter.emit('osAppRun-'+this.app,{status:false})
             }
         },

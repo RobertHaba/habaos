@@ -22,7 +22,8 @@
     </div>
     <div class="form-footer">
         <button class="form-button form-subbmit" :disabled="trySendStatus" @click="sendData()">Join to Rocket<span class="logo-red">OS</span></button>
-        <p class="form-footer-text">Do you have an account? <router-link class="form-footer-text__link" to="/login">Login</router-link> </p>
+        <p class="form-footer-text">Do you have an account? <router-link class="form-footer-text__link" to="/login">Login</router-link>
+        </p>
     </div>
 
 </div>
@@ -104,8 +105,8 @@ export default {
             installationData: this.installationDataProp
         }
     },
-    computed:{
-        
+    computed: {
+
     },
     components: {
         formInput
@@ -168,15 +169,11 @@ export default {
                     this.installationData.step = 3
                     this.createTreeData(this.userID)
                 })
-                .then(() => {
-                    console.log(this.finish);
-                })
-
             this.sendStatus = true
         },
-        themeClass(theme){
-            let className = 'form-button--' + theme 
-            let classNameActive = (this.userTheme == theme)?'form-button--active' : ''
+        themeClass(theme) {
+            let className = 'form-button--' + theme
+            let classNameActive = (this.userTheme == theme) ? 'form-button--active' : ''
             return className + ' ' + classNameActive
         }
     },
@@ -186,22 +183,18 @@ export default {
             handler() {
                 localStorage.setItem('email', this.formItems[0].value)
                 let userObjects = {
-                    email:this.formItems[0].value,
-                    name:this.formItems[2].value,
-                    avatarSrc:'https://cdn.haba.usermd.net/os/img/user.webp',
+                    email: this.formItems[0].value,
+                    name: this.formItems[2].value,
+                    avatarSrc: 'https://cdn.haba.usermd.net/os/img/user.webp',
 
                 }
                 let memberUsersFromStorage = localStorage.getItem('memberUsers')
-                console.log(JSON.parse(memberUsersFromStorage));
-                if(memberUsersFromStorage !== null){
+                if (memberUsersFromStorage !== null) {
                     let memberUsersArray
-                    memberUsersArray= (Array.isArray(memberUsersFromStorage))?JSON.parse(memberUsersFromStorage):[JSON.parse(memberUsersFromStorage)]
-                    console.log(memberUsersArray);
+                    memberUsersArray = (Array.isArray(JSON.parse(memberUsersFromStorage))) ? JSON.parse(memberUsersFromStorage) : [JSON.parse(memberUsersFromStorage)]
                     memberUsersArray.unshift(userObjects)
-                    console.log(memberUsersArray);
                     localStorage.setItem('memberUsers', JSON.stringify(memberUsersArray))
-                }
-                else{
+                } else {
                     localStorage.setItem('memberUsers', JSON.stringify(userObjects))
                 }
                 localStorage.setItem('uid', this.userID)
@@ -255,39 +248,47 @@ export default {
     font-weight: bold;
     border-radius: 30px;
 }
+
 .form-button--light {
     background-image: #FFF;
 }
+
 .form-button--dark {
     color: #FFF;
     background-image: var(--bg-theme);
 }
-.form-button::first-letter{
+
+.form-button::first-letter {
     text-transform: uppercase;
 }
-.form-button--active::after{
-    content:'';
+
+.form-button--active::after {
+    content: '';
     position: absolute;
-    left:0;
+    left: 0;
     bottom: -0.5rem;
     width: 100%;
     border-bottom: 2px solid var(--subpage-second-color);
 }
-.form-button:hover{
+
+.form-button:hover {
     border-radius: 3px;
     transition: 0.5s ease all;
 }
+
 .form-footer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
-.form-footer-text{
+
+.form-footer-text {
     font-size: 0.8em;
     margin-top: 0.5rem;
 }
-.form-footer-text__link{
+
+.form-footer-text__link {
     color: var(--subpage-second-color);
 }
 </style><style>

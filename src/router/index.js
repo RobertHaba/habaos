@@ -26,7 +26,6 @@ const router = new createRouter({
 
 router.beforeEach((to,from,next) => {
     if (sessionStorage.getItem('authenticated') != 'true') {
-      console.log('asdasda');
         if (to.name == 'register' || to.name == 'login') {
             next()
         } else next({name:'login'})

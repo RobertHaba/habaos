@@ -30,7 +30,7 @@ export default {
                         id: null,
                         component: 'widgetMusic',
                         ready: '',
-                        active: true
+                        active: false
                     },
                     favorite: {
                         id: null,
@@ -99,61 +99,69 @@ export default {
                 },
             ],
             musicPlayerRecommended: [{
-                    author: 'Lovely',
+                    author: 'DBL',
                     favorite: false,
                     id: '1',
                     img: "https://cdn.haba.usermd.net/music1.jpg",
-                    title: 'Nickelback',
-                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+                    title: 'Muchacho',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song1.mp3'
                 },
                 {
-                    author: 'The Chainsmokers',
+                    author: 'Noname',
                     favorite: false,
                     id: '2',
                     img: "https://cdn.haba.usermd.net/music2.jpg",
-                    title: 'Roses',
-                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3'
+                    title: 'Stop Being Yourself',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song2.mp3'
                 },
                 {
-                    author: 'X Ambassadors',
+                    author: 'Juice WRLD ft. Marshmello',
                     favorite: false,
                     id: '3',
                     img: "https://cdn.haba.usermd.net/music3.jpg",
-                    title: 'Unsteady',
-                    url: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3'
+                    title: 'Come & Go',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song3.mp3'
                 },
                 {
-                    author: 'Midsplit',
+                    author: 'Twocolors',
                     favorite: false,
                     id: '4',
                     img: "https://cdn.haba.usermd.net/music4.jpg",
-                    title: 'Nickelback',
-                    url: 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3'
+                    title: 'Lovefool',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song4.mp3'
                 },
                 {
-                    author: 'Lovely',
+                    author: 'Young T & Bugsey',
                     favorite: false,
                     id: '5',
                     img: "https://cdn.haba.usermd.net/music5.jpg",
-                    title: 'Midsplit, No-One',
-                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+                    title: "Don 't Rush Remix",
+                    url: 'https://cdn.haba.usermd.net/os/songs/song5.mp3'
                 },
                 {
-                    author: 'Lovely',
+                    author: 'Tujamo, VIZE, MAJAN',
                     favorite: false,
                     id: '6',
                     img: "https://cdn.haba.usermd.net/music6.jpg",
-                    title: 'Midsplit, No-One',
-                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+                    title: 'Lonely',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song6.mp3'
                 },
                 {
-                    author: 'Sanah',
+                    author: 'Trevor Daniel',
                     favorite: false,
                     id: '7',
                     img: "https://cdn.haba.usermd.net/music7.jpg",
-                    title: 'Etc.',
-                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-                }
+                    title: 'Forgot',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song7.mp3'
+                },
+                {
+                    author: 'NICOLOSI',
+                    favorite: false,
+                    id: '8',
+                    img: "https://cdn.haba.usermd.net/music8.jpg",
+                    title: 'Wasted Time',
+                    url: 'https://cdn.haba.usermd.net/os/songs/song8.mp3'
+                },
             ],
             finish: false,
         }
@@ -163,7 +171,6 @@ export default {
             let empty = true
             db.collection(userid).doc('system').get()
                 .then((data) => {
-                    console.log(data.exists);
                     empty = data.exists
                 })
                 .then(() => {
@@ -200,8 +207,5 @@ export default {
                 systemPathToDB.collection('dailyRecommended').doc().set(item)
             })
         },
-        test() {
-            console.log(this.$data);
-        }
     }
 }

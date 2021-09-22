@@ -104,7 +104,6 @@ import todoView from './components/todo.vue'
                 this.todayDate = this.day.toJSON().slice(0,10).replace(/-/g,'.');
                 this.actuallyMonth =this.day.toLocaleString('en-us', {month:'long'})
                 this.actuallyDay =this.day.toLocaleString('en-us', {weekday:'long'})
-                console.log(this.todayDate);
             },
         },
         mounted(){

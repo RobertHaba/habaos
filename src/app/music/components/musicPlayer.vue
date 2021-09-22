@@ -161,24 +161,27 @@ export default {
             }, 50)
         },
         nextAudio() {
-            this.repeat = false
-            let lastSong = this.song
-            this.song = ((parseInt(this.playListSongs.indexOf(this.song)) + 1) < this.playListSongs.length) ? this.playListSongs[parseInt(this.playListSongs.indexOf(this.song)) + 1] : this.playListSongs[0]
-            if (this.song.id == this.playLists[0].id && this.playLists[0].id == this.playListSongs[0].id && this.usedShuffle) {
-                if (this.shuffle || lastSong.id !== this.song.id) {
+            if (this.playListSongs.length > 1) {
+                this.repeat = false
+                let lastSong = this.song
+                this.song = ((parseInt(this.playListSongs.indexOf(this.song)) + 1) < this.playListSongs.length) ? this.playListSongs[parseInt(this.playListSongs.indexOf(this.song)) + 1] : this.playListSongs[0]
+                if (this.song.id == this.playLists[0].id && this.playLists[0].id == this.playListSongs[0].id && this.usedShuffle) {
+                    if (this.shuffle || lastSong.id !== this.song.id) {
+                        this.resetCurrentTime()
+                    }
+                } else {
                     this.resetCurrentTime()
                 }
-            } else {
-                this.resetCurrentTime()
+                this.playerOptions(true)
             }
-            this.playerOptions(true)
-
         },
         previousAudio() {
-            this.repeat = false
-            this.song = ((parseInt(this.playListSongs.indexOf(this.song)) - 1) >= 0) ? this.playListSongs[parseInt(this.playListSongs.indexOf(this.song)) - 1] : this.playListSongs[0]
-            this.resetCurrentTime()
-            this.playerOptions(true)
+            if (this.playListSongs.length > 1) {
+                this.repeat = false
+                this.song = ((parseInt(this.playListSongs.indexOf(this.song)) - 1) >= 0) ? this.playListSongs[parseInt(this.playListSongs.indexOf(this.song)) - 1] : this.playListSongs[0]
+                this.resetCurrentTime()
+                this.playerOptions(true)
+            }
         },
         resetCurrentTime() {
             let audioPlayer = document.querySelector('#audioPlayer')
@@ -210,25 +213,25 @@ export default {
             let dbRecommended = db.collection(this.account).doc('musicPlayer').collection('dailyRecommended')
             let dbFavorite = db.collection(this.account).doc('musicPlayer').collection('favorite')
             if (await this.seeIfItExistsFavorites(dbFavorite) == false) {
-                    this.song.favorite = true
-                    this.favorite = true
-                    let songObject = Object.assign(this.song, {
-                        'timestamp': +new Date
-                    }, {
-                        'mainPlaylist': this.dbPlaylistsName
-                    })
-                    dbFavorite.doc(this.song.id).set(songObject)
-                    await dbRecommended.doc(this.song.id).update({
-                        favorite: true
-                    })
+                this.song.favorite = true
+                this.favorite = true
+                let songObject = Object.assign(this.song, {
+                    'timestamp': +new Date
+                }, {
+                    'mainPlaylist': this.dbPlaylistsName
+                })
+                dbFavorite.doc(this.song.id).set(songObject)
+                await dbRecommended.doc(this.song.id).update({
+                    favorite: true
+                })
             } else {
-                   dbRecommended.doc(this.song.id).update({
-                        favorite: false
-                    })
-                    dbFavorite.doc(this.song.id).delete()
+                dbRecommended.doc(this.song.id).update({
+                    favorite: false
+                })
+                dbFavorite.doc(this.song.id).delete()
                 this.song.favorite = false
                 this.favorite = false
-            }// naprawić wysyłanie ulubionych
+            }
 
         },
         async seeIfItExistsFavorites(dbFavorite) {

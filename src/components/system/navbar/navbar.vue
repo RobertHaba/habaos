@@ -116,7 +116,6 @@ export default {
         getDateAndTime() {
             let date = new Date()
             this.todayDate = date.toJSON().slice(0, 10).replace(/-/g, '.').split('.').reverse().join('.');
-            console.log(this.todayDate);
             setInterval(() => {
                 this.timer()
             }, 1000);
@@ -138,7 +137,6 @@ export default {
         themeID: {
             deep: true,
             handler() {
-                console.log('asdasd');
                 this.themesID = this.themeID.userThemeID
                 this.changeBrightness(this.themesID)
             }

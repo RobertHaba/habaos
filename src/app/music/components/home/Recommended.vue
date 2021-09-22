@@ -38,8 +38,6 @@ export default {
                 .get()
                 .then((snapshot) => {
                     this.dailyRecommended.forEach((item, index) => {
-                        console.log(index);
-                        console.log(snapshot.docs[index].id);
                         item.id = snapshot.docs[index].id
                         db.collection(this.account).doc('musicPlayer').collection('dailyRecommended').doc(snapshot.docs[index].id).update(item)
                     })

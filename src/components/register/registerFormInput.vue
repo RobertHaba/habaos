@@ -29,7 +29,6 @@ export default {
     methods: {
         validation(functionName) {
             let input = this.itemData
-            console.log('asda');
             this[functionName](input)
         },
         validationByLght(input) {

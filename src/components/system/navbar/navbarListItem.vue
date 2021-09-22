@@ -43,7 +43,6 @@ export default {
             }
         },
         moveAppToWorkNavbar(){
-            console.log(this.app);
                 let appItem = document.querySelector(`[data-navbar-os-app="${this.appData.appName}"]`)
             if(!this.appData.pinned && this.app !== 'account'){
                 document.querySelector('#workNavbarDefault').appendChild(appItem)
